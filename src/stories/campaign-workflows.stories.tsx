@@ -132,7 +132,7 @@ export const CampaignListWorkbench: Story = {
   CampaignListCard,
   CampaignListToolbar,
   CampaignStatCard,
-} from '@pikaboo/web-design-system';
+} from '@pikaboo/t2-design-system';
 
 <CampaignListToolbar value={query} onValueChange={setQuery} />
 <CampaignStatCard icon="▣" label="Visible Campaigns" value={200} />
@@ -239,7 +239,7 @@ export const SupportRequest: Story = {
 	parameters: {
 		docs: {
 			source: {
-				code: `import { SupportRequestDialog } from '@pikaboo/web-design-system';
+				code: `import { SupportRequestDialog } from '@pikaboo/t2-design-system';
 
 <SupportRequestDialog
   defaultValues={{ name: 'Lario Owner', page: 'Campaigns' }}
@@ -265,7 +265,7 @@ export const AddSitesInventory: Story = {
 	parameters: {
 		docs: {
 			source: {
-				code: `import { SiteInventoryPanel } from '@pikaboo/web-design-system';
+				code: `import { SiteInventoryPanel } from '@pikaboo/t2-design-system';
 
 <SiteInventoryPanel
   defaultSelectedIds={['AC003']}
@@ -303,7 +303,7 @@ export const ScheduleDialog: Story = {
 	parameters: {
 		docs: {
 			source: {
-				code: `import { CampaignScheduleDialog } from '@pikaboo/web-design-system';
+				code: `import { CampaignScheduleDialog } from '@pikaboo/t2-design-system';
 
 <CampaignScheduleDialog
   defaultRange={{ from: new Date(2026, 6, 9), to: new Date(2026, 6, 22) }}

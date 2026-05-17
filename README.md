@@ -99,8 +99,8 @@ import {
 	Card,
 	ThemeProvider,
 	ThemeSwitcher,
-} from '@pikaboo/web-design-system';
-import '@pikaboo/web-design-system/styles.css';
+} from '@pikaboo/t2-design-system';
+import '@pikaboo/t2-design-system/styles.css';
 
 export function App() {
 	return (
@@ -115,7 +115,7 @@ export function App() {
 Tailwind consumers can share the same token names through the exported preset:
 
 ```ts
-import pikabooTailwindPreset from '@pikaboo/web-design-system/tailwind';
+import pikabooTailwindPreset from '@pikaboo/t2-design-system/tailwind';
 
 export default {
 	content: ['./src/**/*.{ts,tsx}'],

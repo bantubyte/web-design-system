@@ -46,7 +46,7 @@ export const MetricTile: Story = {
 	parameters: {
 		docs: {
 			source: {
-				code: `import { ReportMetricTile } from '@pikaboo/web-design-system';
+				code: `import { ReportMetricTile } from '@pikaboo/t2-design-system';
 
 <ReportMetricTile
   accent="cyan"
@@ -80,7 +80,7 @@ export const MetricRibbonLoading: Story = {
 	parameters: {
 		docs: {
 			source: {
-				code: `import { ReportMetricRibbonLoading } from '@pikaboo/web-design-system';
+				code: `import { ReportMetricRibbonLoading } from '@pikaboo/t2-design-system';
 
 <ReportMetricRibbonLoading count={6} />`,
 			},
@@ -98,7 +98,7 @@ export const MetricRibbonInteractive: Story = {
 	parameters: {
 		docs: {
 			source: {
-				code: `import { ReportMetricRibbon, ReportMetricTile } from '@pikaboo/web-design-system';
+				code: `import { ReportMetricRibbon, ReportMetricTile } from '@pikaboo/t2-design-system';
 
 <ReportMetricRibbon highlighted tourAnchor="bottom">
   <ReportMetricTile id="reach" label="Reach" onSelect={setSelectedMetric} selected={selectedMetric === 'reach'} value="3.3M" />
@@ -153,7 +153,7 @@ export const ChartLoadingBlock: Story = {
 	parameters: {
 		docs: {
 			source: {
-				code: `import { ReportChartLoadingBlock } from '@pikaboo/web-design-system';
+				code: `import { ReportChartLoadingBlock } from '@pikaboo/t2-design-system';
 
 <ReportChartLoadingBlock title="Reach" variant="bars" rows={6} />`,
 			},
@@ -170,7 +170,7 @@ export const RankedListBlock: Story = {
 	parameters: {
 		docs: {
 			source: {
-				code: `import { ReportRankedListBlock } from '@pikaboo/web-design-system';
+				code: `import { ReportRankedListBlock } from '@pikaboo/t2-design-system';
 
 <ReportRankedListBlock
   items={items}
@@ -221,7 +221,7 @@ export const EntityCard: Story = {
 	parameters: {
 		docs: {
 			source: {
-				code: `import { ReportEntityCard } from '@pikaboo/web-design-system';
+				code: `import { ReportEntityCard } from '@pikaboo/t2-design-system';
 
 <ReportEntityCard
   id="mazda"
@@ -265,7 +265,7 @@ export const ComparisonBlock: Story = {
 	parameters: {
 		docs: {
 			source: {
-				code: `import { ReportComparisonBlock } from '@pikaboo/web-design-system';
+				code: `import { ReportComparisonBlock } from '@pikaboo/t2-design-system';
 
 <ReportComparisonBlock
   left={{ id: 'scenario-a', label: 'Scenario A' }}
@@ -313,7 +313,7 @@ export const PlacementTable: Story = {
 	parameters: {
 		docs: {
 			source: {
-				code: `import { ReportPlacementTable } from '@pikaboo/web-design-system';
+				code: `import { ReportPlacementTable } from '@pikaboo/t2-design-system';
 
 <ReportPlacementTable
   rows={rows}
@@ -364,7 +364,7 @@ export const TourCallout: Story = {
 	parameters: {
 		docs: {
 			source: {
-				code: `import { ReportTourCallout } from '@pikaboo/web-design-system';
+				code: `import { ReportTourCallout } from '@pikaboo/t2-design-system';
 
 <ReportTourCallout
   steps={[

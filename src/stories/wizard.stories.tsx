@@ -45,7 +45,7 @@ export const QuickSetup: Story = {
   GuidedWizardShell,
   GuidedWizardStatusBar,
   GuidedWizardStepper,
-} from '@pikaboo/web-design-system';
+} from '@pikaboo/t2-design-system';
 
 <GuidedWizardShell title={campaignName} backAction={{ children: 'Back' }}>
   <GuidedWizardStepper steps={steps} activeStep={activeStep} onStepChange={setActiveStep} />
