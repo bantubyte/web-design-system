@@ -203,6 +203,12 @@ export function App() {
 - Brand: `BrandMark`, `BrandLockup`, `ProductName`.
 - Auth: `AuthAccessScreen`, `AuthSignUpScreen`, `AuthLoginScreen`, Google and
   GitHub SSO actions, WhatsApp support action.
+- Support and payments: `HelpCenter` with searchable FAQs and WhatsApp contact
+  actions, `PaymentForm` for donation, contribution, invoice, or deposit flows.
+- Page blocks: `PageTemplate`, `PageHero`, `LogoCloud`, `FeatureGrid`,
+  `FeatureSplit`, `StatsStrip`, `TestimonialBand`, `PricingSection`,
+  `FaqSection`, `ContactStrip`, `FinalCta`, `SignupPanel`, `DonationPanel`,
+  `ReliefImpactSection`, `TransparencySection`.
 - Primitives: `Button`, `IconButton`, `Badge`, `Avatar`, `AvatarGroup`,
   `RemovableBadge`, `SelectionBadge`, `Surface`, `Card`, `Input`, `Select`,
   `Textarea`, `Switch`, `Slider`, `RadioCardGroup`, `Popover`,
@@ -218,8 +224,10 @@ export function App() {
 - Campaign patterns: `CampaignStatCard`, `CampaignListToolbar`,
   `CampaignCardGrid`, `CampaignListCard`, `CampaignSummaryCard`,
   `PlacementCard`, `AudienceCard`, `FilterChip`, `ActionBar`,
-  `SupportRequestDialog`, `SiteInventoryPanel`, `SiteInventoryRow`,
-  `CampaignScheduleDialog`, `KeyValueList`, `Timeline`.
+  `CampaignSetupWorkspace`, `CampaignControlCard`, `CampaignControlRow`,
+  `CampaignHierarchySelector`, `CampaignRangeControl`, `CampaignChoiceChips`,
+  `CampaignSetupReviewRail`, `SupportRequestDialog`, `SiteInventoryPanel`,
+  `SiteInventoryRow`, `CampaignScheduleDialog`, `KeyValueList`, `Timeline`.
 - Report blocks: `ReportShell`, `ReportExportHeader`, `ReportSection`,
   `ReportBlock`, `ReportBlockGrid`, `ReportMetricBlock`,
   `ReportMetricRibbon`, `ReportMetricRibbonLoading`, `ReportMetricTile`,
@@ -239,6 +247,11 @@ export function App() {
 - `primedia`: tenant theme; product copy uses `Cortexx`.
 - `cortexx`: accepted as a product-name alias and resolves to the `primedia`
   theme, but is not a separate switchable theme.
+
+Page-block presets are customer-facing only: `pikaboo` and `primedia`.
+`timbuk2` is internal/corporate metadata and should not be used as a page-block
+visual theme. Primedia/Cortexx page blocks are blue-led and avoid significant
+Pikaboo purple.
 
 ## Current Scope
 

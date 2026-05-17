@@ -1,4 +1,12 @@
 import { describe, expect, it } from 'vitest';
+import {
+	DonationPanel,
+	HelpCenter,
+	PageHero,
+	PageTemplate,
+	PaymentForm,
+	SignupPanel,
+} from '.';
 import { AuthAccessScreen, AuthSignUpScreen } from './auth';
 import { createAuthAccessModel } from './auth-core';
 import { RawAuthAccessScreen, renderRawJsxToHtml } from './auth-jsx';
@@ -54,5 +62,17 @@ describe('package entrypoints', () => {
 		expect(renderRawJsxToHtml).toBeTypeOf('function');
 		expect(authJsx).toBeTypeOf('function');
 		expect(AuthLoginScreen).toBeTypeOf('function');
+	});
+
+	it('exports support and payment patterns through the root entry', () => {
+		expect(HelpCenter).toBeTypeOf('function');
+		expect(PaymentForm).toBeTypeOf('function');
+	});
+
+	it('exports page block components through the root entry', () => {
+		expect(PageTemplate).toBeTypeOf('function');
+		expect(PageHero).toBeTypeOf('function');
+		expect(DonationPanel).toBeTypeOf('function');
+		expect(SignupPanel).toBeTypeOf('function');
 	});
 });
