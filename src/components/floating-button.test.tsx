@@ -111,6 +111,22 @@ describe('FloatingButton', () => {
 		);
 	});
 
+	it('defaults the lifted bottom corner inset to the same 20px edge inset', () => {
+		const container = render(
+			<FloatingButton icon="help" label="Contact Help" liftBottomCorners />,
+		);
+		const button = container.querySelector<HTMLElement>(
+			'.pds-floating-button',
+		);
+
+		expect(
+			button?.style.getPropertyValue('--pds-floating-button-edge-inset'),
+		).toBe('20px');
+		expect(
+			button?.style.getPropertyValue('--pds-floating-button-bottom-inset'),
+		).toBe('20px');
+	});
+
 	it('snaps to a dragged corner, persists it, and suppresses the drag click', () => {
 		const clicks: string[] = [];
 		const corners: string[] = [];

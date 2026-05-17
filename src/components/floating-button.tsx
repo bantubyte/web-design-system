@@ -69,7 +69,7 @@ export interface FloatingButtonProps
 
 const defaultCorner: FloatingButtonCorner = 'bottom-right';
 const defaultEdgeInset = 20;
-const defaultBottomLiftInset = 96;
+const defaultBottomLiftInset = 20;
 
 const validCorners: ReadonlySet<FloatingButtonCorner> = new Set(
 	floatingButtonCorners,

@@ -134,7 +134,6 @@ export function CampaignToolbar() {
 export function HelpAction() {
   return (
     <FloatingButton
-      bottomLiftInset={96}
       icon="help"
       label="Contact Help"
       liftBottomCorners

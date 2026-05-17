@@ -118,7 +118,7 @@ function FloatingButtonDemo(args: FloatingButtonStoryArgs) {
 
 export const Playground: Story = {
 	args: {
-		bottomLiftInset: 96,
+		bottomLiftInset: 20,
 		collapseAfterMs: 4000,
 		defaultCorner: 'bottom-right',
 		dragDisabled: false,
