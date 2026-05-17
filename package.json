@@ -1,5 +1,5 @@
 {
-	"name": "@pikaboo/web-design-system",
+	"name": "@pikaboo/t2-design-system",
 	"version": "0.1.0",
 	"description": "Pikaboo design system tokens, themes, and React components.",
 	"type": "module",
