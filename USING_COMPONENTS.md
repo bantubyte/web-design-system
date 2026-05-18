@@ -141,6 +141,56 @@ export function HelpAction() {
 }
 ```
 
+Tooltip styling and the optional idle pulse are exposed as CSS variables on the
+button so consumers can tune them via inline `style` (no need to target internal
+classes):
+
+```tsx
+<FloatingButton
+	icon="help"
+	label="Contact Help"
+	tooltip="Need a hand?"
+	style={{
+		// Tooltip shape — every var has a default that matches the current visuals
+		'--pds-floating-button-tooltip-padding': '0.6rem 0.95rem',
+		'--pds-floating-button-tooltip-font-size': '0.8125rem',
+		'--pds-floating-button-tooltip-font-weight': '600',
+		'--pds-floating-button-tooltip-radius': '14px',
+		'--pds-floating-button-tooltip-shadow': '0 12px 28px -12px rgb(0 0 0 / 0.32)',
+		'--pds-floating-button-tooltip-border-color': 'transparent',
+		// Idle breathing-ring pulse — opt-in. Pauses on hover/focus/drag/snap and
+		// respects `prefers-reduced-motion`.
+		'--pds-floating-button-idle-animation': 'pds-floating-button-idle-pulse',
+		'--pds-floating-button-idle-duration': '2.4s',
+	}}
+/>
+```
+
+Available tooltip variables (every one has a default that preserves current
+visuals):
+
+| Variable | Default |
+| --- | --- |
+| `--pds-floating-button-tooltip-max-width` | `14rem` |
+| `--pds-floating-button-tooltip-padding` | `0.45rem 0.65rem` |
+| `--pds-floating-button-tooltip-font-size` | `0.75rem` |
+| `--pds-floating-button-tooltip-font-weight` | `inherit` |
+| `--pds-floating-button-tooltip-line-height` | `1.25` |
+| `--pds-floating-button-tooltip-color` | `var(--theme-foreground)` |
+| `--pds-floating-button-tooltip-background` | `var(--theme-surface)` |
+| `--pds-floating-button-tooltip-border-width` | `1px` |
+| `--pds-floating-button-tooltip-border-color` | `var(--theme-border)` |
+| `--pds-floating-button-tooltip-radius` | `calc(var(--radius) - 2px)` |
+| `--pds-floating-button-tooltip-shadow` | `var(--theme-shadow-md)` |
+
+The tooltip defaults to `white-space: nowrap` so short labels don't wrap when
+you bump `padding` or `font-size`. Set `--pds-floating-button-tooltip-max-width`
+and ship a wider tooltip if you need multi-line copy.
+
+`data-*` attributes pass through to the underlying `<button>` element via the
+component's rest-prop spread — `data-testid`, `data-analytics`, and friends
+work without any extra wiring.
+
 ---
 
 ## Troubleshooting
