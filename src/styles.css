@@ -339,6 +339,7 @@
 	--pds-floating-button-bottom-inset: var(--pds-floating-button-edge-inset);
 	--pds-floating-button-drag-x: 0px;
 	--pds-floating-button-drag-y: 0px;
+	--pds-floating-button-idle-duration: 2.4s;
 	position: fixed;
 	z-index: var(--pds-floating-button-z-index, 70);
 	display: inline-flex;
@@ -380,6 +381,42 @@
 
 .pds-floating-button--absolute {
 	position: absolute;
+}
+
+.pds-floating-button::before {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	content: "";
+	border-radius: inherit;
+	box-shadow: 0 0 0 0 rgb(var(--theme-primary-rgb) / 0.45);
+	animation-name: var(--pds-floating-button-idle-animation, none);
+	animation-duration: var(--pds-floating-button-idle-duration, 2.4s);
+	animation-timing-function: ease-out;
+	animation-iteration-count: infinite;
+}
+
+.pds-floating-button:hover::before,
+.pds-floating-button:focus-visible::before,
+.pds-floating-button--dragging::before,
+.pds-floating-button--snapping::before,
+.pds-floating-button--grab-ready::before {
+	animation-name: none;
+}
+
+@keyframes pds-floating-button-idle-pulse {
+	0% {
+		box-shadow: 0 0 0 0 rgb(var(--theme-primary-rgb) / 0.45);
+	}
+	100% {
+		box-shadow: 0 0 0 14px rgb(var(--theme-primary-rgb) / 0);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.pds-floating-button::before {
+		animation-name: none;
+	}
 }
 
 .pds-floating-button--top-left {
@@ -472,16 +509,25 @@
 .pds-floating-button__tooltip {
 	position: absolute;
 	z-index: 1;
-	max-width: 14rem;
-	padding: 0.45rem 0.65rem;
-	font-size: 0.75rem;
-	line-height: 1.25;
-	color: var(--theme-foreground);
+	max-width: var(--pds-floating-button-tooltip-max-width, 14rem);
+	padding: var(--pds-floating-button-tooltip-padding, 0.45rem 0.65rem);
+	font-size: var(--pds-floating-button-tooltip-font-size, 0.75rem);
+	font-weight: var(--pds-floating-button-tooltip-font-weight, inherit);
+	line-height: var(--pds-floating-button-tooltip-line-height, 1.25);
+	color: var(--pds-floating-button-tooltip-color, var(--theme-foreground));
+	white-space: nowrap;
 	pointer-events: none;
-	background: var(--theme-surface);
-	border: 1px solid var(--theme-border);
-	border-radius: calc(var(--radius) - 2px);
-	box-shadow: var(--theme-shadow-md);
+	background: var(
+		--pds-floating-button-tooltip-background,
+		var(--theme-surface)
+	);
+	border: var(--pds-floating-button-tooltip-border-width, 1px) solid
+		var(--pds-floating-button-tooltip-border-color, var(--theme-border));
+	border-radius: var(
+		--pds-floating-button-tooltip-radius,
+		calc(var(--radius) - 2px)
+	);
+	box-shadow: var(--pds-floating-button-tooltip-shadow, var(--theme-shadow-md));
 	opacity: 0;
 	transition:
 		opacity 150ms ease,
