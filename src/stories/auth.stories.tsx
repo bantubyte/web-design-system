@@ -1,10 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import {
-	AuthAccessScreen,
-	AuthLoginScreen,
-	AuthSignUpScreen,
-	ThemeProvider,
-} from '../index';
+import { AuthAccessScreen, AuthLoginScreen, AuthSignUpScreen } from '../index';
 
 const meta = {
 	title: 'Auth/Sign Up',
@@ -26,7 +21,6 @@ type Story = StoryObj<typeof meta>;
 
 export const PrimediaCortexx: Story = {
 	args: {
-		productName: '-',
 		supportAction: {
 			href: 'https://wa.me/27100000000',
 			iconLabel: 'WA',
@@ -40,7 +34,6 @@ export const PrimediaCortexx: Story = {
 
 <ThemeProvider theme="primedia" applyToRoot>
   <AuthSignUpScreen
-    productName="-"
     ssoProviders={[
       { id: 'google', label: 'Google' },
       { id: 'github', label: 'GitHub' },
@@ -52,11 +45,7 @@ export const PrimediaCortexx: Story = {
 			},
 		},
 	},
-	render: (args) => (
-		<ThemeProvider theme="primedia">
-			<AuthSignUpScreen {...args} />
-		</ThemeProvider>
-	),
+	render: (args) => <AuthSignUpScreen {...args} />,
 };
 
 export const Pikaboo: Story = {
@@ -71,11 +60,7 @@ export const Pikaboo: Story = {
 			},
 		},
 	},
-	render: () => (
-		<ThemeProvider theme="pikaboo">
-			<AuthSignUpScreen />
-		</ThemeProvider>
-	),
+	render: () => <AuthSignUpScreen />,
 };
 
 export const Login: StoryObj<typeof AuthLoginScreen> = {
@@ -90,11 +75,7 @@ export const Login: StoryObj<typeof AuthLoginScreen> = {
 			},
 		},
 	},
-	render: () => (
-		<ThemeProvider theme="pikaboo">
-			<AuthLoginScreen defaultEmail="owner@example.com" />
-		</ThemeProvider>
-	),
+	render: () => <AuthLoginScreen defaultEmail="owner@example.com" />,
 };
 
 export const FullAccessPanel: StoryObj<typeof AuthAccessScreen> = {
@@ -113,15 +94,13 @@ export const FullAccessPanel: StoryObj<typeof AuthAccessScreen> = {
 		},
 	},
 	render: () => (
-		<ThemeProvider theme="pikaboo-dark">
-			<AuthAccessScreen
-				defaultMode="signup"
-				supportAction={{
-					href: 'https://wa.me/27100000000',
-					iconLabel: 'WA',
-					label: 'Call us on WhatsApp',
-				}}
-			/>
-		</ThemeProvider>
+		<AuthAccessScreen
+			defaultMode="signup"
+			supportAction={{
+				href: 'https://wa.me/27100000000',
+				iconLabel: 'WA',
+				label: 'Call us on WhatsApp',
+			}}
+		/>
 	),
 };

@@ -1,6 +1,6 @@
 import type { Decorator, Preview } from '@storybook/react-vite';
 import { useGlobals } from 'storybook/preview-api';
-import { type ThemeId, ThemeProvider, ThemeSwitcher } from '../src';
+import { type ThemeId, ThemeProvider } from '../src';
 import '../src/styles.css';
 
 const withTheme: Decorator = (Story, context) => {
@@ -18,9 +18,6 @@ const withTheme: Decorator = (Story, context) => {
 			onThemeChange={(themeId) => updateGlobals({ theme: themeId })}
 			theme={selectedTheme}
 		>
-			<div className="pds-story-theme-dock">
-				<ThemeSwitcher />
-			</div>
 			<Story />
 		</ThemeProvider>
 	);
@@ -41,12 +38,13 @@ const preview: Preview = {
 					{ value: 'pikaboo-dark', title: 'Pikaboo Dark' },
 					{ value: 'primedia', title: 'Primedia / Cortexx' },
 				],
-				showName: true,
+				dynamicTitle: true,
 			},
 		},
 	},
 	parameters: {
 		layout: 'centered',
+		a11y: { test: 'todo' },
 		controls: {
 			matchers: {
 				color: /(background|color)$/i,

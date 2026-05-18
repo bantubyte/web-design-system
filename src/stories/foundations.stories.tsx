@@ -14,7 +14,7 @@ import {
 	Stack,
 	Surface,
 } from '../components';
-import { ThemeProvider, ThemeSwitcher } from '../theme';
+import { ThemeProvider } from '../theme';
 
 const meta = {
 	title: 'Foundations/System',
@@ -61,7 +61,6 @@ export const Typography: Story = {
 		<main className="pds-story-frame pds-foundation-page">
 			<Container width="lg">
 				<SectionHeader
-					actions={<ThemeSwitcher />}
 					description="Product typography, tokenized across tenant themes and tuned for dense planning, reporting, and public brand surfaces."
 					eyebrow="Foundations"
 					title="Typography"
@@ -122,7 +121,6 @@ export const GridSystem: Story = {
 		<main className="pds-story-frame pds-foundation-page">
 			<Container width="lg">
 				<SectionHeader
-					actions={<ThemeSwitcher />}
 					description="A 12-column product grid, container widths, stack rhythm, and cluster alignment for repeatable application layout."
 					eyebrow="Foundations"
 					title="Grid System"
@@ -175,7 +173,6 @@ export const Icons: Story = {
 		<main className="pds-story-frame pds-foundation-page">
 			<Container width="lg">
 				<SectionHeader
-					actions={<ThemeSwitcher />}
 					description="Named SVG icons and icon-only buttons for tools, nav, SSO, reporting, support, and WhatsApp contact."
 					eyebrow="Foundations"
 					title="Icon Palette"
@@ -251,11 +248,6 @@ export const FooterAndDarkMode: Story = {
 			<div className="pds-dark-foundation">
 				<div className="pds-dark-foundation__panel">
 					<SectionHeader
-						actions={
-							<ThemeSwitcher
-								options={['pikaboo-dark', 'pikaboo', 'primedia']}
-							/>
-						}
 						description="Website-style Pikaboo dark mode plus a production footer for product and public surfaces."
 						eyebrow="Pikaboo Dark"
 						title="Footer"

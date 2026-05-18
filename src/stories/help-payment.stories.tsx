@@ -1,11 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import {
-	Container,
-	HelpCenter,
-	PaymentForm,
-	SectionHeader,
-	ThemeProvider,
-} from '../index';
+import { Container, HelpCenter, PaymentForm, SectionHeader } from '../index';
 
 const helpCategories = [
 	{
@@ -84,46 +78,44 @@ export const HelpCentre: HelpStory = {
 		faqs: helpFaqs,
 	},
 	render: (args) => (
-		<ThemeProvider theme="pikaboo">
-			<Container className="pds-story-frame" width="xl">
-				<SectionHeader
-					description="Searchable support, FAQ filtering, quick links, and WhatsApp escalation for product and website surfaces."
-					eyebrow="Support"
-					title="Help centre"
-				/>
-				<HelpCenter
-					{...args}
-					contactActions={[
-						{
-							description: 'Talk to the support team',
-							href: 'https://wa.me/27100000000',
-							icon: 'whatsapp',
-							label: 'Call us on WhatsApp',
-						},
-						{
-							description: 'Send a structured request',
-							href: 'mailto:support@pikaboo.ai',
-							icon: 'support',
-							label: 'Email support',
-						},
-					]}
-					featuredLinks={[
-						{
-							description: 'Start with campaign, account, and billing basics',
-							href: '#getting-started',
-							icon: 'spark',
-							label: 'Getting started',
-						},
-						{
-							description: 'Shareable status, report, and approval guidance',
-							href: '#operators',
-							icon: 'grid',
-							label: 'Operator guides',
-						},
-					]}
-				/>
-			</Container>
-		</ThemeProvider>
+		<Container className="pds-story-frame" width="xl">
+			<SectionHeader
+				description="Searchable support, FAQ filtering, quick links, and WhatsApp escalation for product and website surfaces."
+				eyebrow="Support"
+				title="Help centre"
+			/>
+			<HelpCenter
+				{...args}
+				contactActions={[
+					{
+						description: 'Talk to the support team',
+						href: 'https://wa.me/27100000000',
+						icon: 'whatsapp',
+						label: 'Call us on WhatsApp',
+					},
+					{
+						description: 'Send a structured request',
+						href: 'mailto:support@pikaboo.ai',
+						icon: 'support',
+						label: 'Email support',
+					},
+				]}
+				featuredLinks={[
+					{
+						description: 'Start with campaign, account, and billing basics',
+						href: '#getting-started',
+						icon: 'spark',
+						label: 'Getting started',
+					},
+					{
+						description: 'Shareable status, report, and approval guidance',
+						href: '#operators',
+						icon: 'grid',
+						label: 'Operator guides',
+					},
+				]}
+			/>
+		</Container>
 	),
 };
 
@@ -132,39 +124,37 @@ export const DonationPayment: StoryObj<typeof PaymentForm> = {
 		layout: 'fullscreen',
 	},
 	render: () => (
-		<ThemeProvider theme="pikaboo-dark">
-			<Container className="pds-story-frame" width="lg">
-				<SectionHeader
-					description="A UI-only payment pattern for donations, invoices, deposits, and contribution flows."
-					eyebrow="Payments"
-					title="Donation form"
-				/>
-				<PaymentForm
-					amountOptions={[
-						{ description: 'Starter contribution', label: 'R100', value: 100 },
-						{ description: 'Most common', label: 'R250', value: 250 },
-						{ description: 'Sustainer', label: 'R500', value: 500 },
-						{ description: 'Sponsor', label: 'R1,000', value: 1000 },
-					]}
-					defaultAmount={250}
-					methods={[
-						{
-							description: 'Card checkout adapter',
-							icon: 'check',
-							id: 'card',
-							label: 'Card',
-						},
-						{
-							description: 'Manual bank transfer',
-							icon: 'download',
-							id: 'eft',
-							label: 'EFT',
-						},
-					]}
-					onSubmit={() => undefined}
-					title="Support Pikaboo"
-				/>
-			</Container>
-		</ThemeProvider>
+		<Container className="pds-story-frame" width="lg">
+			<SectionHeader
+				description="A UI-only payment pattern for donations, invoices, deposits, and contribution flows."
+				eyebrow="Payments"
+				title="Donation form"
+			/>
+			<PaymentForm
+				amountOptions={[
+					{ description: 'Starter contribution', label: 'R100', value: 100 },
+					{ description: 'Most common', label: 'R250', value: 250 },
+					{ description: 'Sustainer', label: 'R500', value: 500 },
+					{ description: 'Sponsor', label: 'R1,000', value: 1000 },
+				]}
+				defaultAmount={250}
+				methods={[
+					{
+						description: 'Card checkout adapter',
+						icon: 'check',
+						id: 'card',
+						label: 'Card',
+					},
+					{
+						description: 'Manual bank transfer',
+						icon: 'download',
+						id: 'eft',
+						label: 'EFT',
+					},
+				]}
+				onSubmit={() => undefined}
+				title="Support Pikaboo"
+			/>
+		</Container>
 	),
 };

@@ -89,7 +89,11 @@
 		},
 		"./styles.css": "./dist/styles.css"
 	},
+	"lint-staged": {
+		"*": "biome check --fix --no-errors-on-unmatched"
+	},
 	"scripts": {
+		"prepare": "husky",
 		"dev": "storybook dev -p 2050 --host 127.0.0.1 --no-open",
 		"storybook": "storybook dev -p 2050 --host 127.0.0.1 --no-open",
 		"build-storybook": "storybook build",
@@ -106,6 +110,8 @@
 		"check:fix": "biome check --write",
 		"type-check": "tsc --noEmit",
 		"test": "vitest run",
+		"test:unit": "vitest --project unit run",
+		"test:storybook": "vitest --project storybook run",
 		"init-timbuk2-npm": "sh -c 'AWS_PROFILE=\"${1:?Usage: npm run init-timbuk2-npm <AWS_PROFILE>}\" exec aws codeartifact login --tool npm --domain timbuk2 --domain-owner 539247467239 --repository npm --region eu-west-1' init-timbuk2-npm"
 	},
 	"peerDependencies": {
@@ -116,12 +122,18 @@
 		"@biomejs/biome": "2.3.13",
 		"@storybook/addon-a11y": "^10.4.0",
 		"@storybook/addon-docs": "^10.4.0",
+		"@storybook/addon-vitest": "^10.4.0",
 		"@storybook/react-vite": "^10.4.0",
 		"@types/node": "^25.8.0",
 		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
 		"@vitejs/plugin-react": "^6.0.2",
+		"@vitest/browser": "^4.1.6",
+		"@vitest/browser-playwright": "^4.1.6",
+		"husky": "^9.1.7",
 		"jsdom": "^29.1.1",
+		"lint-staged": "^17.0.5",
+		"playwright": "^1.60.0",
 		"react": "^19.2.6",
 		"react-dom": "^19.2.6",
 		"storybook": "^10.4.0",

@@ -1,9 +1,9 @@
 import {
 	type CSSProperties,
-	type FieldsetHTMLAttributes,
 	forwardRef,
 	type HTMLAttributes,
 	type InputHTMLAttributes,
+	type LabelHTMLAttributes,
 	type ReactNode,
 	type SelectHTMLAttributes,
 	type TextareaHTMLAttributes,
@@ -12,8 +12,7 @@ import {
 } from 'react';
 import { cx } from '../utils/class-names';
 
-export interface FieldProps
-	extends FieldsetHTMLAttributes<HTMLFieldSetElement> {
+export interface FieldProps extends LabelHTMLAttributes<HTMLLabelElement> {
 	error?: ReactNode;
 	hint?: ReactNode;
 	label?: ReactNode;
@@ -30,7 +29,8 @@ export function Field({
 	...props
 }: FieldProps) {
 	return (
-		<fieldset className={cx('pds-field', className)} {...props}>
+		// biome-ignore lint/a11y/noLabelWithoutControl: control is provided via `children` (Input/Select/Textarea), giving implicit label association.
+		<label className={cx('pds-field', className)} {...props}>
 			{label ? (
 				<span
 					{...labelProps}
@@ -42,7 +42,7 @@ export function Field({
 			{children}
 			{hint && !error ? <p className="pds-field__hint">{hint}</p> : null}
 			{error ? <p className="pds-field__error">{error}</p> : null}
-		</fieldset>
+		</label>
 	);
 }
 
