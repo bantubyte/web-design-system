@@ -63,7 +63,7 @@ import {
 	Toolbar,
 	Tooltip,
 } from '../components';
-import { ThemeProvider, ThemeSwitcher, useTheme } from '../theme';
+import { ThemeProvider, useTheme } from '../theme';
 
 const meta = {
 	title: 'Components/Library',
@@ -94,7 +94,6 @@ function WorkspaceFrame({ children }: { children: ReactNode }) {
 			}
 			header={
 				<SectionHeader
-					actions={<ThemeSwitcher />}
 					description={`${theme.copy.productName} components tuned for campaign planning, reporting, and tenant-specific product copy.`}
 					eyebrow={theme.copy.tenantName}
 					title="Design system workspace"
@@ -113,7 +112,6 @@ export const Foundations: Story = {
 		return (
 			<main className="pds-story-frame">
 				<SectionHeader
-					actions={<ThemeSwitcher />}
 					description="Tenant tokens, product copy, brand lockups, buttons, badges, and surface tones."
 					eyebrow={theme.copy.tenantName}
 					title={theme.copy.productName}
@@ -169,7 +167,6 @@ export const FormsAndControls: Story = {
 		return (
 			<main className="pds-story-frame">
 				<SectionHeader
-					actions={<ThemeSwitcher />}
 					description="Inputs, selectors, switches, filters, tabs, and status controls for dense product screens."
 					eyebrow="Controls"
 					title="Form System"

@@ -18,8 +18,6 @@ import {
 	SectionHeader,
 	SiteInventoryPanel,
 	SupportRequestDialog,
-	ThemeProvider,
-	ThemeSwitcher,
 } from '../index';
 
 const meta: Meta = {
@@ -229,12 +227,7 @@ export const CampaignListWorkbench: Story = {
 		return (
 			<main className="pds-story-frame">
 				<SectionHeader
-					actions={
-						<>
-							<ThemeSwitcher />
-							<Button leftIcon="+">Create Campaign</Button>
-						</>
-					}
+					actions={<Button leftIcon="+">Create Campaign</Button>}
 					description="Manage and monitor reusable campaign-card states."
 					title="Campaigns"
 				/>
@@ -349,7 +342,6 @@ export const AddSitesInventory: Story = {
 		return (
 			<main className="pds-story-frame">
 				<SectionHeader
-					actions={<ThemeSwitcher />}
 					description="Reusable add-sites panel with tabs, search, sort actions, selectable rows, and bulk-add callback."
 					eyebrow="Location Intel"
 					title="Add Sites"
@@ -387,152 +379,150 @@ export const CampaignSetupControls: Story = {
 		},
 	},
 	render: () => (
-		<ThemeProvider theme="primedia">
-			<main className="pds-story-frame pds-story-frame--theme-aware">
-				<SectionHeader
-					description="Compact campaign setup cards for hierarchy trees, range controls, selection chips, and a useful review rail."
-					eyebrow="Create Campaign"
-					title="Campaign Setup Controls"
-				/>
-				<CampaignSetupWorkspace
-					footer={
-						<div className="pds-campaign-setup-story-alert">
-							<Badge tone="warning">Missing</Badge>
-							Name, Locations, Dates
-						</div>
-					}
-					sidebar={
-						<CampaignSetupReviewRail
-							action={<Button rightIcon="→">Continue setup</Button>}
-							completionValue={58}
-							sections={[
-								{
-									items: [
-										{ label: 'Campaign name', status: 'missing' },
-										{ label: 'Client', status: 'missing' },
-										{ label: 'Target locations', status: 'missing' },
-										{ label: 'Campaign dates', status: 'missing' },
-									],
-									title: 'Required',
-								},
-								{
-									items: [
-										{ label: 'Budget', value: 'R1,000,000' },
-										{ label: 'Age range', value: '15 - 84 years' },
-										{ label: 'Gender', value: 'Female, Male' },
-										{ label: 'Income range', value: 'ZAR 0 - 2.4M+' },
-									],
-									title: 'Audience',
-								},
-							]}
-							title="Setup review"
-						/>
-					}
+		<div className="pds-story-frame pds-story-frame--theme-aware">
+			<SectionHeader
+				description="Compact campaign setup cards for hierarchy trees, range controls, selection chips, and a useful review rail."
+				eyebrow="Create Campaign"
+				title="Campaign Setup Controls"
+			/>
+			<CampaignSetupWorkspace
+				footer={
+					<div className="pds-campaign-setup-story-alert">
+						<Badge tone="warning">Missing</Badge>
+						Name, Locations, Dates
+					</div>
+				}
+				sidebar={
+					<CampaignSetupReviewRail
+						action={<Button rightIcon="→">Continue setup</Button>}
+						completionValue={58}
+						sections={[
+							{
+								items: [
+									{ label: 'Campaign name', status: 'missing' },
+									{ label: 'Client', status: 'missing' },
+									{ label: 'Target locations', status: 'missing' },
+									{ label: 'Campaign dates', status: 'missing' },
+								],
+								title: 'Required',
+							},
+							{
+								items: [
+									{ label: 'Budget', value: 'R1,000,000' },
+									{ label: 'Age range', value: '15 - 84 years' },
+									{ label: 'Gender', value: 'Female, Male' },
+									{ label: 'Income range', value: 'ZAR 0 - 2.4M+' },
+								],
+								title: 'Audience',
+							},
+						]}
+						title="Setup review"
+					/>
+				}
+			>
+				<CampaignControlCard
+					description="Contained, searchable, branch-aware tree with a show-more preview."
+					icon="map"
+					meta="2 levels"
+					title="Target locations"
 				>
-					<CampaignControlCard
-						description="Contained, searchable, branch-aware tree with a show-more preview."
-						icon="map"
-						meta="2 levels"
-						title="Target locations"
+					<CampaignControlRow
+						description="Province, municipality, district, or local area."
+						title="Add location"
+						value="Western Cape"
 					>
-						<CampaignControlRow
-							description="Province, municipality, district, or local area."
-							title="Add location"
-							value="Western Cape"
-						>
-							<CampaignHierarchySelector
-								defaultSelectedIds={['city-of-cape-town']}
-								nodes={locationHierarchy}
-								searchPlaceholder="Search locations..."
-							/>
-						</CampaignControlRow>
-					</CampaignControlCard>
-
-					<CampaignControlCard
-						description="Use proximity categories without dumping the whole tree."
-						icon="search"
-						meta="Preview 4"
-						title="Proximity points"
-					>
-						<CampaignControlRow
-							description="Category, subcategory, and specific point hierarchy."
-							title="Add proximity point"
-							value="5 km"
-						>
-							<CampaignHierarchySelector
-								defaultSelectedIds={['preston-watts']}
-								nodes={proximityHierarchy}
-								searchPlaceholder="Search proximity points..."
-							/>
-						</CampaignControlRow>
-						<CampaignRangeControl
-							defaultValue={5}
-							label="Proximity radius"
-							max={50}
-							min={1}
-							unit="km"
+						<CampaignHierarchySelector
+							defaultSelectedIds={['city-of-cape-town']}
+							nodes={locationHierarchy}
+							searchPlaceholder="Search locations..."
 						/>
-					</CampaignControlCard>
+					</CampaignControlRow>
+				</CampaignControlCard>
 
-					<CampaignControlCard
-						description="Audience filters keep inputs, sliders, and summary badges in one rhythm."
-						icon="users"
-						meta="Demographics"
-						title="Target audience"
+				<CampaignControlCard
+					description="Use proximity categories without dumping the whole tree."
+					icon="search"
+					meta="Preview 4"
+					title="Proximity points"
+				>
+					<CampaignControlRow
+						description="Category, subcategory, and specific point hierarchy."
+						title="Add proximity point"
+						value="5 km"
 					>
-						<CampaignRangeControl
-							defaultValue={[15, 84]}
-							label="Age range"
-							max={84}
-							min={15}
-							unit="years"
+						<CampaignHierarchySelector
+							defaultSelectedIds={['preston-watts']}
+							nodes={proximityHierarchy}
+							searchPlaceholder="Search proximity points..."
 						/>
-						<CampaignControlRow
-							description="Select one or more audiences."
-							title="Gender"
-							value="2 selected"
-						>
-							<CampaignChoiceChips
-								defaultSelectedValues={['female', 'male']}
-								options={[
-									{ label: 'Female', value: 'female' },
-									{ label: 'Male', value: 'male' },
-								]}
-							/>
-						</CampaignControlRow>
-						<CampaignRangeControl
-							defaultValue={[0, 2457600]}
-							formatValue={(value) =>
-								value === 2457600
-									? 'ZAR 2,457,600+'
-									: `ZAR ${new Intl.NumberFormat('en-ZA').format(value)}`
-							}
-							label="Income range"
-							max={2457600}
-							min={0}
-							step={50000}
-						/>
-					</CampaignControlCard>
+					</CampaignControlRow>
+					<CampaignRangeControl
+						defaultValue={5}
+						label="Proximity radius"
+						max={50}
+						min={1}
+						unit="km"
+					/>
+				</CampaignControlCard>
 
-					<CampaignControlCard
-						description="Keep the brief in a normal card, not a giant empty panel."
-						icon="spark"
-						title="Campaign brief"
+				<CampaignControlCard
+					description="Audience filters keep inputs, sliders, and summary badges in one rhythm."
+					icon="users"
+					meta="Demographics"
+					title="Target audience"
+				>
+					<CampaignRangeControl
+						defaultValue={[15, 84]}
+						label="Age range"
+						max={84}
+						min={15}
+						unit="years"
+					/>
+					<CampaignControlRow
+						description="Select one or more audiences."
+						title="Gender"
+						value="2 selected"
 					>
-						<CampaignControlRow
-							description="The host product can swap this for a textarea, AI brief helper, or uploaded brief."
-							title="Write your brief"
-							value="Optional"
-						>
-							<div className="pds-campaign-setup-story-brief">
-								Launch awareness around commuter corridors with emphasis on high
-								reach and measurable location intelligence.
-							</div>
-						</CampaignControlRow>
-					</CampaignControlCard>
-				</CampaignSetupWorkspace>
-			</main>
-		</ThemeProvider>
+						<CampaignChoiceChips
+							defaultSelectedValues={['female', 'male']}
+							options={[
+								{ label: 'Female', value: 'female' },
+								{ label: 'Male', value: 'male' },
+							]}
+						/>
+					</CampaignControlRow>
+					<CampaignRangeControl
+						defaultValue={[0, 2457600]}
+						formatValue={(value) =>
+							value === 2457600
+								? 'ZAR 2,457,600+'
+								: `ZAR ${new Intl.NumberFormat('en-ZA').format(value)}`
+						}
+						label="Income range"
+						max={2457600}
+						min={0}
+						step={50000}
+					/>
+				</CampaignControlCard>
+
+				<CampaignControlCard
+					description="Keep the brief in a normal card, not a giant empty panel."
+					icon="spark"
+					title="Campaign brief"
+				>
+					<CampaignControlRow
+						description="The host product can swap this for a textarea, AI brief helper, or uploaded brief."
+						title="Write your brief"
+						value="Optional"
+					>
+						<div className="pds-campaign-setup-story-brief">
+							Launch awareness around commuter corridors with emphasis on high
+							reach and measurable location intelligence.
+						</div>
+					</CampaignControlRow>
+				</CampaignControlCard>
+			</CampaignSetupWorkspace>
+		</div>
 	),
 };
 

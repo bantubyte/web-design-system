@@ -259,9 +259,7 @@ export function CampaignSetupWorkspace({
 		<div className={cx('pds-campaign-setup-workspace', className)} {...props}>
 			<div className="pds-campaign-setup-workspace__main">{children}</div>
 			{sidebar ? (
-				<aside className="pds-campaign-setup-workspace__sidebar">
-					{sidebar}
-				</aside>
+				<div className="pds-campaign-setup-workspace__sidebar">{sidebar}</div>
 			) : null}
 			{footer ? (
 				<div className="pds-campaign-setup-workspace__footer">{footer}</div>

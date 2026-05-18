@@ -1,9 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import {
-	AuthAccessScreen,
-	AuthLoginScreen,
-	AuthSignUpScreen,
-} from '../index';
+import { AuthAccessScreen, AuthLoginScreen, AuthSignUpScreen } from '../index';
 
 const meta = {
 	title: 'Auth/Sign Up',

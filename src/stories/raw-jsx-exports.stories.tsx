@@ -3,7 +3,7 @@ import {
 	RawAuthAccessScreen,
 	renderRawJsxToHtml as renderAuthRawJsxToHtml,
 } from '../auth-jsx';
-import { SectionHeader, ThemeSwitcher } from '../index';
+import { SectionHeader } from '../index';
 import {
 	RawReportChartLoadingBlock,
 	RawReportComparisonBlock,
@@ -189,7 +189,6 @@ const html = renderRawJsxToHtml(
 		return (
 			<main className="pds-story-frame">
 				<SectionHeader
-					actions={<ThemeSwitcher />}
 					description="This preview renders HTML returned by the raw report JSX runtime. It is useful for static exports and non-React hosts."
 					eyebrow="Plain JSX"
 					title="Raw Report Exports"
@@ -231,15 +230,14 @@ const html = renderRawJsxToHtml(
 		);
 
 		return (
-			<main className="pds-story-frame">
+			<div className="pds-story-frame">
 				<SectionHeader
-					actions={<ThemeSwitcher />}
 					description="This is the auth raw JSX screen rendered into HTML without the React auth component."
 					eyebrow="Plain JSX"
 					title="Raw Auth Export"
 				/>
 				<RawHtmlPreview html={authHtml} />
-			</main>
+			</div>
 		);
 	},
 };

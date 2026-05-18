@@ -1760,8 +1760,9 @@ export function ReportPlacementTable({
 				</thead>
 				<tbody>
 					{tableModel.rows.map((row, index) => (
+						// biome-ignore lint/a11y/useAriaPropsSupportedByRole: aria-pressed is only set when role="button" is also set on this row.
 						<tr
-							aria-selected={row.selected ? true : undefined}
+							aria-pressed={onRowSelect ? Boolean(row.selected) : undefined}
 							className={cx(
 								row.selectable && 'pds-report-placement-table__row--selectable',
 								row.selected && 'pds-report-placement-table__row--selected',

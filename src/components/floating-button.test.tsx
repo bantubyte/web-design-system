@@ -115,9 +115,7 @@ describe('FloatingButton', () => {
 		const container = render(
 			<FloatingButton icon="help" label="Contact Help" liftBottomCorners />,
 		);
-		const button = container.querySelector<HTMLElement>(
-			'.pds-floating-button',
-		);
+		const button = container.querySelector<HTMLElement>('.pds-floating-button');
 
 		expect(
 			button?.style.getPropertyValue('--pds-floating-button-edge-inset'),

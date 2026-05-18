@@ -7,7 +7,6 @@ import {
 	floatingButtonCorners,
 	pdsIconNames,
 	SectionHeader,
-	ThemeSwitcher,
 } from '../index';
 
 interface FloatingButtonStoryArgs {
@@ -86,7 +85,6 @@ function FloatingButtonDemo(args: FloatingButtonStoryArgs) {
 	return (
 		<main className="pds-story-frame pds-floating-demo-page">
 			<SectionHeader
-				actions={<ThemeSwitcher />}
 				description="Change the args, drag the button to a corner, wait for idle collapse, then focus or hover it back open. Position absolute keeps the demo contained; fixed shows the production viewport behavior."
 				eyebrow="Interactive primitive"
 				title="Floating Button"

@@ -174,14 +174,16 @@ export const QuickSetup: Story = {
 								onSelectDate={setStartDate}
 								selectedDate={startDate}
 							/>
-							<Input
-								readOnly
-								value={new Intl.DateTimeFormat('en', {
-									day: 'numeric',
-									month: 'short',
-									year: 'numeric',
-								}).format(startDate)}
-							/>
+							<Field label="Selected start date">
+								<Input
+									readOnly
+									value={new Intl.DateTimeFormat('en', {
+										day: 'numeric',
+										month: 'short',
+										year: 'numeric',
+									}).format(startDate)}
+								/>
+							</Field>
 							<p style={{ color: 'var(--theme-primary)', margin: 0 }}>
 								Select an end date (14 day minimum)
 							</p>

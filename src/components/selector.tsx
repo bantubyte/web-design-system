@@ -208,7 +208,12 @@ export function SearchableSelector<TValue extends string = string>({
 				</div>
 			) : null}
 
-			<div className="pds-searchable-selector__list" role="listbox">
+			<div
+				aria-label={searchLabel}
+				aria-multiselectable={mode === 'multiple'}
+				className="pds-searchable-selector__list"
+				role="listbox"
+			>
 				{filteredOptions.length > 0 ? (
 					filteredOptions.map((option) => {
 						const selected = activeValues.has(option.value);

@@ -1,4 +1,9 @@
-import type { HTMLAttributes, OutputHTMLAttributes, ReactNode } from 'react';
+import {
+	type HTMLAttributes,
+	type OutputHTMLAttributes,
+	type ReactNode,
+	useId,
+} from 'react';
 import { cx } from '../utils/class-names';
 import { Button, type ButtonProps } from './button';
 
@@ -145,18 +150,29 @@ export interface ProgressProps extends HTMLAttributes<HTMLDivElement> {
 	value: number;
 }
 
-export function Progress({ className, label, value, ...props }: ProgressProps) {
+export function Progress({
+	'aria-label': ariaLabel,
+	className,
+	label,
+	value,
+	...props
+}: ProgressProps) {
 	const safeValue = Math.max(0, Math.min(100, value));
+	const labelId = useId();
+	const hasVisibleLabel = label != null && label !== false;
+	const fallbackLabel = ariaLabel ?? (hasVisibleLabel ? undefined : 'Progress');
 
 	return (
 		<div className={cx('pds-progress', className)} {...props}>
-			{label ? (
-				<div className="pds-progress__label">
+			{hasVisibleLabel ? (
+				<div className="pds-progress__label" id={labelId}>
 					<span>{label}</span>
 					<span>{safeValue}%</span>
 				</div>
 			) : null}
 			<div
+				aria-label={fallbackLabel}
+				aria-labelledby={hasVisibleLabel ? labelId : undefined}
 				aria-valuemax={100}
 				aria-valuemin={0}
 				aria-valuenow={safeValue}

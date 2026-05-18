@@ -8,7 +8,6 @@ import {
 	CardHeader,
 	CardTitle,
 	SectionHeader,
-	ThemeSwitcher,
 } from '../index';
 import {
 	type ComponentUsageCategory,
@@ -85,9 +84,12 @@ function CodeBlock({ code, label }: { code: string; label: string }) {
 					{copied ? 'Copied' : 'Copy'}
 				</button>
 			</div>
-			<pre>
-				<code>{code}</code>
-			</pre>
+			<section aria-label={`${label} code snippet`}>
+				{/* biome-ignore lint/a11y/noNoninteractiveTabindex: scrollable code block needs keyboard access per axe scrollable-region-focusable. */}
+				<pre tabIndex={0}>
+					<code>{code}</code>
+				</pre>
+			</section>
 		</div>
 	);
 }
@@ -222,7 +224,6 @@ function UsageCatalog({
 		<main className="pds-docs-page">
 			<section className="pds-docs-hero">
 				<SectionHeader
-					actions={<ThemeSwitcher />}
 					description="Search by component, package path, prop, or workflow. Each card shows where to import it from, which props matter first, and how to use it in React. Raw JSX cards show the framework-neutral entrypoints separately."
 					eyebrow="Design system manual"
 					title="Find it. Tune it. Ship it."

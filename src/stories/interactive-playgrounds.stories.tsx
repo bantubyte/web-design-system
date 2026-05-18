@@ -42,7 +42,6 @@ import {
 	Skeleton,
 	Slider,
 	Switch,
-	ThemeSwitcher,
 } from '../index';
 
 interface PlaygroundArgs {
@@ -163,7 +162,6 @@ export const ActionsFeedbackAndLoaders: Story = {
 	render: (args) => (
 		<main className="pds-story-frame">
 			<SectionHeader
-				actions={<ThemeSwitcher />}
 				description="Buttons, badges, alert tones, floating action behaviour, and animated loaders share the same theme tokens."
 				eyebrow="Playground"
 				title="Actions, Feedback, and Loaders"
@@ -249,7 +247,6 @@ export const FormsSelectorsAndCalendar: Story = {
 	render: (args) => (
 		<main className="pds-story-frame">
 			<SectionHeader
-				actions={<ThemeSwitcher />}
 				description="Form controls are stateful, keyboard-friendly, and visible under both tenant themes."
 				eyebrow="Playground"
 				title="Forms, Selectors, and Calendar"
@@ -367,7 +364,6 @@ export const CampaignWorkflowComponents: Story = {
 	render: (args) => (
 		<main className="pds-story-frame">
 			<SectionHeader
-				actions={<ThemeSwitcher />}
 				description="Campaign primitives compose into list views, planning controls, schedule dialogs, and site-picking workflows."
 				eyebrow="Playground"
 				title="Campaign Workflow Components"
@@ -485,7 +481,6 @@ export const ReportComponents: Story = {
 	render: (args) => (
 		<main className="pds-story-frame">
 			<SectionHeader
-				actions={<ThemeSwitcher />}
 				description="Report blocks are exported from the root and the report subpath, with raw JSX mirrors for static rendering where available."
 				eyebrow="Playground"
 				title="Report Components"

@@ -3,6 +3,7 @@ import {
 	type HTMLAttributes,
 	type ReactNode,
 	useEffect,
+	useId,
 	useState,
 } from 'react';
 import { cx } from '../utils/class-names';
@@ -114,6 +115,9 @@ export function GuidedWizardShell({
 	titleId,
 	...props
 }: GuidedWizardShellProps) {
+	const generatedTitleId = useId();
+	const resolvedTitleId = titleId ?? generatedTitleId;
+
 	useEffect(() => {
 		if (!open || !dismissible) return;
 
@@ -133,7 +137,8 @@ export function GuidedWizardShell({
 		<div className="pds-guided-wizard-overlay">
 			<div
 				aria-describedby={descriptionId}
-				aria-labelledby={titleId}
+				aria-label={title ? undefined : 'Guided wizard'}
+				aria-labelledby={title ? resolvedTitleId : undefined}
 				aria-modal="true"
 				className={cx(
 					'pds-guided-wizard',
@@ -146,7 +151,7 @@ export function GuidedWizardShell({
 				<div className="pds-guided-wizard__header">
 					<div className="pds-guided-wizard__title">
 						{icon ? <span>{icon}</span> : null}
-						{title ? <strong id={titleId}>{title}</strong> : null}
+						{title ? <strong id={resolvedTitleId}>{title}</strong> : null}
 					</div>
 					{backAction || dismissible ? (
 						<div className="pds-guided-wizard__actions">
