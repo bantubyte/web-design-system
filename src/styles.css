@@ -10330,3 +10330,94 @@
 		font-size: 2.25rem;
 	}
 }
+
+/* ---------- Theme switcher ---------- */
+
+.pds-theme-toggle {
+	position: relative;
+	display: inline-flex;
+	gap: 0;
+	align-items: center;
+	padding: 0.25rem;
+	background: var(
+		--theme-inverse-surface-soft,
+		rgb(from var(--theme-foreground) r g b / 0.08)
+	);
+	border: 1px solid
+		var(--theme-inverse-border, rgb(from var(--theme-foreground) r g b / 0.12));
+	border-radius: 999px;
+	isolation: isolate;
+}
+
+:where([data-theme="pikaboo"]) .pds-theme-toggle {
+	background: var(--theme-bg-muted);
+	border-color: var(--theme-border);
+}
+
+.pds-theme-toggle__option {
+	position: relative;
+	z-index: 1;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.875rem;
+	height: 1.875rem;
+	padding: 0;
+	color: var(--theme-inverse-foreground-muted, var(--theme-foreground-muted));
+	cursor: pointer;
+	background: transparent;
+	border: 0;
+	border-radius: 999px;
+	transition: color 200ms ease-out;
+}
+
+.pds-theme-toggle__option:hover {
+	color: var(--theme-inverse-foreground, var(--theme-foreground));
+}
+
+:where([data-theme="pikaboo"]) .pds-theme-toggle__option {
+	color: var(--theme-foreground-muted);
+}
+
+:where([data-theme="pikaboo"]) .pds-theme-toggle__option:hover {
+	color: var(--theme-foreground);
+}
+
+.pds-theme-toggle__option--active {
+	color: var(--theme-inverse-foreground, var(--theme-foreground));
+}
+
+:where([data-theme="pikaboo"]) .pds-theme-toggle__option--active {
+	color: var(--theme-foreground);
+}
+
+.pds-theme-toggle__option:focus-visible {
+	outline: 2px solid var(--theme-primary);
+	outline-offset: 2px;
+}
+
+.pds-theme-toggle__thumb {
+	position: absolute;
+	top: 0.25rem;
+	left: 0.25rem;
+	z-index: 0;
+	width: 1.875rem;
+	height: 1.875rem;
+	pointer-events: none;
+	background: var(
+		--theme-inverse-surface-medium,
+		rgb(from var(--theme-foreground) r g b / 0.16)
+	);
+	border-radius: 999px;
+	box-shadow: 0 1px 2px rgb(0 0 0 / 0.12);
+	transition: transform 220ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:where([data-theme="pikaboo"]) .pds-theme-toggle__thumb {
+	background: var(--theme-surface);
+	box-shadow: var(--theme-shadow-sm);
+}
+
+.pds-theme-toggle__thumb--dark {
+	transform: translateX(1.875rem);
+}
