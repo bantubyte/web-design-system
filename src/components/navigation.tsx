@@ -349,6 +349,7 @@ export function SiteNav({
 				logo={logo}
 				onClose={handleClose}
 				open={open}
+				scheme={scheme === 'light' ? 'light' : 'dark'}
 			/>
 		</>
 	);
@@ -371,12 +372,15 @@ function SiteNavAnchor({ link }: { link: SiteNavLink }) {
 	);
 }
 
+export type MobileMenuSheetScheme = 'dark' | 'light';
+
 export interface MobileMenuSheetProps extends HTMLAttributes<HTMLDivElement> {
 	cta?: ReactNode;
 	links: readonly SiteNavLink[];
 	logo?: ReactNode;
 	onClose?: () => void;
 	open: boolean;
+	scheme?: MobileMenuSheetScheme;
 }
 
 export function MobileMenuSheet({
@@ -386,6 +390,7 @@ export function MobileMenuSheet({
 	logo,
 	onClose,
 	open,
+	scheme = 'dark',
 	...props
 }: MobileMenuSheetProps) {
 	useEffect(() => {
@@ -408,9 +413,11 @@ export function MobileMenuSheet({
 			aria-label="Mobile menu"
 			className={cx(
 				'pds-mobile-menu-sheet',
+				`pds-mobile-menu-sheet--scheme-${scheme}`,
 				open && 'pds-mobile-menu-sheet--open',
 				className,
 			)}
+			data-scheme={scheme}
 			role="dialog"
 			{...props}
 		>

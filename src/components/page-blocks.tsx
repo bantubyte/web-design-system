@@ -680,6 +680,8 @@ export function FinalCta({
 
 export type SignupPanelVariant = 'auth' | 'newsletter';
 
+export type SignupPanelScheme = 'dark' | 'light';
+
 export interface NewsletterSubmitValues {
 	email: string;
 }
@@ -692,6 +694,7 @@ export interface SignupPanelProps extends PageSectionAttributes {
 	eyebrow?: ReactNode;
 	onNewsletterSubmit?: (values: NewsletterSubmitValues) => void | Promise<void>;
 	placeholder?: string;
+	scheme?: SignupPanelScheme;
 	submitLabel?: ReactNode;
 	title?: ReactNode;
 	variant?: SignupPanelVariant;
@@ -706,6 +709,7 @@ export function SignupPanel({
 	eyebrow,
 	onNewsletterSubmit,
 	placeholder = 'your@email.com',
+	scheme = 'dark',
 	submitLabel = 'Subscribe',
 	title = 'Create an account',
 	variant = 'auth',
@@ -723,6 +727,7 @@ export function SignupPanel({
 				eyebrow={eyebrow}
 				onNewsletterSubmit={onNewsletterSubmit}
 				placeholder={placeholder}
+				scheme={scheme}
 				submitLabel={submitLabel}
 				title={title === 'Create an account' ? 'Stay in the loop' : title}
 				{...sectionProps}
@@ -749,6 +754,7 @@ function NewsletterPanelContent({
 	eyebrow,
 	onNewsletterSubmit,
 	placeholder,
+	scheme,
 	submitLabel,
 	title,
 	...props
@@ -760,6 +766,7 @@ function NewsletterPanelContent({
 	eyebrow?: ReactNode;
 	onNewsletterSubmit?: (values: NewsletterSubmitValues) => void | Promise<void>;
 	placeholder: string;
+	scheme: SignupPanelScheme;
 	submitLabel: ReactNode;
 	title: ReactNode;
 }) {
@@ -798,8 +805,10 @@ function NewsletterPanelContent({
 			className={cx(
 				'pds-signup-panel',
 				'pds-signup-panel--newsletter',
+				`pds-signup-panel--scheme-${scheme}`,
 				className,
 			)}
+			data-scheme={scheme}
 			{...props}
 		>
 			<div className="pds-signup-panel__copy">

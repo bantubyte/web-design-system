@@ -289,6 +289,35 @@ describe('page blocks', () => {
 		expect(container.textContent).toContain("you're subscribed");
 	});
 
+	it('defaults to scheme="dark" for the newsletter variant', () => {
+		const container = render(
+			<SignupPanel onNewsletterSubmit={() => undefined} variant="newsletter" />,
+		);
+		const section = container.querySelector('.pds-signup-panel');
+		expect(section?.classList.contains('pds-signup-panel--scheme-dark')).toBe(
+			true,
+		);
+		expect(section?.getAttribute('data-scheme')).toBe('dark');
+	});
+
+	it('applies the scheme="light" class to the newsletter variant', () => {
+		const container = render(
+			<SignupPanel
+				onNewsletterSubmit={() => undefined}
+				scheme="light"
+				variant="newsletter"
+			/>,
+		);
+		const section = container.querySelector('.pds-signup-panel');
+		expect(section?.classList.contains('pds-signup-panel--scheme-light')).toBe(
+			true,
+		);
+		expect(section?.classList.contains('pds-signup-panel--scheme-dark')).toBe(
+			false,
+		);
+		expect(section?.getAttribute('data-scheme')).toBe('light');
+	});
+
 	it('shows an error when newsletter submit is attempted with empty email', async () => {
 		const container = render(
 			<SignupPanel

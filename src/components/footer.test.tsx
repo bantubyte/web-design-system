@@ -161,6 +161,25 @@ describe('Footer (mega variant)', () => {
 		).toBe(true);
 	});
 
+	it('defaults to scheme="dark" for the mega variant', () => {
+		const container = render(
+			<Footer sections={[productSection]} variant="mega" />,
+		);
+		const footer = container.querySelector('.pds-footer');
+		expect(footer?.classList.contains('pds-footer--scheme-dark')).toBe(true);
+		expect(footer?.getAttribute('data-scheme')).toBe('dark');
+	});
+
+	it('applies the scheme="light" class when explicitly requested', () => {
+		const container = render(
+			<Footer scheme="light" sections={[productSection]} variant="mega" />,
+		);
+		const footer = container.querySelector('.pds-footer');
+		expect(footer?.classList.contains('pds-footer--scheme-light')).toBe(true);
+		expect(footer?.classList.contains('pds-footer--scheme-dark')).toBe(false);
+		expect(footer?.getAttribute('data-scheme')).toBe('light');
+	});
+
 	it('renders social links with aria-label and visually hidden text', () => {
 		const container = render(
 			<Footer

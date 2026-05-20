@@ -87,7 +87,7 @@ export const FaqAccordion: Story = {
 
 export const NewsletterSignup: Story = {
 	render: () => (
-		<div style={{ background: '#0a0418', padding: '4rem 2rem' }}>
+		<div style={{ background: 'var(--theme-page-bg)', padding: '4rem 2rem' }}>
 			<SignupPanel
 				description="Real numbers from real campaigns. No fluff, no sales pitch. Unsubscribe in one click."
 				disclaimer="~1 email a month. We never share your address."
@@ -98,6 +98,42 @@ export const NewsletterSignup: Story = {
 						setTimeout(resolve, 400);
 					})
 				}
+				placeholder="you@email.com"
+				submitLabel="Subscribe"
+				title="What we’re learning, monthly."
+				variant="newsletter"
+			/>
+		</div>
+	),
+};
+
+export const NewsletterSignupLightScheme: Story = {
+	render: () => (
+		<div style={{ background: 'var(--theme-page-bg)', padding: '4rem 2rem' }}>
+			<SignupPanel
+				description="Real numbers from real campaigns. No fluff, no sales pitch."
+				disclaimer="~1 email a month."
+				eyebrow="Field notes"
+				onNewsletterSubmit={async () => undefined}
+				placeholder="you@email.com"
+				scheme="light"
+				submitLabel="Subscribe"
+				title="What we’re learning, monthly."
+				variant="newsletter"
+			/>
+		</div>
+	),
+};
+
+export const NewsletterSignupPikabooDark: Story = {
+	globals: { theme: 'pikaboo-dark' },
+	render: () => (
+		<div style={{ background: 'var(--theme-page-bg)', padding: '4rem 2rem' }}>
+			<SignupPanel
+				description="Real numbers from real campaigns."
+				disclaimer="~1 email a month."
+				eyebrow="Field notes"
+				onNewsletterSubmit={async () => undefined}
 				placeholder="you@email.com"
 				submitLabel="Subscribe"
 				title="What we’re learning, monthly."
@@ -275,6 +311,179 @@ export const SingleArticleCard: Story = {
 				tone="purple"
 			/>
 		</div>
+	),
+};
+
+export const AnnotatedHeadlinePikabooDark: Story = {
+	globals: { theme: 'pikaboo-dark' },
+	render: () => (
+		<AnnotatedHeadline
+			body="Same component, dark theme."
+			doodles={[{ position: 'top-right', type: 'crown' }]}
+			eyebrow="Our story"
+			headline={
+				<>
+					We were born in the{' '}
+					<AnnotatedText annotation="squiggle">townships</AnnotatedText>.
+				</>
+			}
+		/>
+	),
+};
+
+export const ProcessTimelinePikabooDark: Story = {
+	globals: { theme: 'pikaboo-dark' },
+	render: () => (
+		<ProcessTimeline
+			eyebrow="How it works"
+			headline="Brief to proposal in under 24 hours."
+			steps={[
+				{ description: '5 minutes.', icon: 'check', title: 'Brief' },
+				{ description: 'Engine scores panels.', icon: 'spark', title: 'Score' },
+				{ description: 'Captains verify.', icon: 'users', title: 'Verify' },
+				{ description: 'Trust pack lands.', icon: 'download', title: 'Export' },
+			]}
+		/>
+	),
+};
+
+export const TeamGridPikabooDark: Story = {
+	globals: { theme: 'pikaboo-dark' },
+	render: () => (
+		<TeamGrid
+			eyebrow="Who we are"
+			headline="Built by people who live where the billboards are."
+			people={[
+				{
+					bio: 'Built the first FOONA pilots.',
+					name: 'Sipho Mbeki',
+					role: 'Co-founder & CEO',
+					tone: 'purple',
+				},
+				{
+					bio: 'Data science lead.',
+					name: 'Aisha Patel',
+					role: 'Head of Intelligence',
+					tone: 'magenta',
+				},
+			]}
+		/>
+	),
+};
+
+export const ArticleCardsPikabooDark: Story = {
+	globals: { theme: 'pikaboo-dark' },
+	render: () => (
+		<ArticleCardGrid
+			eyebrow="Latest"
+			headline="From the field."
+			items={[
+				{
+					href: '/case-shoprite',
+					kind: 'Case study',
+					readingTime: '6 min read',
+					title: 'How Shoprite reached 4M shoppers with 38% less spend.',
+					tone: 'purple',
+				},
+				{
+					href: '/field-langa',
+					kind: 'Field notes',
+					readingTime: '4 min read',
+					title: 'Five days in Langa.',
+					tone: 'magenta',
+				},
+			]}
+		/>
+	),
+};
+
+export const FaqAccordionPikabooDark: Story = {
+	globals: { theme: 'pikaboo-dark' },
+	render: () => (
+		<FaqSection
+			defaultOpenId="a"
+			eyebrow="FAQ"
+			faqs={[
+				{ answer: 'Answer A.', id: 'a', question: 'Question A?' },
+				{ answer: 'Answer B.', id: 'b', question: 'Question B?' },
+			]}
+			title="Things people ask us."
+			variant="accordion"
+		/>
+	),
+};
+
+export const TestimonialPullPikabooDark: Story = {
+	globals: { theme: 'pikaboo-dark' },
+	render: () => (
+		<TestimonialBand
+			accentDoodle="squiggle"
+			authorAvatar={
+				<div
+					style={{
+						width: '100%',
+						height: '100%',
+						background:
+							'linear-gradient(135deg, var(--theme-brand-magenta), var(--theme-primary))',
+					}}
+				/>
+			}
+			authorName="Naledi Khumalo"
+			authorRole="Head of OOH"
+			eyebrow="What clients say"
+			photo={
+				<div
+					style={{
+						width: '100%',
+						height: '100%',
+						background:
+							'linear-gradient(135deg, var(--theme-brand-magenta), var(--theme-primary))',
+					}}
+				/>
+			}
+			quote="Pikaboo cut our brief-to-proposal cycle from three weeks to a single afternoon."
+			variant="pull"
+		/>
+	),
+};
+
+export const LogoCloudBandPikabooDark: Story = {
+	globals: { theme: 'pikaboo-dark' },
+	render: () => (
+		<LogoCloud
+			eyebrow="Trusted by teams running real campaigns"
+			items={['PRIMEDIA', 'SHOPRITE', 'TAKEALOT', 'STANDARD BANK']}
+			title="Trusted by teams"
+			variant="band"
+		/>
+	),
+};
+
+export const CoverageMapPikabooDark: Story = {
+	globals: { theme: 'pikaboo-dark' },
+	render: () => (
+		<CoverageMap
+			cities={[
+				{
+					detail: '12,400 panels',
+					id: 'jhb',
+					name: 'Johannesburg',
+					status: 'live',
+					x: 78,
+					y: 70,
+				},
+				{
+					detail: 'Q3 2026',
+					id: 'polokwane',
+					name: 'Polokwane',
+					status: 'soon',
+					x: 86,
+					y: 56,
+				},
+			]}
+			eyebrow="Coverage"
+			headline="Where the network lives."
+		/>
 	),
 };
 

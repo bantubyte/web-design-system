@@ -104,6 +104,20 @@ export const DarkSchemeOverHero: Story = {
 	),
 };
 
+export const PikabooDarkTheme: Story = {
+	args: {
+		links: sampleLinks,
+		logo: <PikabooWordmark height={26} tone="light" />,
+		cta: <Button size="sm">Book demo</Button>,
+	},
+	globals: { theme: 'pikaboo-dark' },
+	render: (args) => (
+		<div style={{ minHeight: '60vh', background: 'var(--theme-page-bg)' }}>
+			<SiteNav {...args} />
+		</div>
+	),
+};
+
 export const MobileMenu: Story = {
 	args: { links: sampleLinks },
 	render: () => {

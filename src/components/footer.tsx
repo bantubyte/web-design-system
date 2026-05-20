@@ -23,12 +23,15 @@ export interface FooterStatus {
 
 export type FooterVariant = 'default' | 'mega';
 
+export type FooterScheme = 'dark' | 'light';
+
 export interface FooterProps extends HTMLAttributes<HTMLElement> {
 	actions?: ReactNode;
 	brand?: ReactNode;
 	copyright?: ReactNode;
 	description?: ReactNode;
 	legalLinks?: readonly FooterLink[];
+	scheme?: FooterScheme;
 	sections?: readonly FooterSection[];
 	socialLinks?: readonly FooterLink[];
 	status?: FooterStatus;
@@ -66,6 +69,7 @@ export function Footer({
 	copyright,
 	description = 'Building the ultimate dataset for Africa',
 	legalLinks = defaultLegalLinks,
+	scheme = 'dark',
 	sections = defaultFooterSections,
 	socialLinks,
 	status,
@@ -79,7 +83,13 @@ export function Footer({
 	if (variant === 'mega') {
 		return (
 			<footer
-				className={cx('pds-footer', 'pds-footer--mega', className)}
+				className={cx(
+					'pds-footer',
+					'pds-footer--mega',
+					`pds-footer--scheme-${scheme}`,
+					className,
+				)}
+				data-scheme={scheme}
 				{...props}
 			>
 				<div className="pds-footer-mega__top">

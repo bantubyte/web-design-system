@@ -118,3 +118,15 @@ export const MegaDegradedStatus: Story = {
 		status: { label: 'Investigating elevated latency', tone: 'degraded' },
 	},
 };
+
+export const MegaLightScheme: Story = {
+	args: {
+		...Mega.args,
+		scheme: 'light',
+	},
+};
+
+export const MegaPikabooDark: Story = {
+	args: Mega.args,
+	globals: { theme: 'pikaboo-dark' },
+};

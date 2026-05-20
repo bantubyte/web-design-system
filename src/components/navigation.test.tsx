@@ -241,6 +241,36 @@ describe('MobileMenuSheet', () => {
 		expect(closes).toEqual(['escape']);
 	});
 
+	it('defaults to scheme="dark"', () => {
+		const container = render(
+			<MobileMenuSheet links={links} onClose={() => undefined} open />,
+		);
+		const sheet = container.querySelector('.pds-mobile-menu-sheet');
+		expect(
+			sheet?.classList.contains('pds-mobile-menu-sheet--scheme-dark'),
+		).toBe(true);
+		expect(sheet?.getAttribute('data-scheme')).toBe('dark');
+	});
+
+	it('applies the scheme="light" class when explicitly requested', () => {
+		const container = render(
+			<MobileMenuSheet
+				links={links}
+				onClose={() => undefined}
+				open
+				scheme="light"
+			/>,
+		);
+		const sheet = container.querySelector('.pds-mobile-menu-sheet');
+		expect(
+			sheet?.classList.contains('pds-mobile-menu-sheet--scheme-light'),
+		).toBe(true);
+		expect(
+			sheet?.classList.contains('pds-mobile-menu-sheet--scheme-dark'),
+		).toBe(false);
+		expect(sheet?.getAttribute('data-scheme')).toBe('light');
+	});
+
 	it('does not lock scroll or react to escape while closed', () => {
 		document.body.style.overflow = 'auto';
 		const closes: string[] = [];
