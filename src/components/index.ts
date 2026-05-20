@@ -27,6 +27,7 @@ export * from './popover';
 export * from './report';
 export * from './selector';
 export * from './surface';
+export * from './theme-toggle';
 export * from './timeline';
 export * from './tooltip';
 export * from './wizard';
