@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect } from 'storybook/test';
 import {
 	RawAuthAccessScreen,
 	renderRawJsxToHtml as renderAuthRawJsxToHtml,
@@ -197,6 +198,11 @@ const html = renderRawJsxToHtml(
 			</main>
 		);
 	},
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /raw report exports/i }),
+		).toBeVisible();
+	},
 };
 
 export const AuthPlainJsx: Story = {
@@ -239,5 +245,10 @@ const html = renderRawJsxToHtml(
 				<RawHtmlPreview html={authHtml} />
 			</div>
 		);
+	},
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /raw auth export/i }),
+		).toBeVisible();
 	},
 };

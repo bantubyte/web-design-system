@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect } from 'storybook/test';
 import { Container, HelpCenter, PaymentForm, SectionHeader } from '../index';
 
 const helpCategories = [
@@ -117,6 +118,11 @@ export const HelpCentre: HelpStory = {
 			/>
 		</Container>
 	),
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /help centre/i }),
+		).toBeVisible();
+	},
 };
 
 export const DonationPayment: StoryObj<typeof PaymentForm> = {
@@ -157,4 +163,7 @@ export const DonationPayment: StoryObj<typeof PaymentForm> = {
 			/>
 		</Container>
 	),
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText('Support Pikaboo')).toBeVisible();
+	},
 };

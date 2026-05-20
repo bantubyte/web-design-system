@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect } from 'storybook/test';
 import { Button } from './button';
 import {
 	Dialog,
@@ -47,4 +48,11 @@ export const Confirmation: Story = {
 			/>
 		</Dialog>
 	),
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText('Save campaign plan')).toBeVisible();
+		await expect(
+			canvas.getByRole('button', { name: /save plan/i }),
+		).toBeVisible();
+		await expect(canvas.getByRole('button', { name: /cancel/i })).toBeVisible();
+	},
 };

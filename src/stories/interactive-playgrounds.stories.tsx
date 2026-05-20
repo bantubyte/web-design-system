@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect } from 'storybook/test';
 import {
 	Alert,
 	Badge,
@@ -224,6 +225,11 @@ export const ActionsFeedbackAndLoaders: Story = {
 			/>
 		</main>
 	),
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /actions, feedback, and loaders/i }),
+		).toBeVisible();
+	},
 };
 
 export const FormsSelectorsAndCalendar: Story = {
@@ -342,6 +348,11 @@ export const FormsSelectorsAndCalendar: Story = {
 			</div>
 		</main>
 	),
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /forms, selectors, and calendar/i }),
+		).toBeVisible();
+	},
 };
 
 export const CampaignWorkflowComponents: Story = {
@@ -458,6 +469,11 @@ export const CampaignWorkflowComponents: Story = {
 			</div>
 		</main>
 	),
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /campaign workflow components/i }),
+		).toBeVisible();
+	},
 };
 
 export const ReportComponents: Story = {
@@ -620,4 +636,9 @@ export const ReportComponents: Story = {
 			/>
 		</main>
 	),
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /report components/i }),
+		).toBeVisible();
+	},
 };

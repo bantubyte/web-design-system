@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect } from 'storybook/test';
 import { Tooltip } from './tooltip';
 
 const meta = {
@@ -21,7 +22,11 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+export const Playground: Story = {
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText('Renewal date')).toBeVisible();
+	},
+};
 
 export const Sides: Story = {
 	render: () => (
@@ -33,4 +38,9 @@ export const Sides: Story = {
 			))}
 		</div>
 	),
+	play: async ({ canvas }) => {
+		for (const side of ['top', 'right', 'bottom', 'left']) {
+			await expect(canvas.getByText(side)).toBeVisible();
+		}
+	},
 };

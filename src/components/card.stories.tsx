@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect } from 'storybook/test';
 import { Badge } from './badge';
 import {
 	Card,
@@ -43,6 +44,10 @@ export const Playground: Story = {
 			</CardFooter>
 		</Card>
 	),
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText('Camissa Asset Management')).toBeVisible();
+		await expect(canvas.getByText('Planning')).toBeVisible();
+	},
 };
 
 export const Tones: Story = {
@@ -64,6 +69,11 @@ export const Tones: Story = {
 			))}
 		</div>
 	),
+	play: async ({ canvas }) => {
+		for (const tone of ['default', 'muted', 'brand', 'accent']) {
+			await expect(canvas.getByText(tone)).toBeVisible();
+		}
+	},
 };
 
 export const Interactive: Story = {
@@ -76,4 +86,7 @@ export const Interactive: Story = {
 			</CardHeader>
 		</Card>
 	),
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText('Renew flight')).toBeVisible();
+	},
 };

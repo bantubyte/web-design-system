@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect } from 'storybook/test';
 import { Button } from './button';
 
 const meta = {
@@ -26,7 +27,13 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+export const Playground: Story = {
+	play: async ({ canvas, userEvent }) => {
+		const button = canvas.getByRole('button', { name: /create campaign/i });
+		await expect(button).toBeVisible();
+		await userEvent.click(button);
+	},
+};
 
 export const Variants: Story = {
 	render: () => (
@@ -49,4 +56,15 @@ export const Variants: Story = {
 			</Button>
 		</div>
 	),
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('button', { name: /^primary$/i }),
+		).toBeVisible();
+		await expect(
+			canvas.getByRole('button', { name: /^secondary$/i }),
+		).toBeVisible();
+		await expect(
+			canvas.getByRole('button', { name: /^danger$/i }),
+		).toBeVisible();
+	},
 };

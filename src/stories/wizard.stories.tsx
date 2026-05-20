@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useMemo, useState } from 'react';
+import { expect } from 'storybook/test';
 import {
 	Button,
 	Calendar,
@@ -235,5 +236,11 @@ export const QuickSetup: Story = {
 				) : null}
 			</main>
 		);
+	},
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText('Campaign Dates')).toBeVisible();
+		await expect(
+			canvas.getByRole('button', { name: /next: target locations/i }),
+		).toBeVisible();
 	},
 };

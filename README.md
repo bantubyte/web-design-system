@@ -67,6 +67,37 @@ npm_config_cache=/private/tmp/pds-npm-cache npm pack --dry-run
 npm_config_cache=/private/tmp/pds-npm-cache npm publish --access restricted
 ```
 
+## Testing
+
+Storybook ships the recommended test suite end-to-end: every story runs as a
+component test in a real Chromium browser, and every story is checked against
+axe accessibility rules at the same time.
+
+```bash
+npm test                # unit + storybook projects
+npm run test:unit       # vitest unit tests (jsdom)
+npm run test:storybook  # all stories in chromium via @storybook/addon-vitest
+```
+
+`npm run test:storybook` boots a Vitest browser-mode run that:
+
+- mounts every `*.stories.tsx` story in headless Chromium (`@vitest/browser` +
+  `@vitest/browser-playwright`),
+- runs the story's `play()` function as an interaction test,
+- runs `@storybook/addon-a11y` against each story with axe and fails the run on
+  any violation (`a11y.test: 'error'` is set in [.storybook/preview.tsx](.storybook/preview.tsx)).
+
+To use the test widget interactively, start Storybook (`npm run dev`), open
+<http://localhost:2050>, expand the bottom-left test widget, toggle the
+**Accessibility** and **Component tests** checkboxes, then click **Run component
+tests** to drive the same suite from the UI.
+
+Visual regression tests (Chromatic) are not wired up; only component and
+accessibility tests are enforced.
+
+CI (`.github/workflows/test.yml`) runs `test:unit` and `test:storybook` on every
+push and pull request.
+
 ## Storybook Manual
 
 Storybook is the living usage manual for the package:

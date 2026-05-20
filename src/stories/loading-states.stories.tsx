@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect } from 'storybook/test';
 import {
 	BigLoader,
 	CardLoadingState,
@@ -94,6 +95,11 @@ export const AppLoadingSystem: Story = {
 			</main>
 		);
 	},
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /application loading states/i }),
+		).toBeVisible();
+	},
 };
 
 export const ReportLoadingSystem: Story = {
@@ -158,5 +164,10 @@ export const ReportLoadingSystem: Story = {
 				/>
 			</main>
 		);
+	},
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /report loading states/i }),
+		).toBeVisible();
 	},
 };

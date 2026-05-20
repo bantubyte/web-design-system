@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { type ReactNode, useState } from 'react';
+import { expect } from 'storybook/test';
 import {
 	Accordion,
 	ActionBar,
@@ -149,6 +150,12 @@ export const Foundations: Story = {
 				</div>
 			</main>
 		);
+	},
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('button', { name: /^primary$/i }),
+		).toBeVisible();
+		await expect(canvas.getByText('Brand')).toBeVisible();
 	},
 };
 
@@ -527,6 +534,11 @@ export const FormsAndControls: Story = {
 			</main>
 		);
 	},
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /form system/i }),
+		).toBeVisible();
+	},
 };
 
 export const CampaignWorkspace: Story = {
@@ -758,6 +770,12 @@ export const CampaignWorkspace: Story = {
 			</div>
 		</WorkspaceFrame>
 	),
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('button', { name: /save plan/i }),
+		).toBeVisible();
+		await expect(canvas.getByText('Autosaved moments ago')).toBeVisible();
+	},
 };
 
 function ThemeMatrixPanel({ themeId }: { themeId: 'pikaboo' | 'primedia' }) {
@@ -856,4 +874,8 @@ export const ThemeSwitchingMatrix: Story = {
 			</div>
 		</main>
 	),
+	play: async ({ canvas }) => {
+		await expect(canvas.getAllByText('PIKABOO').length).toBeGreaterThan(0);
+		await expect(canvas.getAllByText('Cortexx').length).toBeGreaterThan(0);
+	},
 };

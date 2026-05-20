@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect } from 'storybook/test';
 import { AuthAccessScreen, AuthLoginScreen, AuthSignUpScreen } from '../index';
 
 const meta = {
@@ -46,6 +47,9 @@ export const PrimediaCortexx: Story = {
 		},
 	},
 	render: (args) => <AuthSignUpScreen {...args} />,
+	play: async ({ canvas }) => {
+		await expect(canvas.getAllByRole('textbox').length).toBeGreaterThan(0);
+	},
 };
 
 export const Pikaboo: Story = {
@@ -61,6 +65,9 @@ export const Pikaboo: Story = {
 		},
 	},
 	render: () => <AuthSignUpScreen />,
+	play: async ({ canvas }) => {
+		await expect(canvas.getAllByRole('textbox').length).toBeGreaterThan(0);
+	},
 };
 
 export const Login: StoryObj<typeof AuthLoginScreen> = {
@@ -76,6 +83,9 @@ export const Login: StoryObj<typeof AuthLoginScreen> = {
 		},
 	},
 	render: () => <AuthLoginScreen defaultEmail="owner@example.com" />,
+	play: async ({ canvas }) => {
+		await expect(canvas.getAllByRole('textbox').length).toBeGreaterThan(0);
+	},
 };
 
 export const FullAccessPanel: StoryObj<typeof AuthAccessScreen> = {
@@ -103,4 +113,9 @@ export const FullAccessPanel: StoryObj<typeof AuthAccessScreen> = {
 			}}
 		/>
 	),
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('link', { name: /call us on whatsapp/i }),
+		).toBeVisible();
+	},
 };
