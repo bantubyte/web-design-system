@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useEffect, useMemo, useState } from 'react';
+import { expect } from 'storybook/test';
 import {
 	Badge,
 	Card,
@@ -302,6 +303,12 @@ export const Catalog: Story = {
 		snippetMode: 'both',
 	},
 	render: (args) => <UsageCatalog {...args} />,
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /find it\. tune it\. ship it\./i }),
+		).toBeVisible();
+		await expect(canvas.getByLabelText(/search catalog/i)).toBeInTheDocument();
+	},
 };
 
 export const ReactOnlyQuickStart: Story = {
@@ -312,6 +319,11 @@ export const ReactOnlyQuickStart: Story = {
 		snippetMode: 'react',
 	},
 	render: (args) => <UsageCatalog {...args} />,
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /find it\. tune it\. ship it\./i }),
+		).toBeVisible();
+	},
 };
 
 export const PlainJsxExports: Story = {
@@ -322,4 +334,9 @@ export const PlainJsxExports: Story = {
 		snippetMode: 'raw-jsx',
 	},
 	render: (args) => <UsageCatalog {...args} />,
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /find it\. tune it\. ship it\./i }),
+		).toBeVisible();
+	},
 };

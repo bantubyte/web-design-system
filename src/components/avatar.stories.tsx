@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect } from 'storybook/test';
 import { Avatar, AvatarGroup } from './avatar';
 
 const meta = {
@@ -18,7 +19,11 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+export const Playground: Story = {
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText('LB')).toBeVisible();
+	},
+};
 
 export const Sizes: Story = {
 	render: () => (
@@ -28,6 +33,9 @@ export const Sizes: Story = {
 			<Avatar initials="LB" size="lg" />
 		</div>
 	),
+	play: async ({ canvas }) => {
+		await expect(canvas.getAllByText('LB')).toHaveLength(3);
+	},
 };
 
 export const Group: Story = {
@@ -43,4 +51,8 @@ export const Group: Story = {
 			]}
 		/>
 	),
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText('LB')).toBeVisible();
+		await expect(canvas.getByText('DK')).toBeVisible();
+	},
 };

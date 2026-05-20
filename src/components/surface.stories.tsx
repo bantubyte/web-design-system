@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect } from 'storybook/test';
 import { Surface } from './surface';
 
 const meta = {
@@ -36,6 +37,11 @@ export const Playground: Story = {
 			</p>
 		</Surface>
 	),
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: 'Planning workspace' }),
+		).toBeVisible();
+	},
 };
 
 export const Tones: Story = {
@@ -64,4 +70,17 @@ export const Tones: Story = {
 			))}
 		</div>
 	),
+	play: async ({ canvas }) => {
+		for (const tone of [
+			'default',
+			'muted',
+			'brand',
+			'ink',
+			'success',
+			'warning',
+			'danger',
+		]) {
+			await expect(canvas.getByText(tone)).toBeVisible();
+		}
+	},
 };

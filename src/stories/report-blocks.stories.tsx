@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useMemo, useState } from 'react';
+import { expect } from 'storybook/test';
 import {
 	Badge,
 	Button,
@@ -586,4 +587,9 @@ function ReportWorkbench() {
 
 export const Workbench: Story = {
 	render: () => <ReportWorkbench />,
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /interactive report blocks/i }),
+		).toBeVisible();
+	},
 };

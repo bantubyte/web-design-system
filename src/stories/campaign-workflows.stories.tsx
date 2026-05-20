@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
+import { expect } from 'storybook/test';
 import {
 	Badge,
 	Button,
@@ -293,6 +294,14 @@ export const CampaignListWorkbench: Story = {
 			</main>
 		);
 	},
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /campaigns/i }),
+		).toBeVisible();
+		await expect(
+			canvas.getByRole('button', { name: /create campaign/i }),
+		).toBeVisible();
+	},
 };
 
 export const SupportRequest: Story = {
@@ -319,6 +328,9 @@ export const SupportRequest: Story = {
 			/>
 		</div>
 	),
+	play: async ({ canvasElement }) => {
+		await expect(canvasElement.children.length).toBeGreaterThan(0);
+	},
 };
 
 export const AddSitesInventory: Story = {
@@ -355,6 +367,11 @@ export const AddSitesInventory: Story = {
 				</div>
 			</main>
 		);
+	},
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /add sites/i }),
+		).toBeVisible();
 	},
 };
 
@@ -524,6 +541,11 @@ export const CampaignSetupControls: Story = {
 			</CampaignSetupWorkspace>
 		</div>
 	),
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /campaign setup controls/i }),
+		).toBeVisible();
+	},
 };
 
 export const ScheduleDialog: Story = {
@@ -551,4 +573,7 @@ export const ScheduleDialog: Story = {
 			/>
 		</div>
 	),
+	play: async ({ canvasElement }) => {
+		await expect(canvasElement.children.length).toBeGreaterThan(0);
+	},
 };

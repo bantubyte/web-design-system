@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { CSSProperties } from 'react';
+import { expect } from 'storybook/test';
 import { Button, Surface } from '../components';
 import {
 	createDesignTheme,
@@ -109,6 +110,12 @@ function ThemeOverview() {
 
 export const Overview: Story = {
 	render: () => <ThemeOverview />,
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /^actions$/i }),
+		).toBeVisible();
+		await expect(canvas.getByText(/--theme-primary/i)).toBeVisible();
+	},
 };
 
 function ThemeComparisonPanel() {
@@ -146,6 +153,14 @@ export const TenantComparison: Story = {
 			</div>
 		</div>
 	),
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: 'PIKABOO' }),
+		).toBeVisible();
+		await expect(
+			canvas.getByRole('heading', { name: 'Cortexx' }),
+		).toBeVisible();
+	},
 };
 
 const demoTheme = createDesignTheme({
@@ -207,4 +222,9 @@ const demoTheme = createDesignTheme({
 			</main>
 		</ThemeProvider>
 	),
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /demo intelligence/i }),
+		).toBeVisible();
+	},
 };

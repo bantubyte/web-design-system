@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { CSSProperties } from 'react';
 import { useEffect, useState } from 'react';
+import { expect } from 'storybook/test';
 import {
 	Badge,
 	FloatingButton,
@@ -223,6 +224,11 @@ const defaultArgs: FloatingButtonStoryArgs = {
 export const Playground: Story = {
 	args: defaultArgs,
 	render: (args) => <FloatingButtonDemo {...args} />,
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('button', { name: /contact help/i }),
+		).toBeVisible();
+	},
 };
 
 export const QuickCreateAction: Story = {
@@ -234,6 +240,11 @@ export const QuickCreateAction: Story = {
 		tooltip: 'Start a new campaign',
 	},
 	render: (args) => <FloatingButtonDemo {...args} />,
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('button', { name: /create campaign/i }),
+		).toBeVisible();
+	},
 };
 
 export const PillTooltipShape: Story = {
@@ -254,6 +265,11 @@ export const PillTooltipShape: Story = {
 		tooltipShadow: '0 12px 28px -12px rgb(0 0 0 / 0.32)',
 	},
 	render: (args) => <FloatingButtonDemo {...args} />,
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('button', { name: /contact help/i }),
+		).toBeVisible();
+	},
 };
 
 export const IdlePulse: Story = {
@@ -272,4 +288,9 @@ export const IdlePulse: Story = {
 		tooltip: 'Soft breathing ring while idle',
 	},
 	render: (args) => <FloatingButtonDemo {...args} />,
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('button', { name: /contact help/i }),
+		).toBeVisible();
+	},
 };

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
+import { expect } from 'storybook/test';
 import {
 	Badge,
 	ReportChartLoadingBlock,
@@ -71,6 +72,10 @@ export const MetricTile: Story = {
 			/>
 		</div>
 	),
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText('48.1M')).toBeVisible();
+		await expect(canvas.getByText('VAC')).toBeVisible();
+	},
 };
 
 export const MetricRibbonLoading: Story = {
@@ -92,6 +97,9 @@ export const MetricRibbonLoading: Story = {
 			<ReportMetricRibbonLoading {...args} />
 		</div>
 	),
+	play: async ({ canvasElement }) => {
+		await expect(canvasElement.children.length).toBeGreaterThan(0);
+	},
 };
 
 export const MetricRibbonInteractive: Story = {
@@ -142,6 +150,10 @@ export const MetricRibbonInteractive: Story = {
 			</div>
 		);
 	},
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText('Reach')).toBeVisible();
+		await expect(canvas.getByText('48.1M')).toBeVisible();
+	},
 };
 
 export const ChartLoadingBlock: Story = {
@@ -164,6 +176,9 @@ export const ChartLoadingBlock: Story = {
 			<ReportChartLoadingBlock title="Reach" {...args} />
 		</div>
 	),
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText('Reach')).toBeVisible();
+	},
 };
 
 export const RankedListBlock: Story = {
@@ -215,6 +230,9 @@ export const RankedListBlock: Story = {
 			</div>
 		);
 	},
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText('SPEC/607/1')).toBeVisible();
+	},
 };
 
 export const EntityCard: Story = {
@@ -258,6 +276,10 @@ export const EntityCard: Story = {
 				/>
 			</div>
 		);
+	},
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText('Mazda')).toBeVisible();
+		await expect(canvas.getByText('100% likely to renew')).toBeVisible();
 	},
 };
 
@@ -307,6 +329,10 @@ export const ComparisonBlock: Story = {
 			/>
 		</div>
 	),
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText('Scenario A')).toBeVisible();
+		await expect(canvas.getByText('Scenario B')).toBeVisible();
+	},
 };
 
 export const PlacementTable: Story = {
@@ -358,6 +384,9 @@ export const PlacementTable: Story = {
 			</div>
 		);
 	},
+	play: async ({ canvas }) => {
+		await expect(canvas.getByText('Pretoria Central Gantry')).toBeVisible();
+	},
 };
 
 export const TourCallout: Story = {
@@ -391,4 +420,9 @@ export const TourCallout: Story = {
 			]}
 		/>
 	),
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByText('Performance metrics at a glance'),
+		).toBeVisible();
+	},
 };

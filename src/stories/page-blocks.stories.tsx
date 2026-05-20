@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect } from 'storybook/test';
 import {
 	ContactStrip,
 	DonationPanel,
@@ -175,6 +176,13 @@ export const PikabooExpressive: Story = {
 			/>
 		</PageTemplate>
 	),
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', {
+				name: /pikaboo pages that still mean business/i,
+			}),
+		).toBeVisible();
+	},
 };
 
 export const PikabooSerious: Story = {
@@ -243,6 +251,13 @@ export const PikabooSerious: Story = {
 			/>
 		</PageTemplate>
 	),
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', {
+				name: /commercial pages with more gravity/i,
+			}),
+		).toBeVisible();
+	},
 };
 
 export const PrimediaProduct: Story = {
@@ -326,6 +341,11 @@ export const PrimediaProduct: Story = {
 			/>
 		</PageTemplate>
 	),
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /plan campaigns with cortexx/i }),
+		).toBeVisible();
+	},
 };
 
 export const ReliefDonation: Story = {
@@ -413,6 +433,13 @@ export const ReliefDonation: Story = {
 			<FaqSection faqs={reliefFaqs} />
 		</PageTemplate>
 	),
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', {
+				name: /help families recover after flooding/i,
+			}),
+		).toBeVisible();
+	},
 };
 
 export const SignupAndDonationFlow: Story = {
@@ -461,6 +488,11 @@ export const SignupAndDonationFlow: Story = {
 			</div>
 		</PageTemplate>
 	),
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /make support easy to repeat/i }),
+		).toBeVisible();
+	},
 };
 
 export const DarkAndLightMatrix: Story = {
@@ -494,4 +526,12 @@ export const DarkAndLightMatrix: Story = {
 			</ThemeProvider>
 		</div>
 	),
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /pikaboo light/i }),
+		).toBeVisible();
+		await expect(
+			canvas.getByRole('heading', { name: /cortexx dark/i }),
+		).toBeVisible();
+	},
 };

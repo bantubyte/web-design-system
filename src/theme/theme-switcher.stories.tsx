@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
+import { expect } from 'storybook/test';
 import { Surface } from '../components';
 import { ThemeProvider, useTheme } from './theme-provider';
 import { ThemeSwitcher } from './theme-switcher';
@@ -45,5 +46,10 @@ export const Controlled: Story = {
 				<ThemeSwitcherDemo />
 			</ThemeProvider>
 		);
+	},
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: 'PIKABOO' }),
+		).toBeVisible();
 	},
 };

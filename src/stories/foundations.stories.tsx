@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect } from 'storybook/test';
 import {
 	Badge,
 	Button,
@@ -114,6 +115,11 @@ export const Typography: Story = {
 			</Container>
 		</main>
 	),
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /^typography$/i }),
+		).toBeVisible();
+	},
 };
 
 export const GridSystem: Story = {
@@ -166,6 +172,11 @@ export const GridSystem: Story = {
 			</Container>
 		</main>
 	),
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /grid system/i }),
+		).toBeVisible();
+	},
 };
 
 export const Icons: Story = {
@@ -240,6 +251,11 @@ export const Icons: Story = {
 			</Container>
 		</main>
 	),
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /icon palette/i }),
+		).toBeVisible();
+	},
 };
 
 export const FooterAndDarkMode: Story = {
@@ -316,4 +332,9 @@ export const FooterAndDarkMode: Story = {
 			</div>
 		</ThemeProvider>
 	),
+	play: async ({ canvas }) => {
+		await expect(
+			canvas.getByRole('heading', { name: /^footer$/i }),
+		).toBeVisible();
+	},
 };
