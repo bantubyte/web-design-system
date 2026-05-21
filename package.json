@@ -57,6 +57,21 @@
 			"import": "./dist/react/report.js",
 			"require": "./dist/react/report.cjs"
 		},
+		"./marketing-jsx": {
+			"types": "./dist/marketing-jsx.d.ts",
+			"import": "./dist/marketing-jsx.js",
+			"require": "./dist/marketing-jsx.cjs"
+		},
+		"./marketing-jsx/jsx-dev-runtime": {
+			"types": "./dist/marketing-jsx/jsx-dev-runtime.d.ts",
+			"import": "./dist/marketing-jsx/jsx-dev-runtime.js",
+			"require": "./dist/marketing-jsx/jsx-dev-runtime.cjs"
+		},
+		"./marketing-jsx/jsx-runtime": {
+			"types": "./dist/marketing-jsx/jsx-runtime.d.ts",
+			"import": "./dist/marketing-jsx/jsx-runtime.js",
+			"require": "./dist/marketing-jsx/jsx-runtime.cjs"
+		},
 		"./report": {
 			"types": "./dist/report.d.ts",
 			"import": "./dist/report.js",

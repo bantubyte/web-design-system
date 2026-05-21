@@ -29,6 +29,15 @@ export default defineConfig({
 					'src/auth-jsx/jsx-runtime.ts',
 				),
 				index: resolve(__dirname, 'src/index.ts'),
+				'marketing-jsx': resolve(__dirname, 'src/marketing-jsx.ts'),
+				'marketing-jsx/jsx-dev-runtime': resolve(
+					__dirname,
+					'src/marketing-jsx/jsx-dev-runtime.ts',
+				),
+				'marketing-jsx/jsx-runtime': resolve(
+					__dirname,
+					'src/marketing-jsx/jsx-runtime.ts',
+				),
 				'react/auth': resolve(__dirname, 'src/react/auth.ts'),
 				'react/report': resolve(__dirname, 'src/react/report.ts'),
 				report: resolve(__dirname, 'src/report.ts'),
