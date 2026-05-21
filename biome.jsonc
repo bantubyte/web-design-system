@@ -14,7 +14,8 @@
 			"!.mesh",
 			"!dist",
 			"!build",
-			"!*.min.js"
+			"!*.min.js",
+			"!**/*.svelte"
 		]
 	},
 	"formatter": {

@@ -1,6 +1,15 @@
 node_modules/
 dist/
 storybook-static/
+.svelte-kit/
 .superpowers/
 debug-storybook.log
 .DS_Store
+
+# svelte-package's TS pass occasionally drops .d.ts files alongside cross-folder
+# imports (svelte2tsx limitation). Post-build cleanup removes them; this guard
+# stops accidental commits if cleanup is skipped.
+src/**/*.d.ts
+!src/vite-env.d.ts
+!src/svelte/_internal/svelte-shim.d.ts
+

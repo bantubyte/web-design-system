@@ -68,6 +68,7 @@ import { /* tokens */ } from "@pikaboo/t2-design-system/theme";
 | `@pikaboo/t2-design-system/tailwind` | Tailwind preset |
 | `@pikaboo/t2-design-system/auth` · `/auth-core` · `/auth-jsx` · `/react/auth` | Auth surface |
 | `@pikaboo/t2-design-system/report` · `/report-core` · `/report-jsx` · `/react/report` | Report surface |
+| `@pikaboo/t2-design-system/svelte` · `/svelte/auth` · `/svelte/report` | Native Svelte 5 wrappers around the same auth and report surface |
 
 ## 5. Find usage snippets in Storybook
 
@@ -121,6 +122,50 @@ const html = renderRawJsxToHtml(
 	</RawReportMetricRibbon>,
 );
 ```
+
+Svelte 5 report blocks (peer dependency: `svelte ^5.0.0`):
+
+```svelte
+<script lang="ts">
+	import '@pikaboo/t2-design-system/styles.css';
+	import {
+		ReportComparisonBlock,
+		ReportMetricTile,
+		ReportPlacementTable,
+	} from '@pikaboo/t2-design-system/svelte/report';
+
+	const metrics = [
+		{ label: 'Reach', leftValue: 4_200_000, rightValue: 3_800_000 },
+	];
+</script>
+
+<ReportMetricTile id="reach" label="Reach" value="4.2M" accent="cyan" />
+<ReportComparisonBlock
+	left={{ id: 'a', label: 'Scenario A' }}
+	right={{ id: 'b', label: 'Scenario B' }}
+	{metrics}
+/>
+<ReportPlacementTable rows={placements} />
+```
+
+Svelte auth surface:
+
+```svelte
+<script lang="ts">
+	import '@pikaboo/t2-design-system/styles.css';
+	import { AuthLoginScreen } from '@pikaboo/t2-design-system/svelte/auth';
+</script>
+
+<AuthLoginScreen
+	productName="Cortexx"
+	onSubmit={({ email }) => signIn(email)}
+	onSsoSelect={(provider) => signInWithSso(provider.id)}
+/>
+```
+
+> The Svelte wrappers delegate to the same framework-agnostic raw-JSX layer
+> the React surface uses, so styling, behaviour, and accessibility stay in
+> lockstep across both frameworks.
 
 Floating action button:
 

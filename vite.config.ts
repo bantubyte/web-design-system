@@ -11,6 +11,8 @@ export default defineConfig({
 				'src/**/*.stories.tsx',
 				'src/**/*.test.ts',
 				'src/**/*.test.tsx',
+				'src/**/*.svelte',
+				'src/svelte/**',
 				'vite.config.ts',
 				'vitest.config.ts',
 			],

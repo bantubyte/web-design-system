@@ -23,6 +23,15 @@ import {
 import { createReportComparisonModel } from './report-core';
 import { RawReportMetricTile, RawReportPageLoadingState } from './report-jsx';
 import { jsx as reportJsx } from './report-jsx/jsx-runtime';
+import {
+	AuthLoginScreen as SvelteAuthLoginScreen,
+	AuthSignUpScreen as SvelteAuthSignUpScreen,
+} from './svelte/auth';
+import {
+	ReportComparisonBlock as SvelteReportComparisonBlock,
+	ReportMetricTile as SvelteReportMetricTile,
+	ReportPageLoadingState as SvelteReportPageLoadingState,
+} from './svelte/report';
 import pikabooTailwindPreset from './tailwind';
 import { createDesignTheme, ThemeProvider, ThemeSwitcher } from './theme';
 
@@ -79,5 +88,13 @@ describe('package entrypoints', () => {
 		expect(PageHero).toBeTypeOf('function');
 		expect(DonationPanel).toBeTypeOf('function');
 		expect(SignupPanel).toBeTypeOf('function');
+	});
+
+	it('exports svelte auth and report screens through the svelte subpath entry', () => {
+		expect(SvelteAuthLoginScreen).toBeDefined();
+		expect(SvelteAuthSignUpScreen).toBeDefined();
+		expect(SvelteReportMetricTile).toBeDefined();
+		expect(SvelteReportComparisonBlock).toBeDefined();
+		expect(SvelteReportPageLoadingState).toBeDefined();
 	});
 });

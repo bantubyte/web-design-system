@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
+import { svelte } from '@sveltejs/vite-plugin-svelte';
 import { playwright } from '@vitest/browser-playwright';
 import { defineConfig } from 'vitest/config';
 
@@ -14,6 +15,10 @@ export default defineConfig({
 		projects: [
 			{
 				extends: true,
+				plugins: [svelte()],
+				resolve: {
+					conditions: ['browser'],
+				},
 				test: {
 					name: 'unit',
 					environment: 'jsdom',
