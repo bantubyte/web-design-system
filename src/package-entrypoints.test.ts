@@ -12,6 +12,8 @@ import { AuthAccessScreen, AuthSignUpScreen } from './auth';
 import { createAuthAccessModel } from './auth-core';
 import { RawAuthAccessScreen, renderRawJsxToHtml } from './auth-jsx';
 import { jsx as authJsx } from './auth-jsx/jsx-runtime';
+import { RawPageHero } from './marketing-jsx';
+import { jsx as marketingJsx } from './marketing-jsx/jsx-runtime';
 import { AuthLoginScreen } from './react/auth';
 import { ReportEvidenceList as ReactReportEvidenceList } from './react/report';
 import {
@@ -79,5 +81,10 @@ describe('package entrypoints', () => {
 		expect(PageHero).toBeTypeOf('function');
 		expect(DonationPanel).toBeTypeOf('function');
 		expect(SignupPanel).toBeTypeOf('function');
+	});
+
+	it('exports marketing raw JSX through the marketing-jsx subpath entry', () => {
+		expect(RawPageHero).toBeTypeOf('function');
+		expect(marketingJsx).toBeTypeOf('function');
 	});
 });
