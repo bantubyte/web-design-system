@@ -22,6 +22,7 @@ import { Badge, type BadgeTone } from './badge';
 import { Button, type ButtonProps } from './button';
 import { Card, CardContent, CardHeader, CardTitle } from './card';
 import {
+	AreaChart as ChartAreaChart,
 	BarList as ChartBarList,
 	LineChart as ChartLineChart,
 	PieChart as ChartPieChart,
@@ -1813,5 +1814,59 @@ export function ReportSourceFooter({
 			</div>
 			{right ? <span>{right}</span> : null}
 		</footer>
+	);
+}
+
+export interface ReportAreaChartItem {
+	label: string;
+	value: number | null | undefined;
+}
+
+export interface ReportAreaChartProps
+	extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
+	formatValue?: (value: number) => ReactNode;
+	items: readonly ReportAreaChartItem[];
+	title?: ReactNode;
+}
+
+export function ReportAreaChart({
+	className,
+	formatValue = (value) => value,
+	items,
+	title,
+	...props
+}: ReportAreaChartProps) {
+	const chartData = items.map((item) => ({
+		label: item.label,
+		value: item.value,
+	}));
+	const formatChartValue = (value: unknown) =>
+		typeof value === 'number' ? reportNodeToText(formatValue(value)) : '';
+
+	return (
+		<Card className={cx('pds-report-area-chart', className)} {...props}>
+			{title ? (
+				<CardHeader>
+					<CardTitle>{title}</CardTitle>
+				</CardHeader>
+			) : null}
+			<CardContent>
+				<ChartAreaChart
+					ariaLabel={typeof title === 'string' ? title : 'Report area chart'}
+					className="pds-report-area-chart__chart"
+					data={chartData}
+					height={220}
+					series={[
+						{
+							key: 'value',
+							label: typeof title === 'string' ? title : 'Value',
+						},
+					]}
+					showLegend={false}
+					xKey="label"
+					yFormat={formatChartValue}
+				/>
+			</CardContent>
+		</Card>
 	);
 }
