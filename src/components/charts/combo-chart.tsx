@@ -19,13 +19,24 @@ import type {
 	ChartSizeProps,
 	ChartStatusProps,
 } from '../../charts-core';
-import { getChartAnimationProps, getSeriesStrokeDasharray } from '../../charts-core';
+import {
+	getChartAnimationProps,
+	getSeriesStrokeDasharray,
+} from '../../charts-core';
 import { cx } from '../../utils/class-names';
-import { ChartContainer, ChartProvider, useChartPalette } from './_internal/chart-container';
+import { getRechartsTickFormatter } from './_internal/chart-axis';
+import {
+	ChartContainer,
+	ChartProvider,
+	useChartPalette,
+} from './_internal/chart-container';
 import { ChartLegend } from './_internal/chart-legend';
 import { ChartTooltip } from './_internal/chart-tooltip';
-import { getRechartsTickFormatter } from './_internal/chart-axis';
-import { getSeriesColumns, getSeriesLabel, toChartData } from './_internal/chart-utils';
+import {
+	getSeriesColumns,
+	getSeriesLabel,
+	toChartData,
+} from './_internal/chart-utils';
 
 export interface ComboChartProps<T extends ChartDatum>
 	extends Omit<HTMLAttributes<HTMLDivElement>, 'children'>,
@@ -89,28 +100,88 @@ function ComboChartContent<T extends ChartDatum>({
 			error={error}
 			height={height}
 			loading={loading}
-			tableColumns={tableColumns ?? getSeriesColumns(xKey, series, xFormat, yFormat)}
+			tableColumns={
+				tableColumns ?? getSeriesColumns(xKey, series, xFormat, yFormat)
+			}
 			{...props}
 		>
 			<div className="pds-chart__plot">
 				<ResponsiveContainer height="100%" width="100%">
-					<ComposedChart data={toChartData(data)} margin={{ bottom: 10, left: 4, right: 18, top: 12 }}>
-						{showGrid ? <CartesianGrid stroke={palette.grid} strokeDasharray="4 6" vertical={false} /> : null}
-						<XAxis axisLine={false} dataKey={String(xKey)} tick={{ fill: palette.axis, fontSize: 12, fontWeight: 700 }} tickFormatter={getRechartsTickFormatter(xFormat)} tickLine={false} />
-						<YAxis axisLine={false} tick={{ fill: palette.axis, fontSize: 12, fontWeight: 700 }} tickFormatter={getRechartsTickFormatter(yFormat)} tickLine={false} width={54} />
-						{showTooltip ? <Tooltip content={<ChartTooltip labelFormatter={xFormat} valueFormatter={yFormat} />} /> : null}
+					<ComposedChart
+						data={toChartData(data)}
+						margin={{ bottom: 10, left: 4, right: 18, top: 12 }}
+					>
+						{showGrid ? (
+							<CartesianGrid
+								stroke={palette.grid}
+								strokeDasharray="4 6"
+								vertical={false}
+							/>
+						) : null}
+						<XAxis
+							axisLine={false}
+							dataKey={String(xKey)}
+							tick={{ fill: palette.axis, fontSize: 12, fontWeight: 700 }}
+							tickFormatter={getRechartsTickFormatter(xFormat)}
+							tickLine={false}
+						/>
+						<YAxis
+							axisLine={false}
+							tick={{ fill: palette.axis, fontSize: 12, fontWeight: 700 }}
+							tickFormatter={getRechartsTickFormatter(yFormat)}
+							tickLine={false}
+							width={54}
+						/>
+						{showTooltip ? (
+							<Tooltip
+								content={
+									<ChartTooltip
+										labelFormatter={xFormat}
+										valueFormatter={yFormat}
+									/>
+								}
+							/>
+						) : null}
 						{visibleSeries.map((item, index) => {
-							const color = item.color ?? palette.categorical[index % palette.categorical.length];
+							const color =
+								item.color ??
+								palette.categorical[index % palette.categorical.length];
 							return item.type === 'line' ? (
-								<Line key={String(item.key)} dataKey={String(item.key)} name={getSeriesLabel(item)} stroke={color} strokeDasharray={getSeriesStrokeDasharray(index, item.strokeDasharray)} strokeWidth={2.5} type="monotone" {...animation} />
+								<Line
+									dataKey={String(item.key)}
+									key={String(item.key)}
+									name={getSeriesLabel(item)}
+									stroke={color}
+									strokeDasharray={getSeriesStrokeDasharray(
+										index,
+										item.strokeDasharray,
+									)}
+									strokeWidth={2.5}
+									type="monotone"
+									{...animation}
+								/>
 							) : (
-								<Bar key={String(item.key)} dataKey={String(item.key)} fill={color} name={getSeriesLabel(item)} radius={[6, 6, 0, 0]} {...animation} />
+								<Bar
+									dataKey={String(item.key)}
+									fill={color}
+									key={String(item.key)}
+									name={getSeriesLabel(item)}
+									radius={[6, 6, 0, 0]}
+									{...animation}
+								/>
 							);
 						})}
 					</ComposedChart>
 				</ResponsiveContainer>
 			</div>
-			{showLegend ? <ChartLegend hiddenKeys={hiddenKeys} onToggle={toggleSeries} palette={palette} series={series} /> : null}
+			{showLegend ? (
+				<ChartLegend
+					hiddenKeys={hiddenKeys}
+					onToggle={toggleSeries}
+					palette={palette}
+					series={series}
+				/>
+			) : null}
 		</ChartContainer>
 	);
 }

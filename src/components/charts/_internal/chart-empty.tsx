@@ -12,7 +12,7 @@ export function ChartEmpty({
 }: ChartEmptyProps) {
 	return (
 		<div className={cx('pds-chart-state pds-chart-state--empty', className)}>
-			<span className="pds-chart-state__mark" aria-hidden="true" />
+			<span aria-hidden="true" className="pds-chart-state__mark" />
 			<p>{message}</p>
 		</div>
 	);

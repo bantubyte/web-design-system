@@ -18,16 +18,23 @@ import type {
 	ChartSizeProps,
 	ChartStatusProps,
 } from '../../charts-core';
-import { getChartAnimationProps, getSeriesStrokeDasharray } from '../../charts-core';
-import { cx } from '../../utils/class-names';
-import { ChartContainer, ChartProvider, useChartPalette } from './_internal/chart-container';
-import { ChartLegend } from './_internal/chart-legend';
-import { ChartTooltip } from './_internal/chart-tooltip';
 import {
+	getChartAnimationProps,
+	getSeriesStrokeDasharray,
+} from '../../charts-core';
+import { cx } from '../../utils/class-names';
+import {
+	type ChartAxisPreset,
 	getRechartsTickFormatter,
 	resolveAxisFormatter,
-	type ChartAxisPreset,
 } from './_internal/chart-axis';
+import {
+	ChartContainer,
+	ChartProvider,
+	useChartPalette,
+} from './_internal/chart-container';
+import { ChartLegend } from './_internal/chart-legend';
+import { ChartTooltip } from './_internal/chart-tooltip';
 import {
 	getSeriesColumns,
 	getSeriesLabel,
@@ -116,7 +123,9 @@ function LineChartContent<T extends ChartDatum>({
 			height={height}
 			loading={loading}
 			style={minHeight ? { minHeight } : undefined}
-			tableColumns={tableColumns ?? getSeriesColumns(xKey, series, xFormat, yFormat)}
+			tableColumns={
+				tableColumns ?? getSeriesColumns(xKey, series, xFormat, yFormat)
+			}
 			{...props}
 		>
 			<div className="pds-chart__plot">
@@ -163,8 +172,14 @@ function LineChartContent<T extends ChartDatum>({
 								dot={{ r: 2, strokeWidth: 0, tabIndex: 0 }}
 								key={String(item.key)}
 								name={getSeriesLabel(item)}
-								stroke={item.color ?? palette.categorical[index % palette.categorical.length]}
-								strokeDasharray={getSeriesStrokeDasharray(index, item.strokeDasharray)}
+								stroke={
+									item.color ??
+									palette.categorical[index % palette.categorical.length]
+								}
+								strokeDasharray={getSeriesStrokeDasharray(
+									index,
+									item.strokeDasharray,
+								)}
 								strokeLinecap="round"
 								strokeWidth={2.5}
 								type={lineTypeForVariant(variant)}

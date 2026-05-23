@@ -1,5 +1,9 @@
 import type { HTMLAttributes } from 'react';
-import { ResponsiveContainer, Tooltip, Treemap as RechartsTreemap } from 'recharts';
+import {
+	Treemap as RechartsTreemap,
+	ResponsiveContainer,
+	Tooltip,
+} from 'recharts';
 import type {
 	ChartA11yProps,
 	ChartDataKey,
@@ -10,7 +14,11 @@ import type {
 	ChartStatusProps,
 } from '../../charts-core';
 import { cx } from '../../utils/class-names';
-import { ChartContainer, ChartProvider, useChartPalette } from './_internal/chart-container';
+import {
+	ChartContainer,
+	ChartProvider,
+	useChartPalette,
+} from './_internal/chart-container';
 import { ChartTooltip } from './_internal/chart-tooltip';
 
 export interface TreemapProps<T extends ChartDatum>
@@ -58,7 +66,12 @@ function TreemapContent<T extends ChartDatum>({
 			error={error}
 			height={height}
 			loading={loading}
-			tableColumns={tableColumns ?? [{ header: 'Label', key: nameKey }, { format: valueFormat, header: 'Value', key: valueKey }]}
+			tableColumns={
+				tableColumns ?? [
+					{ header: 'Label', key: nameKey },
+					{ format: valueFormat, header: 'Value', key: valueKey },
+				]
+			}
 			{...props}
 		>
 			<div className="pds-chart__plot">

@@ -36,7 +36,9 @@ export const Playground: Story = {
 		</div>
 	),
 	play: async ({ canvas }) => {
-		await expect(canvas.getByRole('img', { name: /channel delivery/i })).toBeVisible();
+		await expect(
+			canvas.getByRole('img', { name: /channel delivery/i }),
+		).toBeVisible();
 	},
 };
 
@@ -69,7 +71,7 @@ export const Loading: Story = {
 	),
 };
 
-export const Error: Story = {
+export const ErrorState: Story = {
 	args: { error: 'Unable to load bar chart data.' },
 	render: (args) => (
 		<div style={{ width: 520 }}>

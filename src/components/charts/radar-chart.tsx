@@ -20,10 +20,19 @@ import type {
 } from '../../charts-core';
 import { getChartAnimationProps } from '../../charts-core';
 import { cx } from '../../utils/class-names';
-import { ChartContainer, ChartProvider, useChartPalette } from './_internal/chart-container';
+import { getRechartsTickFormatter } from './_internal/chart-axis';
+import {
+	ChartContainer,
+	ChartProvider,
+	useChartPalette,
+} from './_internal/chart-container';
 import { ChartLegend } from './_internal/chart-legend';
 import { ChartTooltip } from './_internal/chart-tooltip';
-import { getSeriesColumns, getSeriesLabel, toChartData } from './_internal/chart-utils';
+import {
+	getSeriesColumns,
+	getSeriesLabel,
+	toChartData,
+} from './_internal/chart-utils';
 
 export interface RadarChartProps<T extends ChartDatum>
 	extends Omit<HTMLAttributes<HTMLDivElement>, 'children'>,
@@ -69,18 +78,29 @@ function RadarChartContent<T extends ChartDatum>({
 			error={error}
 			height={height}
 			loading={loading}
-			tableColumns={tableColumns ?? getSeriesColumns(angleKey, series, undefined, valueFormat)}
+			tableColumns={
+				tableColumns ??
+				getSeriesColumns(angleKey, series, undefined, valueFormat)
+			}
 			{...props}
 		>
 			<div className="pds-chart__plot">
 				<ResponsiveContainer height="100%" width="100%">
 					<RechartsRadarChart data={toChartData(data)}>
 						<PolarGrid stroke={palette.grid} />
-						<PolarAngleAxis dataKey={String(angleKey)} tick={{ fill: palette.axis, fontSize: 12, fontWeight: 700 }} />
-						<PolarRadiusAxis tick={{ fill: palette.axis, fontSize: 11 }} tickFormatter={valueFormat} />
+						<PolarAngleAxis
+							dataKey={String(angleKey)}
+							tick={{ fill: palette.axis, fontSize: 12, fontWeight: 700 }}
+						/>
+						<PolarRadiusAxis
+							tick={{ fill: palette.axis, fontSize: 11 }}
+							tickFormatter={getRechartsTickFormatter(valueFormat)}
+						/>
 						<Tooltip content={<ChartTooltip valueFormatter={valueFormat} />} />
 						{series.map((item, index) => {
-							const color = item.color ?? palette.categorical[index % palette.categorical.length];
+							const color =
+								item.color ??
+								palette.categorical[index % palette.categorical.length];
 							return (
 								<Radar
 									dataKey={String(item.key)}

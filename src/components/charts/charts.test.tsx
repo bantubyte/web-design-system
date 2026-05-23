@@ -45,9 +45,9 @@ describe('chart component accessibility contracts', () => {
 			/>,
 		);
 
-		expect(container.querySelector('[role="img"]')?.getAttribute('aria-label')).toBe(
-			'Reach trend',
-		);
+		expect(
+			container.querySelector('[role="img"]')?.getAttribute('aria-label'),
+		).toBe('Reach trend');
 		expect(container.querySelectorAll('path')).toHaveLength(2);
 	});
 
@@ -62,7 +62,11 @@ describe('chart component accessibility contracts', () => {
 			/>,
 		);
 
-		expect(container.querySelector('.pds-visually-hidden table, table.pds-visually-hidden')).toBeTruthy();
+		expect(
+			container.querySelector(
+				'.pds-visually-hidden table, table.pds-visually-hidden',
+			),
+		).toBeTruthy();
 		expect(container.textContent).toContain('Gauteng');
 	});
 

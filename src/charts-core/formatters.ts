@@ -51,7 +51,9 @@ export const formatPercent = ({
 	from = 'ratio',
 	locale = 'en-ZA',
 	...options
-}: NumberFormatterOptions & { from?: 'ratio' | 'whole' } = {}): ChartFormatter => {
+}: NumberFormatterOptions & {
+	from?: 'ratio' | 'whole';
+} = {}): ChartFormatter => {
 	const formatter = new Intl.NumberFormat(locale, {
 		maximumFractionDigits: 1,
 		style: 'percent',

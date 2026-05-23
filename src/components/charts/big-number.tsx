@@ -21,7 +21,14 @@ export function BigNumber({
 	...props
 }: BigNumberProps) {
 	return (
-		<div className={cx('pds-chart-big-number', `pds-chart-big-number--${tone}`, className)} {...props}>
+		<div
+			className={cx(
+				'pds-chart-big-number',
+				`pds-chart-big-number--${tone}`,
+				className,
+			)}
+			{...props}
+		>
 			<span className="pds-chart-big-number__label">{label}</span>
 			<strong className="pds-chart-big-number__value">{value}</strong>
 			{delta || metadata ? (

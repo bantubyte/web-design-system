@@ -14,7 +14,7 @@ export function ChartError({
 			className={cx('pds-chart-state pds-chart-state--error', className)}
 			role="alert"
 		>
-			<span className="pds-chart-state__mark" aria-hidden="true" />
+			<span aria-hidden="true" className="pds-chart-state__mark" />
 			<p>{message}</p>
 		</div>
 	);

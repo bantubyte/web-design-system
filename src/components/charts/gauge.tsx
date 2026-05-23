@@ -21,19 +21,25 @@ export function Gauge({
 }: GaugeProps) {
 	const ratio = clamp((value - min) / (max - min || 1));
 	const angle = -90 + ratio * 180;
+	const meterLabel =
+		props['aria-label'] ?? (typeof label === 'string' ? label : 'Gauge');
 
 	return (
-		<div
-			aria-label={typeof label === 'string' ? label : 'Gauge'}
-			aria-valuemax={max}
-			aria-valuemin={min}
-			aria-valuenow={value}
-			className={cx('pds-chart-gauge', className)}
-			role="meter"
-			{...props}
-		>
+		<div className={cx('pds-chart-gauge', className)} {...props}>
+			<meter
+				aria-label={meterLabel}
+				className="pds-visually-hidden"
+				max={max}
+				min={min}
+				value={value}
+			>
+				{value}
+			</meter>
 			<svg aria-hidden="true" viewBox="0 0 160 92">
-				<path className="pds-chart-gauge__track" d="M 20 80 A 60 60 0 0 1 140 80" />
+				<path
+					className="pds-chart-gauge__track"
+					d="M 20 80 A 60 60 0 0 1 140 80"
+				/>
 				<path
 					className="pds-chart-gauge__value"
 					d="M 20 80 A 60 60 0 0 1 140 80"

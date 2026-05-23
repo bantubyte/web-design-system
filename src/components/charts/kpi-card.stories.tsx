@@ -69,7 +69,7 @@ export const Empty: Story = {
 };
 
 export const Loading: Story = Playground;
-export const Error: Story = Playground;
+export const ErrorState: Story = Playground;
 export const RealisticPikabooData: Story = Playground;
 export const RealisticPrimediaData: Story = {
 	args: {

@@ -1,29 +1,29 @@
-import type { ChartFormatter } from '../../../charts-core';
+import type { ChartDatum, ChartFormatter } from '../../../charts-core';
 import { formatPlainValue } from '../../../charts-core';
 
-interface TooltipPayloadItem {
+interface TooltipPayloadItem<T extends ChartDatum = ChartDatum> {
 	color?: string;
 	dataKey?: string;
 	name?: string;
-	payload?: Record<string, unknown>;
+	payload?: T;
 	value?: unknown;
 }
 
-export interface ChartTooltipProps {
+export interface ChartTooltipProps<T extends ChartDatum = ChartDatum> {
 	active?: boolean;
 	label?: unknown;
-	labelFormatter?: ChartFormatter;
-	payload?: readonly TooltipPayloadItem[];
-	valueFormatter?: ChartFormatter;
+	labelFormatter?: ChartFormatter<T>;
+	payload?: readonly TooltipPayloadItem<T>[];
+	valueFormatter?: ChartFormatter<T>;
 }
 
-export function ChartTooltip({
+export function ChartTooltip<T extends ChartDatum = ChartDatum>({
 	active,
 	label,
 	labelFormatter,
 	payload,
 	valueFormatter,
-}: ChartTooltipProps) {
+}: ChartTooltipProps<T>) {
 	if (!active || !payload?.length) return null;
 
 	return (

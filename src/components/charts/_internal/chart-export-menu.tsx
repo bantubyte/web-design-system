@@ -19,7 +19,8 @@ const downloadBlob = (blob: Blob, fileName: string) => {
 	URL.revokeObjectURL(url);
 };
 
-const quoteCsvCell = (value: string): string => `"${value.replaceAll('"', '""')}"`;
+const quoteCsvCell = (value: string): string =>
+	`"${value.replace(/"/g, '""')}"`;
 
 export function ChartExportMenu<T extends ChartDatum>({
 	columns,
@@ -33,7 +34,10 @@ export function ChartExportMenu<T extends ChartDatum>({
 			table.headers.map(quoteCsvCell).join(','),
 			...table.rows.map((row) => row.map(quoteCsvCell).join(',')),
 		].join('\n');
-		downloadBlob(new Blob([csv], { type: 'text/csv;charset=utf-8' }), `${fileName}.csv`);
+		downloadBlob(
+			new Blob([csv], { type: 'text/csv;charset=utf-8' }),
+			`${fileName}.csv`,
+		);
 	};
 
 	const handlePngExport = async () => {

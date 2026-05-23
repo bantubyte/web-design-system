@@ -1,9 +1,9 @@
 import type { HTMLAttributes } from 'react';
 import {
 	CartesianGrid,
+	ScatterChart as RechartsScatterChart,
 	ResponsiveContainer,
 	Scatter,
-	ScatterChart as RechartsScatterChart,
 	Tooltip,
 	XAxis,
 	YAxis,
@@ -20,9 +20,13 @@ import type {
 } from '../../charts-core';
 import { getChartAnimationProps } from '../../charts-core';
 import { cx } from '../../utils/class-names';
-import { ChartContainer, ChartProvider, useChartPalette } from './_internal/chart-container';
-import { ChartTooltip } from './_internal/chart-tooltip';
 import { getRechartsTickFormatter } from './_internal/chart-axis';
+import {
+	ChartContainer,
+	ChartProvider,
+	useChartPalette,
+} from './_internal/chart-container';
+import { ChartTooltip } from './_internal/chart-tooltip';
 import { toChartData } from './_internal/chart-utils';
 
 export interface ScatterChartProps<T extends ChartDatum>
@@ -83,7 +87,9 @@ function ScatterChartContent<T extends ChartDatum>({
 		>
 			<div className="pds-chart__plot">
 				<ResponsiveContainer height="100%" width="100%">
-					<RechartsScatterChart margin={{ bottom: 10, left: 4, right: 18, top: 12 }}>
+					<RechartsScatterChart
+						margin={{ bottom: 10, left: 4, right: 18, top: 12 }}
+					>
 						<CartesianGrid stroke={palette.grid} strokeDasharray="4 6" />
 						<XAxis
 							axisLine={false}
@@ -104,9 +110,16 @@ function ScatterChartContent<T extends ChartDatum>({
 							type="number"
 							width={54}
 						/>
-						{sizeKey ? <ZAxis dataKey={String(sizeKey)} range={[60, 520]} /> : null}
+						{sizeKey ? (
+							<ZAxis dataKey={String(sizeKey)} range={[60, 520]} />
+						) : null}
 						<Tooltip content={<ChartTooltip valueFormatter={yFormat} />} />
-						<Scatter data={toChartData(data)} fill={palette.categorical[0]} name={name} {...animation} />
+						<Scatter
+							data={toChartData(data)}
+							fill={palette.categorical[0]}
+							name={name}
+							{...animation}
+						/>
 					</RechartsScatterChart>
 				</ResponsiveContainer>
 			</div>
@@ -114,7 +127,9 @@ function ScatterChartContent<T extends ChartDatum>({
 	);
 }
 
-export function ScatterChart<T extends ChartDatum>(props: ScatterChartProps<T>) {
+export function ScatterChart<T extends ChartDatum>(
+	props: ScatterChartProps<T>,
+) {
 	return (
 		<ChartProvider palette={props.palette}>
 			<ScatterChartContent {...props} />

@@ -6,7 +6,11 @@ import type {
 	ChartStatusProps,
 } from '../../charts-core';
 import { cx } from '../../utils/class-names';
-import { ChartContainer, ChartProvider, useChartPalette } from './_internal/chart-container';
+import {
+	ChartContainer,
+	ChartProvider,
+	useChartPalette,
+} from './_internal/chart-container';
 
 export interface BoxPlotDatum extends ChartDatum {
 	label: string;
@@ -26,7 +30,19 @@ export interface BoxPlotProps
 	palette?: ChartPaletteName;
 }
 
-function BoxPlotContent({ ariaDescription, ariaLabel, className, data, empty, emptyMessage, error, height = 260, loading, tableColumns, ...props }: BoxPlotProps) {
+function BoxPlotContent({
+	ariaDescription,
+	ariaLabel,
+	className,
+	data,
+	empty,
+	emptyMessage,
+	error,
+	height = 260,
+	loading,
+	tableColumns,
+	...props
+}: BoxPlotProps) {
 	const palette = useChartPalette();
 	const min = Math.min(...data.map((datum) => datum.min), 0);
 	const max = Math.max(...data.map((datum) => datum.max), 1);
@@ -43,14 +59,16 @@ function BoxPlotContent({ ariaDescription, ariaLabel, className, data, empty, em
 			error={error}
 			height={height}
 			loading={loading}
-			tableColumns={tableColumns ?? [
-				{ header: 'Label', key: 'label' },
-				{ header: 'Min', key: 'min' },
-				{ header: 'Lower quartile', key: 'lower' },
-				{ header: 'Median', key: 'median' },
-				{ header: 'Upper quartile', key: 'upper' },
-				{ header: 'Max', key: 'max' },
-			]}
+			tableColumns={
+				tableColumns ?? [
+					{ header: 'Label', key: 'label' },
+					{ header: 'Min', key: 'min' },
+					{ header: 'Lower quartile', key: 'lower' },
+					{ header: 'Median', key: 'median' },
+					{ header: 'Upper quartile', key: 'upper' },
+					{ header: 'Max', key: 'max' },
+				]
+			}
 			{...props}
 		>
 			<div className="pds-chart-box-plot">
@@ -58,9 +76,26 @@ function BoxPlotContent({ ariaDescription, ariaLabel, className, data, empty, em
 					<div className="pds-chart-box-plot__row" key={datum.label}>
 						<strong>{datum.label}</strong>
 						<span className="pds-chart-box-plot__axis">
-							<span className="pds-chart-box-plot__whisker" style={{ left: `${scale(datum.min)}%`, width: `${scale(datum.max) - scale(datum.min)}%` }} />
-							<span className="pds-chart-box-plot__box" style={{ background: palette.categorical[index % palette.categorical.length], left: `${scale(datum.lower)}%`, width: `${scale(datum.upper) - scale(datum.lower)}%` }} />
-							<span className="pds-chart-box-plot__median" style={{ left: `${scale(datum.median)}%` }} />
+							<span
+								className="pds-chart-box-plot__whisker"
+								style={{
+									left: `${scale(datum.min)}%`,
+									width: `${scale(datum.max) - scale(datum.min)}%`,
+								}}
+							/>
+							<span
+								className="pds-chart-box-plot__box"
+								style={{
+									background:
+										palette.categorical[index % palette.categorical.length],
+									left: `${scale(datum.lower)}%`,
+									width: `${scale(datum.upper) - scale(datum.lower)}%`,
+								}}
+							/>
+							<span
+								className="pds-chart-box-plot__median"
+								style={{ left: `${scale(datum.median)}%` }}
+							/>
 						</span>
 					</div>
 				))}

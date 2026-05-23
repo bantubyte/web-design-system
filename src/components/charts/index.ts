@@ -1,3 +1,10 @@
+export {
+	ChartContainer,
+	ChartProvider,
+	useChartContext,
+	useChartPalette,
+} from './_internal/chart-container';
+export * from './_internal/chart-export-menu';
 export * from './area-chart';
 export * from './bar-chart';
 export * from './bar-list';
@@ -24,10 +31,3 @@ export * from './scatter-chart';
 export * from './sparkline';
 export * from './treemap';
 export * from './waterfall-chart';
-export {
-	ChartContainer,
-	ChartProvider,
-	useChartContext,
-	useChartPalette,
-} from './_internal/chart-container';
-export * from './_internal/chart-export-menu';

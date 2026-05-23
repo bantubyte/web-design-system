@@ -18,9 +18,17 @@ import type {
 } from '../../charts-core';
 import { formatPercent, getChartAnimationProps } from '../../charts-core';
 import { cx } from '../../utils/class-names';
-import { ChartContainer, ChartProvider, useChartPalette } from './_internal/chart-container';
+import {
+	ChartContainer,
+	ChartProvider,
+	useChartPalette,
+} from './_internal/chart-container';
 import { ChartTooltip } from './_internal/chart-tooltip';
-import { getNumberValue, getValueLabel, toChartData } from './_internal/chart-utils';
+import {
+	getNumberValue,
+	getValueLabel,
+	toChartData,
+} from './_internal/chart-utils';
 
 export interface PieChartProps<T extends ChartDatum>
 	extends Omit<HTMLAttributes<HTMLDivElement>, 'children'>,
@@ -70,11 +78,10 @@ function PieChartContent<T extends ChartDatum>({
 		[data, valueKey],
 	);
 	const percentFormatter = formatPercent();
-	const columns: readonly ChartA11yColumn<T>[] =
-		tableColumns ?? [
-			{ header: 'Segment', key: nameKey },
-			{ format: valueFormat, header: 'Value', key: valueKey },
-		];
+	const columns: readonly ChartA11yColumn<T>[] = tableColumns ?? [
+		{ header: 'Segment', key: nameKey },
+		{ format: valueFormat, header: 'Value', key: valueKey },
+	];
 	const animation = getChartAnimationProps();
 
 	return (
@@ -102,14 +109,18 @@ function PieChartContent<T extends ChartDatum>({
 					<ResponsiveContainer height="100%" width="100%">
 						<RechartsPieChart>
 							{showTooltip ? (
-								<Tooltip content={<ChartTooltip valueFormatter={valueFormat} />} />
+								<Tooltip
+									content={<ChartTooltip valueFormatter={valueFormat} />}
+								/>
 							) : null}
 							<Pie
 								cx="50%"
 								cy="50%"
 								data={toChartData(data)}
 								dataKey={String(valueKey)}
-								innerRadius={variant === 'donut' ? (innerRadius ?? 58) : innerRadius}
+								innerRadius={
+									variant === 'donut' ? (innerRadius ?? 58) : innerRadius
+								}
 								nameKey={String(nameKey)}
 								outerRadius="82%"
 								paddingAngle={2}
@@ -119,7 +130,9 @@ function PieChartContent<T extends ChartDatum>({
 							>
 								{data.map((datum, index) => (
 									<Cell
-										fill={palette.categorical[index % palette.categorical.length]}
+										fill={
+											palette.categorical[index % palette.categorical.length]
+										}
 										key={String(datum[nameKey] ?? index)}
 									/>
 								))}
@@ -140,12 +153,15 @@ function PieChartContent<T extends ChartDatum>({
 									<span
 										className="pds-chart-pie__swatch"
 										style={{
-											background: palette.categorical[index % palette.categorical.length],
+											background:
+												palette.categorical[index % palette.categorical.length],
 										}}
 									/>
 									<span>{getValueLabel(datum[nameKey])}</span>
 									<strong>
-										{valueFormat ? valueFormat(value, { datum }) : percentFormatter(percent)}
+										{valueFormat
+											? valueFormat(value, { datum })
+											: percentFormatter(percent)}
 									</strong>
 								</li>
 							);

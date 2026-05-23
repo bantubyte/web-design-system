@@ -9,7 +9,11 @@ import type {
 } from '../../charts-core';
 import { clamp } from '../../charts-core';
 import { cx } from '../../utils/class-names';
-import { ChartContainer, ChartProvider, useChartPalette } from './_internal/chart-container';
+import {
+	ChartContainer,
+	ChartProvider,
+	useChartPalette,
+} from './_internal/chart-container';
 import { getNumberValue } from './_internal/chart-utils';
 
 export interface CalendarHeatmapProps<T extends ChartDatum>
@@ -65,14 +69,22 @@ function CalendarHeatmapContent<T extends ChartDatum>({
 			height={180}
 			loading={loading}
 			loadingVariant="grid"
-			tableColumns={tableColumns ?? [{ header: 'Date', key: dateKey }, { format: valueFormat, header: 'Value', key: valueKey }]}
+			tableColumns={
+				tableColumns ?? [
+					{ header: 'Date', key: dateKey },
+					{ format: valueFormat, header: 'Value', key: valueKey },
+				]
+			}
 			{...props}
 		>
 			<div className="pds-chart-calendar-heatmap">
 				{sorted.map((datum, index) => {
 					const date = parseDate(datum[dateKey]);
 					const value = getNumberValue(datum[valueKey]) ?? 0;
-					const paletteIndex = Math.round(clamp((value - min) / (max - min || 1)) * (palette.sequential.length - 1));
+					const paletteIndex = Math.round(
+						clamp((value - min) / (max - min || 1)) *
+							(palette.sequential.length - 1),
+					);
 					return (
 						<span
 							key={`${date?.toISOString() ?? 'date'}-${index}`}
@@ -86,7 +98,9 @@ function CalendarHeatmapContent<T extends ChartDatum>({
 	);
 }
 
-export function CalendarHeatmap<T extends ChartDatum>(props: CalendarHeatmapProps<T>) {
+export function CalendarHeatmap<T extends ChartDatum>(
+	props: CalendarHeatmapProps<T>,
+) {
 	return (
 		<ChartProvider palette={props.palette ?? 'sequential'}>
 			<CalendarHeatmapContent {...props} />

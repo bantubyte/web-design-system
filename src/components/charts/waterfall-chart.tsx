@@ -7,7 +7,11 @@ import type {
 	ChartStatusProps,
 } from '../../charts-core';
 import { cx } from '../../utils/class-names';
-import { ChartContainer, ChartProvider, useChartPalette } from './_internal/chart-container';
+import {
+	ChartContainer,
+	ChartProvider,
+	useChartPalette,
+} from './_internal/chart-container';
 
 export interface WaterfallDatum extends ChartDatum {
 	label: string;
@@ -60,7 +64,12 @@ function WaterfallChartContent({
 			height={height}
 			loading={loading}
 			loadingVariant="bar"
-			tableColumns={tableColumns ?? [{ header: 'Label', key: 'label' }, { format: valueFormat, header: 'Value', key: 'value' }]}
+			tableColumns={
+				tableColumns ?? [
+					{ header: 'Label', key: 'label' },
+					{ format: valueFormat, header: 'Value', key: 'value' },
+				]
+			}
 			{...props}
 		>
 			<div className="pds-chart-waterfall">

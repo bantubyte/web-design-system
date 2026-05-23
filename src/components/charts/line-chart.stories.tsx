@@ -85,7 +85,7 @@ export const Loading: Story = {
 	),
 };
 
-export const Error: Story = {
+export const ErrorState: Story = {
 	args: { error: 'Insights service did not return trend data.' },
 	render: (args) => (
 		<div style={{ width: 520 }}>

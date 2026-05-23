@@ -10,7 +10,6 @@ import {
 	createReportEvidenceModel,
 	createReportPlacementTableModel,
 	createReportRankedListModel,
-	createReportSeriesPath,
 	createReportTourModel,
 	getInitialReportEvidenceState,
 	getReportNumbers,
@@ -1163,7 +1162,6 @@ export function ReportComparisonBlock({
 
 const getNumbers = getReportNumbers;
 const getRange = getReportRange;
-const pointsToPath = createReportSeriesPath;
 
 const reportNodeToText = (value: ReactNode): string => {
 	if (typeof value === 'string' || typeof value === 'number') {

@@ -1,8 +1,8 @@
 import type { HTMLAttributes } from 'react';
 import {
 	Funnel,
-	FunnelChart as RechartsFunnelChart,
 	LabelList,
+	FunnelChart as RechartsFunnelChart,
 	ResponsiveContainer,
 	Tooltip,
 } from 'recharts';
@@ -17,7 +17,11 @@ import type {
 } from '../../charts-core';
 import { getChartAnimationProps } from '../../charts-core';
 import { cx } from '../../utils/class-names';
-import { ChartContainer, ChartProvider, useChartPalette } from './_internal/chart-container';
+import {
+	ChartContainer,
+	ChartProvider,
+	useChartPalette,
+} from './_internal/chart-container';
 import { ChartTooltip } from './_internal/chart-tooltip';
 import { toChartData } from './_internal/chart-utils';
 
@@ -67,15 +71,29 @@ function FunnelChartContent<T extends ChartDatum>({
 			error={error}
 			height={height}
 			loading={loading}
-			tableColumns={tableColumns ?? [{ header: 'Stage', key: nameKey }, { format: valueFormat, header: 'Value', key: valueKey }]}
+			tableColumns={
+				tableColumns ?? [
+					{ header: 'Stage', key: nameKey },
+					{ format: valueFormat, header: 'Value', key: valueKey },
+				]
+			}
 			{...props}
 		>
 			<div className="pds-chart__plot">
 				<ResponsiveContainer height="100%" width="100%">
 					<RechartsFunnelChart>
 						<Tooltip content={<ChartTooltip valueFormatter={valueFormat} />} />
-						<Funnel data={toChartData(chartData)} dataKey={String(valueKey)} nameKey={String(nameKey)} {...animation}>
-							<LabelList dataKey={String(nameKey)} fill="var(--theme-foreground)" position="right" />
+						<Funnel
+							data={toChartData(chartData)}
+							dataKey={String(valueKey)}
+							nameKey={String(nameKey)}
+							{...animation}
+						>
+							<LabelList
+								dataKey={String(nameKey)}
+								fill="var(--theme-foreground)"
+								position="right"
+							/>
 						</Funnel>
 					</RechartsFunnelChart>
 				</ResponsiveContainer>

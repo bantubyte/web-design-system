@@ -99,16 +99,30 @@ export const AllVariants: Story = {
 			/>
 			<Histogram
 				ariaLabel="Site score histogram"
-				data={[12, 18, 22, 35, 41, 42, 48, 52, 66, 71, 74, 86].map(
-					(value) => ({ value }),
-				)}
+				data={[12, 18, 22, 35, 41, 42, 48, 52, 66, 71, 74, 86].map((value) => ({
+					value,
+				}))}
 				valueKey="value"
 			/>
 			<BoxPlot
 				ariaLabel="Attention distribution box plot"
 				data={[
-					{ label: 'Pikaboo', lower: 42, max: 92, median: 63, min: 22, upper: 78 },
-					{ label: 'Primedia', lower: 38, max: 86, median: 59, min: 18, upper: 72 },
+					{
+						label: 'Pikaboo',
+						lower: 42,
+						max: 92,
+						median: 63,
+						min: 22,
+						upper: 78,
+					},
+					{
+						label: 'Primedia',
+						lower: 38,
+						max: 86,
+						median: 59,
+						min: 18,
+						upper: 72,
+					},
 				]}
 			/>
 			<WaterfallChart
@@ -163,7 +177,7 @@ export const AllVariants: Story = {
 export const Playground: Story = AllVariants;
 export const Empty: Story = AllVariants;
 export const Loading: Story = AllVariants;
-export const Error: Story = AllVariants;
+export const ErrorState: Story = AllVariants;
 export const RealisticPikabooData: Story = AllVariants;
 export const RealisticPrimediaData: Story = AllVariants;
 export const KeyboardNavigation: Story = AllVariants;

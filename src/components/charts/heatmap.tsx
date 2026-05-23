@@ -10,7 +10,11 @@ import type {
 } from '../../charts-core';
 import { clamp } from '../../charts-core';
 import { cx } from '../../utils/class-names';
-import { ChartContainer, ChartProvider, useChartPalette } from './_internal/chart-container';
+import {
+	ChartContainer,
+	ChartProvider,
+	useChartPalette,
+} from './_internal/chart-container';
 import { getNumberValue } from './_internal/chart-utils';
 
 export interface HeatmapProps<T extends ChartDatum>
@@ -44,8 +48,12 @@ function HeatmapContent<T extends ChartDatum>({
 	...props
 }: HeatmapProps<T>) {
 	const palette = useChartPalette();
-	const rows = Array.from(new Set(data.map((datum) => String(datum[rowKey] ?? ''))));
-	const columns = Array.from(new Set(data.map((datum) => String(datum[columnKey] ?? ''))));
+	const rows = Array.from(
+		new Set(data.map((datum) => String(datum[rowKey] ?? ''))),
+	);
+	const columns = Array.from(
+		new Set(data.map((datum) => String(datum[columnKey] ?? ''))),
+	);
 	const values = data.map((datum) => getNumberValue(datum[valueKey]) ?? 0);
 	const min = Math.min(...values, 0);
 	const max = Math.max(...values, 1);
@@ -91,7 +99,10 @@ function HeatmapContent<T extends ChartDatum>({
 									String(item[columnKey] ?? '') === column,
 							);
 							const value = datum ? (getNumberValue(datum[valueKey]) ?? 0) : 0;
-							const index = Math.round(clamp((value - min) / (max - min || 1)) * (palette.sequential.length - 1));
+							const index = Math.round(
+								clamp((value - min) / (max - min || 1)) *
+									(palette.sequential.length - 1),
+							);
 							return (
 								<span
 									className="pds-chart-heatmap__cell"

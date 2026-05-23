@@ -1,8 +1,8 @@
 import { type HTMLAttributes, useMemo, useState } from 'react';
 import {
 	Area,
-	AreaChart as RechartsAreaChart,
 	CartesianGrid,
+	AreaChart as RechartsAreaChart,
 	ResponsiveContainer,
 	Tooltip,
 	XAxis,
@@ -18,16 +18,23 @@ import type {
 	ChartSizeProps,
 	ChartStatusProps,
 } from '../../charts-core';
-import { getChartAnimationProps, getSeriesStrokeDasharray } from '../../charts-core';
-import { cx } from '../../utils/class-names';
-import { ChartContainer, ChartProvider, useChartPalette } from './_internal/chart-container';
-import { ChartLegend } from './_internal/chart-legend';
-import { ChartTooltip } from './_internal/chart-tooltip';
 import {
+	getChartAnimationProps,
+	getSeriesStrokeDasharray,
+} from '../../charts-core';
+import { cx } from '../../utils/class-names';
+import {
+	type ChartAxisPreset,
 	getRechartsTickFormatter,
 	resolveAxisFormatter,
-	type ChartAxisPreset,
 } from './_internal/chart-axis';
+import {
+	ChartContainer,
+	ChartProvider,
+	useChartPalette,
+} from './_internal/chart-container';
+import { ChartLegend } from './_internal/chart-legend';
+import { ChartTooltip } from './_internal/chart-tooltip';
 import {
 	getSeriesColumns,
 	getSeriesLabel,
@@ -104,7 +111,9 @@ function AreaChartContent<T extends ChartDatum>({
 			error={error}
 			height={height}
 			loading={loading}
-			tableColumns={tableColumns ?? getSeriesColumns(xKey, series, xFormat, yFormat)}
+			tableColumns={
+				tableColumns ?? getSeriesColumns(xKey, series, xFormat, yFormat)
+			}
 			{...props}
 		>
 			<div className="pds-chart__plot">
@@ -114,7 +123,11 @@ function AreaChartContent<T extends ChartDatum>({
 						margin={{ bottom: 10, left: 4, right: 18, top: 12 }}
 					>
 						{showGrid ? (
-							<CartesianGrid stroke={palette.grid} strokeDasharray="4 6" vertical={false} />
+							<CartesianGrid
+								stroke={palette.grid}
+								strokeDasharray="4 6"
+								vertical={false}
+							/>
 						) : null}
 						<XAxis
 							axisLine={false}
@@ -132,11 +145,18 @@ function AreaChartContent<T extends ChartDatum>({
 						/>
 						{showTooltip ? (
 							<Tooltip
-								content={<ChartTooltip labelFormatter={xFormatter} valueFormatter={yFormatter} />}
+								content={
+									<ChartTooltip
+										labelFormatter={xFormatter}
+										valueFormatter={yFormatter}
+									/>
+								}
 							/>
 						) : null}
 						{visibleSeries.map((item, index) => {
-							const color = item.color ?? palette.categorical[index % palette.categorical.length];
+							const color =
+								item.color ??
+								palette.categorical[index % palette.categorical.length];
 							return (
 								<Area
 									dataKey={String(item.key)}
@@ -144,9 +164,12 @@ function AreaChartContent<T extends ChartDatum>({
 									fillOpacity={0.16}
 									key={String(item.key)}
 									name={getSeriesLabel(item)}
-									stackId={stacked ? item.stackId ?? 'stack' : item.stackId}
+									stackId={stacked ? (item.stackId ?? 'stack') : item.stackId}
 									stroke={color}
-									strokeDasharray={getSeriesStrokeDasharray(index, item.strokeDasharray)}
+									strokeDasharray={getSeriesStrokeDasharray(
+										index,
+										item.strokeDasharray,
+									)}
 									strokeWidth={2.25}
 									type="monotone"
 									{...animation}
@@ -157,7 +180,12 @@ function AreaChartContent<T extends ChartDatum>({
 				</ResponsiveContainer>
 			</div>
 			{showLegend ? (
-				<ChartLegend hiddenKeys={hiddenKeys} onToggle={toggleSeries} palette={palette} series={series} />
+				<ChartLegend
+					hiddenKeys={hiddenKeys}
+					onToggle={toggleSeries}
+					palette={palette}
+					series={series}
+				/>
 			) : null}
 		</ChartContainer>
 	);

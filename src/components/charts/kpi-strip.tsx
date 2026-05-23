@@ -8,7 +8,11 @@ export interface KpiStripProps extends HTMLAttributes<HTMLDivElement> {
 export function KpiStrip({ className, columns = 4, ...props }: KpiStripProps) {
 	return (
 		<div
-			className={cx('pds-chart-kpi-strip', `pds-chart-kpi-strip--${columns}`, className)}
+			className={cx(
+				'pds-chart-kpi-strip',
+				`pds-chart-kpi-strip--${columns}`,
+				className,
+			)}
 			{...props}
 		/>
 	);

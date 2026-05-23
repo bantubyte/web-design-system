@@ -7,7 +7,11 @@ import type {
 	ChartStatusProps,
 } from '../../charts-core';
 import { cx } from '../../utils/class-names';
-import { ChartContainer, ChartProvider, useChartPalette } from './_internal/chart-container';
+import {
+	ChartContainer,
+	ChartProvider,
+	useChartPalette,
+} from './_internal/chart-container';
 import { ChartTooltip } from './_internal/chart-tooltip';
 
 export interface SankeyNode {
@@ -82,7 +86,10 @@ function SankeyChartContent({
 						data={data as { links: SankeyLink[]; nodes: SankeyNode[] }}
 						link={{ stroke: palette.categorical[0], strokeOpacity: 0.28 }}
 						margin={{ bottom: 12, left: 12, right: 12, top: 12 }}
-						node={{ fill: palette.categorical[1], stroke: palette.categorical[1] }}
+						node={{
+							fill: palette.categorical[1],
+							stroke: palette.categorical[1],
+						}}
 						nodePadding={24}
 					>
 						<Tooltip content={<ChartTooltip valueFormatter={valueFormat} />} />

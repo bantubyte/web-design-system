@@ -1,1 +1,1 @@
-export * from './charts-core';
+export * from './charts-core/index';

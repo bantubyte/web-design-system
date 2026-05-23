@@ -1,6 +1,6 @@
 import {
-	createContext,
 	type CSSProperties,
+	createContext,
 	type HTMLAttributes,
 	type ReactNode,
 	useContext,
@@ -93,7 +93,8 @@ export function ChartProvider({
 	);
 }
 
-export const useChartContext = (): ChartContextValue => useContext(ChartContext);
+export const useChartContext = (): ChartContextValue =>
+	useContext(ChartContext);
 
 export const useChartPalette = (palette?: ChartPaletteName): ChartPalette => {
 	const context = useChartContext();
@@ -135,9 +136,76 @@ export function ChartContainer<T extends ChartDatum>({
 	tableVisible = false,
 	...props
 }: ChartContainerProps<T>) {
+	const chartRef = useRef<HTMLDivElement>(null);
 	const descriptionId = ariaDescription
 		? `${ariaLabel.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-description`
 		: undefined;
+
+	useEffect(() => {
+		const chart = chartRef.current;
+		if (!chart) return;
+
+		const setAttribute = (
+			element: Element,
+			attributeName: string,
+			value: string,
+		) => {
+			if (element.getAttribute(attributeName) !== value) {
+				element.setAttribute(attributeName, value);
+			}
+		};
+
+		const removeAttribute = (element: Element, attributeName: string) => {
+			if (element.hasAttribute(attributeName)) {
+				element.removeAttribute(attributeName);
+			}
+		};
+
+		const sanitizeRechartsA11y = () => {
+			for (const element of chart.querySelectorAll(
+				'.recharts-wrapper[role="region"]',
+			)) {
+				removeAttribute(element, 'role');
+				removeAttribute(element, 'aria-hidden');
+			}
+
+			for (const element of chart.querySelectorAll('.recharts-surface')) {
+				setAttribute(element, 'role', 'presentation');
+				setAttribute(element, 'focusable', 'false');
+				removeAttribute(element, 'aria-hidden');
+			}
+
+			for (const element of chart.querySelectorAll(
+				'.recharts-layer[role="img"], .recharts-sector[role="img"], .recharts-rectangle[role="img"], .recharts-scatter-symbol[role="img"], [role="img"].recharts-symbols',
+			)) {
+				setAttribute(element, 'role', 'presentation');
+				setAttribute(element, 'aria-hidden', 'true');
+				setAttribute(element, 'tabindex', '-1');
+				setAttribute(element, 'focusable', 'false');
+			}
+
+			for (const element of chart.querySelectorAll(
+				'.recharts-wrapper [tabindex], .recharts-wrapper [focusable="true"]',
+			)) {
+				if (element instanceof HTMLElement || element instanceof SVGElement) {
+					setAttribute(element, 'tabindex', '-1');
+					setAttribute(element, 'focusable', 'false');
+				}
+			}
+		};
+
+		sanitizeRechartsA11y();
+
+		const observer = new MutationObserver(sanitizeRechartsA11y);
+		observer.observe(chart, {
+			attributeFilter: ['aria-hidden', 'focusable', 'role', 'tabindex'],
+			attributes: true,
+			childList: true,
+			subtree: true,
+		});
+
+		return () => observer.disconnect();
+	});
 
 	return (
 		<>
@@ -145,8 +213,11 @@ export function ChartContainer<T extends ChartDatum>({
 				aria-describedby={descriptionId}
 				aria-label={ariaLabel}
 				className={cx('pds-chart', className)}
+				ref={chartRef}
 				role="img"
-				style={{ '--pds-chart-height': `${height}px`, ...style } as CSSProperties}
+				style={
+					{ '--pds-chart-height': `${height}px`, ...style } as CSSProperties
+				}
 				{...props}
 			>
 				{ariaDescription ? (

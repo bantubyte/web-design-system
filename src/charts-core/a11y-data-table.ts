@@ -1,16 +1,12 @@
-import type {
-	ChartA11yColumn,
-	ChartDatum,
-	ChartTableModel,
-} from './types';
+import type { ChartA11yColumn, ChartDatum, ChartTableModel } from './types';
 
 const escapeHtml = (value: unknown): string =>
 	String(value ?? '')
-		.replaceAll('&', '&amp;')
-		.replaceAll('<', '&lt;')
-		.replaceAll('>', '&gt;')
-		.replaceAll('"', '&quot;')
-		.replaceAll("'", '&#39;');
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&#39;');
 
 export const createChartTableModel = <T extends ChartDatum>(
 	data: readonly T[],

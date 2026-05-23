@@ -1,5 +1,9 @@
 import type { KeyboardEvent } from 'react';
-import type { ChartDatum, ChartPalette, ChartSeries } from '../../../charts-core';
+import type {
+	ChartDatum,
+	ChartPalette,
+	ChartSeries,
+} from '../../../charts-core';
 import { getSeriesColor } from '../../../charts-core';
 import { cx } from '../../../utils/class-names';
 import { getSeriesLabel } from './chart-utils';
@@ -19,7 +23,10 @@ export function ChartLegend<T extends ChartDatum>({
 	palette,
 	series,
 }: ChartLegendProps<T>) {
-	const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>, key: string) => {
+	const handleKeyDown = (
+		event: KeyboardEvent<HTMLButtonElement>,
+		key: string,
+	) => {
 		if (event.key === 'Enter' || event.key === ' ') {
 			event.preventDefault();
 			onToggle?.(key);

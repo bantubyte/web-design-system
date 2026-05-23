@@ -12,19 +12,18 @@ export function ChartLoading({
 	variant = 'line',
 }: ChartLoadingProps) {
 	return (
-		<div
+		<output
 			aria-label="Loading chart"
 			className={cx(
 				'pds-chart-loading',
 				`pds-chart-loading--${variant}`,
 				className,
 			)}
-			role="status"
 		>
 			<span />
 			<span />
 			<span />
 			<span />
-		</div>
+		</output>
 	);
 }

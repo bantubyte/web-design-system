@@ -16,7 +16,11 @@ import type {
 } from '../../charts-core';
 import { getChartAnimationProps } from '../../charts-core';
 import { cx } from '../../utils/class-names';
-import { ChartContainer, ChartProvider, useChartPalette } from './_internal/chart-container';
+import {
+	ChartContainer,
+	ChartProvider,
+	useChartPalette,
+} from './_internal/chart-container';
 import { ChartTooltip } from './_internal/chart-tooltip';
 import { toChartData } from './_internal/chart-utils';
 
@@ -66,7 +70,12 @@ function RadialBarChartContent<T extends ChartDatum>({
 			error={error}
 			height={height}
 			loading={loading}
-			tableColumns={tableColumns ?? [{ header: 'Label', key: nameKey }, { format: valueFormat, header: 'Value', key: valueKey }]}
+			tableColumns={
+				tableColumns ?? [
+					{ header: 'Label', key: nameKey },
+					{ format: valueFormat, header: 'Value', key: valueKey },
+				]
+			}
 			{...props}
 		>
 			<div className="pds-chart__plot">
@@ -82,7 +91,13 @@ function RadialBarChartContent<T extends ChartDatum>({
 						startAngle={90}
 					>
 						<Tooltip content={<ChartTooltip valueFormatter={valueFormat} />} />
-						<RadialBar background cornerRadius={10} dataKey={String(valueKey)} name={String(nameKey)} {...animation} />
+						<RadialBar
+							background
+							cornerRadius={10}
+							dataKey={String(valueKey)}
+							name={String(nameKey)}
+							{...animation}
+						/>
 					</RechartsRadialBarChart>
 				</ResponsiveContainer>
 			</div>
@@ -90,7 +105,9 @@ function RadialBarChartContent<T extends ChartDatum>({
 	);
 }
 
-export function RadialBarChart<T extends ChartDatum>(props: RadialBarChartProps<T>) {
+export function RadialBarChart<T extends ChartDatum>(
+	props: RadialBarChartProps<T>,
+) {
 	return (
 		<ChartProvider palette={props.palette}>
 			<RadialBarChartContent {...props} />

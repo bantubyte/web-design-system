@@ -39,7 +39,9 @@ export const Playground: Story = {
 		</div>
 	),
 	play: async ({ canvas }) => {
-		await expect(canvas.getByRole('img', { name: /attention score/i })).toBeVisible();
+		await expect(
+			canvas.getByRole('img', { name: /attention score/i }),
+		).toBeVisible();
 	},
 };
 
@@ -78,7 +80,7 @@ export const Loading: Story = {
 	),
 };
 
-export const Error: Story = {
+export const ErrorState: Story = {
 	args: { error: 'Unable to load heatmap data.' },
 	render: (args) => (
 		<div style={{ width: 520 }}>

@@ -19,7 +19,10 @@ export interface SparklineProps
 }
 
 const getNumbers = (values: readonly (number | null | undefined)[]): number[] =>
-	values.filter((value): value is number => typeof value === 'number' && Number.isFinite(value));
+	values.filter(
+		(value): value is number =>
+			typeof value === 'number' && Number.isFinite(value),
+	);
 
 export const createSparklinePath = (
 	values: readonly (number | null | undefined)[],
@@ -55,7 +58,9 @@ function SparklineContent({
 }: SparklineProps) {
 	const palette = useChartPalette();
 	const actualPath = createSparklinePath(values, width, height);
-	const forecastPath = forecast ? createSparklinePath(forecast, width, height) : '';
+	const forecastPath = forecast
+		? createSparklinePath(forecast, width, height)
+		: '';
 
 	return (
 		<div
@@ -64,8 +69,15 @@ function SparklineContent({
 			role="img"
 			{...props}
 		>
-			{ariaDescription ? <span className="pds-visually-hidden">{ariaDescription}</span> : null}
-			<svg aria-hidden="true" height={height} viewBox={`0 0 ${width} ${height}`} width={width}>
+			{ariaDescription ? (
+				<span className="pds-visually-hidden">{ariaDescription}</span>
+			) : null}
+			<svg
+				aria-hidden="true"
+				height={height}
+				viewBox={`0 0 ${width} ${height}`}
+				width={width}
+			>
 				{forecastPath ? (
 					<path
 						className="pds-chart-sparkline__forecast"

@@ -7,7 +7,11 @@ import type {
 	ChartStatusProps,
 } from '../../charts-core';
 import { cx } from '../../utils/class-names';
-import { ChartContainer, ChartProvider, useChartPalette } from './_internal/chart-container';
+import {
+	ChartContainer,
+	ChartProvider,
+	useChartPalette,
+} from './_internal/chart-container';
 
 export interface RibbonChartProps<T extends ChartDatum>
 	extends Omit<HTMLAttributes<HTMLDivElement>, 'children'>,
@@ -38,12 +42,21 @@ function RibbonChartContent<T extends ChartDatum>({
 	...props
 }: RibbonChartProps<T>) {
 	const palette = useChartPalette();
-	const periods = Array.from(new Set(data.map((datum) => String(datum[xKey] ?? ''))));
-	const categories = Array.from(new Set(data.map((datum) => String(datum[categoryKey] ?? ''))));
-	const maxRank = Math.max(...data.map((datum) => Number(datum[rankKey]) || 1), 1);
+	const periods = Array.from(
+		new Set(data.map((datum) => String(datum[xKey] ?? ''))),
+	);
+	const categories = Array.from(
+		new Set(data.map((datum) => String(datum[categoryKey] ?? ''))),
+	);
+	const maxRank = Math.max(
+		...data.map((datum) => Number(datum[rankKey]) || 1),
+		1,
+	);
 	const pointFor = (category: string, period: string, index: number) => {
 		const datum = data.find(
-			(item) => String(item[categoryKey] ?? '') === category && String(item[xKey] ?? '') === period,
+			(item) =>
+				String(item[categoryKey] ?? '') === category &&
+				String(item[xKey] ?? '') === period,
 		);
 		const rank = Number(datum?.[rankKey]) || maxRank;
 		const x = periods.length <= 1 ? 0 : (index / (periods.length - 1)) * 100;
@@ -62,17 +75,31 @@ function RibbonChartContent<T extends ChartDatum>({
 			error={error}
 			height={height}
 			loading={loading}
-			tableColumns={tableColumns ?? [{ header: 'Period', key: xKey }, { header: 'Category', key: categoryKey }, { header: 'Rank', key: rankKey }]}
+			tableColumns={
+				tableColumns ?? [
+					{ header: 'Period', key: xKey },
+					{ header: 'Category', key: categoryKey },
+					{ header: 'Rank', key: rankKey },
+				]
+			}
 			{...props}
 		>
 			<div className="pds-chart-ribbon">
-				<svg aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 100 100">
+				<svg
+					aria-hidden="true"
+					preserveAspectRatio="none"
+					viewBox="0 0 100 100"
+				>
 					{categories.map((category, categoryIndex) => (
 						<polyline
 							fill="none"
 							key={category}
-							points={periods.map((period, index) => pointFor(category, period, index)).join(' ')}
-							stroke={palette.categorical[categoryIndex % palette.categorical.length]}
+							points={periods
+								.map((period, index) => pointFor(category, period, index))
+								.join(' ')}
+							stroke={
+								palette.categorical[categoryIndex % palette.categorical.length]
+							}
 							strokeLinecap="round"
 							strokeLinejoin="round"
 							strokeWidth="2.5"

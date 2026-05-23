@@ -34,7 +34,12 @@ export function ProgressCircle({
 			{...props}
 		>
 			<svg aria-hidden="true" viewBox="0 0 100 100">
-				<circle className="pds-chart-progress-circle__track" cx="50" cy="50" r={radius} />
+				<circle
+					className="pds-chart-progress-circle__track"
+					cx="50"
+					cy="50"
+					r={radius}
+				/>
 				<circle
 					className="pds-chart-progress-circle__value"
 					cx="50"

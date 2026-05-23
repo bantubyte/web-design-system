@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode } from 'react';
+import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 import type {
 	ChartA11yProps,
 	ChartFormatter,
@@ -7,7 +7,11 @@ import type {
 } from '../../charts-core';
 import { formatPlainValue } from '../../charts-core';
 import { cx } from '../../utils/class-names';
-import { ChartContainer, ChartProvider, useChartPalette } from './_internal/chart-container';
+import {
+	ChartContainer,
+	ChartProvider,
+	useChartPalette,
+} from './_internal/chart-container';
 
 export interface BarListItem {
 	color?: string;
@@ -19,7 +23,7 @@ export interface BarListItem {
 }
 
 export interface BarListProps
-	extends Omit<HTMLAttributes<HTMLDivElement>, 'children'>,
+	extends Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'title'>,
 		Omit<Partial<ChartA11yProps>, 'tableColumns'>,
 		ChartStatusProps {
 	formatValue?: ChartFormatter;
@@ -50,6 +54,19 @@ function BarListContent({
 		label: typeof item.label === 'string' ? item.label : `Item ${index + 1}`,
 		value: item.value,
 	}));
+	const getBarStyle = (item: BarListItem, index: number): CSSProperties => {
+		const toneOverridesColor =
+			item.tone === 'good' || item.tone === 'watch' || item.tone === 'risk';
+		const color =
+			item.color ??
+			(toneOverridesColor
+				? undefined
+				: palette.categorical[index % palette.categorical.length]);
+		return {
+			...(color ? { '--pds-chart-bar-color': color } : {}),
+			'--pds-chart-bar-width': `${Math.round((item.value / maxValue) * 100)}%`,
+		} as CSSProperties;
+	};
 
 	return (
 		<ChartContainer
@@ -81,10 +98,7 @@ function BarListContent({
 									'pds-chart-bar-list__bar',
 									item.tone && `pds-chart-bar-list__bar--${item.tone}`,
 								)}
-								style={{
-									background: item.color ?? palette.categorical[index % palette.categorical.length],
-									width: `${Math.round((item.value / maxValue) * 100)}%`,
-								}}
+								style={getBarStyle(item, index)}
 							/>
 						</span>
 						<strong>{formatValue(item.value)}</strong>

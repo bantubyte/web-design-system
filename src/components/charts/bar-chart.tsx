@@ -1,8 +1,8 @@
 import { type HTMLAttributes, useMemo, useState } from 'react';
 import {
 	Bar,
-	BarChart as RechartsBarChart,
 	CartesianGrid,
+	BarChart as RechartsBarChart,
 	ResponsiveContainer,
 	Tooltip,
 	XAxis,
@@ -18,16 +18,23 @@ import type {
 	ChartSizeProps,
 	ChartStatusProps,
 } from '../../charts-core';
-import { getChartAnimationProps, normalizePercentStack } from '../../charts-core';
-import { cx } from '../../utils/class-names';
-import { ChartContainer, ChartProvider, useChartPalette } from './_internal/chart-container';
-import { ChartLegend } from './_internal/chart-legend';
-import { ChartTooltip } from './_internal/chart-tooltip';
 import {
+	getChartAnimationProps,
+	normalizePercentStack,
+} from '../../charts-core';
+import { cx } from '../../utils/class-names';
+import {
+	type ChartAxisPreset,
 	getRechartsTickFormatter,
 	resolveAxisFormatter,
-	type ChartAxisPreset,
 } from './_internal/chart-axis';
+import {
+	ChartContainer,
+	ChartProvider,
+	useChartPalette,
+} from './_internal/chart-container';
+import { ChartLegend } from './_internal/chart-legend';
+import { ChartTooltip } from './_internal/chart-tooltip';
 import {
 	getSeriesColumns,
 	getSeriesLabel,
@@ -95,7 +102,10 @@ function BarChartContent<T extends ChartDatum>({
 	const chartData = useMemo(
 		() =>
 			variant === 'stacked100'
-				? normalizePercentStack(data, series.map((item) => item.key))
+				? normalizePercentStack(
+						data,
+						series.map((item) => item.key),
+					)
 				: data,
 		[data, series, variant],
 	);
@@ -113,7 +123,11 @@ function BarChartContent<T extends ChartDatum>({
 		<ChartContainer
 			ariaDescription={ariaDescription}
 			ariaLabel={ariaLabel}
-			className={cx('pds-chart--bar', `pds-chart--bar-${orientation}`, className)}
+			className={cx(
+				'pds-chart--bar',
+				`pds-chart--bar-${orientation}`,
+				className,
+			)}
 			data={data}
 			empty={empty}
 			emptyMessage={emptyMessage}
@@ -121,7 +135,9 @@ function BarChartContent<T extends ChartDatum>({
 			height={height}
 			loading={loading}
 			loadingVariant="bar"
-			tableColumns={tableColumns ?? getSeriesColumns(xKey, series, xFormat, yFormat)}
+			tableColumns={
+				tableColumns ?? getSeriesColumns(xKey, series, xFormat, yFormat)
+			}
 			{...props}
 		>
 			<div className="pds-chart__plot">
@@ -129,16 +145,27 @@ function BarChartContent<T extends ChartDatum>({
 					<RechartsBarChart
 						data={toChartData(chartData)}
 						layout={horizontal ? 'vertical' : 'horizontal'}
-						margin={{ bottom: 10, left: horizontal ? 18 : 4, right: 18, top: 12 }}
+						margin={{
+							bottom: 10,
+							left: horizontal ? 18 : 4,
+							right: 18,
+							top: 12,
+						}}
 					>
 						{showGrid ? (
-							<CartesianGrid stroke={palette.grid} strokeDasharray="4 6" vertical={horizontal} />
+							<CartesianGrid
+								stroke={palette.grid}
+								strokeDasharray="4 6"
+								vertical={horizontal}
+							/>
 						) : null}
 						<XAxis
 							axisLine={false}
 							dataKey={horizontal ? undefined : String(xKey)}
 							tick={{ fill: palette.axis, fontSize: 12, fontWeight: 700 }}
-							tickFormatter={getRechartsTickFormatter(horizontal ? yFormatter : xFormatter)}
+							tickFormatter={getRechartsTickFormatter(
+								horizontal ? yFormatter : xFormatter,
+							)}
 							tickLine={false}
 							type={horizontal ? 'number' : 'category'}
 						/>
@@ -146,24 +173,38 @@ function BarChartContent<T extends ChartDatum>({
 							axisLine={false}
 							dataKey={horizontal ? String(xKey) : undefined}
 							tick={{ fill: palette.axis, fontSize: 12, fontWeight: 700 }}
-							tickFormatter={getRechartsTickFormatter(horizontal ? xFormatter : yFormatter)}
+							tickFormatter={getRechartsTickFormatter(
+								horizontal ? xFormatter : yFormatter,
+							)}
 							tickLine={false}
 							type={horizontal ? 'category' : 'number'}
 							width={horizontal ? 96 : 54}
 						/>
 						{showTooltip ? (
 							<Tooltip
-								content={<ChartTooltip labelFormatter={xFormatter} valueFormatter={yFormatter} />}
+								content={
+									<ChartTooltip
+										labelFormatter={xFormatter}
+										valueFormatter={yFormatter}
+									/>
+								}
 							/>
 						) : null}
 						{visibleSeries.map((item, index) => (
 							<Bar
 								dataKey={String(item.key)}
-								fill={item.color ?? palette.categorical[index % palette.categorical.length]}
+								fill={
+									item.color ??
+									palette.categorical[index % palette.categorical.length]
+								}
 								key={String(item.key)}
 								name={getSeriesLabel(item)}
 								radius={horizontal ? [0, 6, 6, 0] : [6, 6, 0, 0]}
-								stackId={variant === 'grouped' ? item.stackId : item.stackId ?? 'stack'}
+								stackId={
+									variant === 'grouped'
+										? item.stackId
+										: (item.stackId ?? 'stack')
+								}
 								{...animation}
 							/>
 						))}
@@ -171,7 +212,12 @@ function BarChartContent<T extends ChartDatum>({
 				</ResponsiveContainer>
 			</div>
 			{showLegend ? (
-				<ChartLegend hiddenKeys={hiddenKeys} onToggle={toggleSeries} palette={palette} series={series} />
+				<ChartLegend
+					hiddenKeys={hiddenKeys}
+					onToggle={toggleSeries}
+					palette={palette}
+					series={series}
+				/>
 			) : null}
 		</ChartContainer>
 	);

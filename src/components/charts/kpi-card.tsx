@@ -25,7 +25,14 @@ export function KpiCard({
 	...props
 }: KpiCardProps) {
 	return (
-		<Card className={cx('pds-chart-kpi-card', `pds-chart-kpi-card--${tone}`, className)} {...props}>
+		<Card
+			className={cx(
+				'pds-chart-kpi-card',
+				`pds-chart-kpi-card--${tone}`,
+				className,
+			)}
+			{...props}
+		>
 			<div className="pds-chart-kpi-card__topline">
 				<span>{label}</span>
 				{delta ? <strong>{delta}</strong> : null}
@@ -37,7 +44,9 @@ export function KpiCard({
 					values={sparkline}
 				/>
 			) : null}
-			{footnote ? <p className="pds-chart-kpi-card__footnote">{footnote}</p> : null}
+			{footnote ? (
+				<p className="pds-chart-kpi-card__footnote">{footnote}</p>
+			) : null}
 		</Card>
 	);
 }

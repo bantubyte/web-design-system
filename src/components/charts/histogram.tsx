@@ -8,8 +8,8 @@ import type {
 	ChartSizeProps,
 	ChartStatusProps,
 } from '../../charts-core';
-import { BarChart } from './bar-chart';
 import { getNumberValue } from './_internal/chart-utils';
+import { BarChart } from './bar-chart';
 
 export interface HistogramProps<T extends ChartDatum>
 	extends Omit<HTMLAttributes<HTMLDivElement>, 'children'>,
@@ -41,7 +41,9 @@ export function Histogram<T extends ChartDatum>({
 		const start = min + index * step;
 		const end = index === bins - 1 ? max : start + step;
 		const count = values.filter((value) =>
-			index === bins - 1 ? value >= start && value <= end : value >= start && value < end,
+			index === bins - 1
+				? value >= start && value <= end
+				: value >= start && value < end,
 		).length;
 		const label = `${valueFormat ? valueFormat(start) : Math.round(start)}-${valueFormat ? valueFormat(end) : Math.round(end)}`;
 		return { count, label };
