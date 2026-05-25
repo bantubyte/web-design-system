@@ -6,6 +6,17 @@ import {
 	useState,
 } from 'react';
 import {
+	Area,
+	Bar,
+	CartesianGrid,
+	ComposedChart,
+	Line,
+	ResponsiveContainer,
+	Tooltip,
+	XAxis,
+	YAxis,
+} from 'recharts';
+import {
 	createReportComparisonModel,
 	createReportEvidenceModel,
 	createReportPlacementTableModel,
@@ -1866,6 +1877,243 @@ export function ReportAreaChart({
 					xKey="label"
 					yFormat={formatChartValue}
 				/>
+			</CardContent>
+		</Card>
+	);
+}
+
+export interface ReportActualForecastChartItem {
+	actual: number | null | undefined;
+	forecast: number | null | undefined;
+	fullDate?: string;
+	label: string;
+}
+
+export interface ReportActualForecastChartProps
+	extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
+	formatValue?: (value: number) => ReactNode;
+	items: readonly ReportActualForecastChartItem[];
+	title?: ReactNode;
+}
+
+const ACTUAL_GRADIENT_ID = 'pds-actual-gradient';
+const ACTUAL_COLOR = '#7B8FE4';
+const FORECAST_COLOR = '#5B6FD4';
+const AREA_THRESHOLD = 14;
+
+function formatAxisTick(value: unknown): string {
+	if (typeof value !== 'number') return String(value);
+	if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
+	if (value >= 1_000) return `${(value / 1_000).toFixed(0)}K`;
+	return value.toFixed(0);
+}
+
+export function ReportActualForecastChart({
+	className,
+	formatValue = (value) => value,
+	items,
+	title,
+	...props
+}: ReportActualForecastChartProps) {
+	const useArea = items.length >= AREA_THRESHOLD;
+
+	return (
+		<Card className={cx('pds-report-actual-forecast', className)} {...props}>
+			{title ? (
+				<CardHeader className="pb-2">
+					<CardTitle className="text-sm font-semibold">{title}</CardTitle>
+				</CardHeader>
+			) : null}
+			<CardContent className="px-2 pb-4">
+				<ResponsiveContainer height={260} width="100%">
+					<ComposedChart
+						data={items as unknown as Record<string, unknown>[]}
+						margin={{ bottom: 8, left: 0, right: 8, top: 8 }}
+					>
+						<defs>
+							<linearGradient
+								id={ACTUAL_GRADIENT_ID}
+								x1="0"
+								x2="0"
+								y1="0"
+								y2="1"
+							>
+								<stop
+									offset="0%"
+									stopColor={ACTUAL_COLOR}
+									stopOpacity={useArea ? 0.75 : 0.85}
+								/>
+								<stop
+									offset="100%"
+									stopColor={ACTUAL_COLOR}
+									stopOpacity={useArea ? 0.15 : 0.2}
+								/>
+							</linearGradient>
+						</defs>
+						<CartesianGrid
+							stroke="#e5e7eb"
+							strokeDasharray="4 6"
+							vertical={false}
+						/>
+						<XAxis
+							axisLine={false}
+							dataKey="label"
+							tick={{ fill: '#6b7280', fontSize: 11, fontWeight: 600 }}
+							tickLine={false}
+						/>
+						<YAxis
+							axisLine={false}
+							tick={{ fill: '#6b7280', fontSize: 11, fontWeight: 600 }}
+							tickFormatter={formatAxisTick}
+							tickLine={false}
+							width={48}
+						/>
+						<Tooltip
+							formatter={(value: number | string, name: string) => [
+								typeof value === 'number'
+									? reportNodeToText(formatValue(value))
+									: String(value),
+								name === 'actual' ? 'Actual' : 'Forecast',
+							]}
+							labelStyle={{ fontWeight: 600 }}
+						/>
+						{useArea ? (
+							<Area
+								dataKey="actual"
+								dot={false}
+								fill={`url(#${ACTUAL_GRADIENT_ID})`}
+								name="actual"
+								stroke={ACTUAL_COLOR}
+								strokeWidth={2}
+								type="monotone"
+							/>
+						) : (
+							<Bar
+								barSize={12}
+								dataKey="actual"
+								fill={`url(#${ACTUAL_GRADIENT_ID})`}
+								name="actual"
+								radius={[4, 4, 0, 0]}
+							/>
+						)}
+						<Line
+							dataKey="forecast"
+							dot={{
+								fill: '#fff',
+								r: 3,
+								stroke: FORECAST_COLOR,
+								strokeWidth: 2,
+							}}
+							name="forecast"
+							stroke={FORECAST_COLOR}
+							strokeDasharray="5 4"
+							strokeWidth={2}
+							type="monotone"
+						/>
+					</ComposedChart>
+				</ResponsiveContainer>
+				<div className="mt-2 flex items-center justify-center gap-6">
+					<div className="flex items-center gap-1.5">
+						<span
+							className="inline-block h-3 w-4 rounded-sm"
+							style={{ background: ACTUAL_COLOR, opacity: 0.7 }}
+						/>
+						<span className="text-xs font-medium text-gray-600">Actual</span>
+					</div>
+					<div className="flex items-center gap-1.5">
+						<svg height="12" width="20">
+							<line
+								stroke={FORECAST_COLOR}
+								strokeDasharray="4 3"
+								strokeWidth="2"
+								x1="0"
+								x2="20"
+								y1="6"
+								y2="6"
+							/>
+							<circle
+								cx="10"
+								cy="6"
+								fill="#fff"
+								r="3"
+								stroke={FORECAST_COLOR}
+								strokeWidth="2"
+							/>
+						</svg>
+						<span className="text-xs font-medium text-gray-600">Forecast</span>
+					</div>
+				</div>
+			</CardContent>
+		</Card>
+	);
+}
+
+export interface ReportSiteBarListItem {
+	color?: string;
+	id: string;
+	label: ReactNode;
+	value: number;
+}
+
+export interface ReportSiteBarListProps
+	extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
+	formatValue?: (value: number) => ReactNode;
+	items: readonly ReportSiteBarListItem[];
+	title?: ReactNode;
+}
+
+export function ReportSiteBarList({
+	className,
+	formatValue = (value) => value,
+	items,
+	title,
+	...props
+}: ReportSiteBarListProps) {
+	const sorted = [...items].sort((a, b) => b.value - a.value);
+	const max = Math.max(...items.map((i) => i.value), 1);
+
+	return (
+		<Card className={cx('pds-report-site-bar-list', className)} {...props}>
+			{title ? (
+				<CardHeader className="pb-2">
+					<CardTitle className="text-sm font-semibold">{title}</CardTitle>
+				</CardHeader>
+			) : null}
+			<CardContent className="px-4 pb-4">
+				<div
+					className="flex flex-col gap-2 overflow-y-auto"
+					style={{ maxHeight: 320 }}
+				>
+					{sorted.map((item) => (
+						<div
+							className="flex flex-col gap-1"
+							data-testid="site-bar-item"
+							key={item.id}
+						>
+							<div className="flex items-center justify-between gap-2">
+								<span
+									className="truncate text-sm text-gray-700"
+									data-testid="site-bar-label"
+								>
+									{item.label}
+								</span>
+								<strong className="shrink-0 text-sm font-semibold text-gray-900">
+									{formatValue(item.value)}
+								</strong>
+							</div>
+							<div className="h-1.5 w-full overflow-hidden rounded-full bg-gray-100">
+								<div
+									className="h-full rounded-full transition-all"
+									style={{
+										backgroundColor:
+											item.color ?? 'var(--pds-color-primary-500)',
+										width: `${((item.value / max) * 100).toFixed(1)}%`,
+									}}
+								/>
+							</div>
+						</div>
+					))}
+				</div>
 			</CardContent>
 		</Card>
 	);
