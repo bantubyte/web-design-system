@@ -84,7 +84,7 @@ export function DashboardPlacementsCardSkeleton({
 				<div className="flex items-center gap-2">
 					<Skeleton
 						height="2rem"
-						radius="sm"
+						radius="lg"
 						style={{
 							border: '1px solid rgba(94,80,228,0.2)',
 							background: '#fff',
@@ -94,7 +94,7 @@ export function DashboardPlacementsCardSkeleton({
 					<Skeleton
 						className="bg-pikaboo-purple/20"
 						height="2rem"
-						radius="sm"
+						radius="lg"
 						width="7rem"
 					/>
 				</div>

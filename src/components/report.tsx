@@ -78,6 +78,7 @@ export interface ReportBlockProps
 	title?: ReactNode;
 	tone?: ReportTone;
 	variant?: ReportBlockVariant;
+	flat?: boolean;
 }
 
 export function ReportBlock({
@@ -92,8 +93,53 @@ export function ReportBlock({
 	title,
 	tone = 'neutral',
 	variant = 'default',
+	flat = false,
 	...props
 }: ReportBlockProps) {
+	if (flat) {
+		return (
+			<div
+				className={cx(
+					'pds-report-block',
+					'pds-report-block--flat',
+					`pds-report-block--${variant}`,
+					`pds-report-block--${tone}`,
+					selected && 'pds-report-block--selected',
+					className,
+				)}
+				{...props}
+			>
+				{eyebrow || title || description || actions ? (
+					<div className="pds-report-block__header">
+						<div>
+							{eyebrow ? (
+								<p className="pds-report-block__eyebrow">{eyebrow}</p>
+							) : null}
+							{title ? (
+								<h3
+									className="pds-card__title"
+									style={{ fontSize: '0.8125rem', fontWeight: 600 }}
+								>
+									{title}
+								</h3>
+							) : null}
+							{description ? (
+								<p className="pds-report-block__description">{description}</p>
+							) : null}
+						</div>
+						{actions ? (
+							<div className="pds-report-block__actions">{actions}</div>
+						) : null}
+					</div>
+				) : null}
+				<div className="pds-report-block__content">{children}</div>
+				{footer ? (
+					<div className="pds-report-block__footer">{footer}</div>
+				) : null}
+			</div>
+		);
+	}
+
 	return (
 		<Card
 			className={cx(
@@ -739,6 +785,9 @@ export interface ReportRankedListItem {
 	tone?: ReportTone;
 	value: number;
 	valueLabel?: ReactNode;
+	icon?: ReactNode;
+	badge?: ReactNode;
+	highlighted?: boolean;
 }
 
 export interface ReportRankedListBlockProps
@@ -756,6 +805,7 @@ export function ReportRankedListBlock({
 	onItemSelect,
 	selectedItemId,
 	title = 'Ranked list',
+	flat = false,
 	...props
 }: ReportRankedListBlockProps) {
 	const rankedList = createReportRankedListModel(items, selectedItemId);
@@ -763,6 +813,7 @@ export function ReportRankedListBlock({
 	return (
 		<ReportBlock
 			className={cx('pds-report-ranked-list', className)}
+			flat={flat}
 			title={title}
 			variant="chart"
 			{...props}
@@ -770,22 +821,42 @@ export function ReportRankedListBlock({
 			<div className="pds-report-ranked-list__items">
 				{rankedList.items.map((item) => {
 					const tone = item.tone ?? 'info';
+					const originalItem =
+						items.find((orig) => orig.id === item.id) || item;
+					const icon = (originalItem as any).icon;
+					const badge = (originalItem as any).badge;
+					const highlighted = (originalItem as any).highlighted;
+
 					return (
 						<button
 							aria-pressed={item.selected}
 							className={cx(
 								'pds-report-ranked-list__item',
 								item.selected && 'pds-report-ranked-list__item--selected',
+								highlighted && 'pds-report-ranked-list__item--highlighted',
 							)}
 							key={item.id}
 							onClick={() => onItemSelect?.(item)}
 							type="button"
 						>
-							<span
-								className={`pds-report-ranked-list__dot pds-report-ranked-list__dot--${tone}`}
-							/>
+							{icon ? (
+								<div className="pds-report-ranked-list__icon-container">
+									{icon}
+								</div>
+							) : (
+								<span
+									className={`pds-report-ranked-list__dot pds-report-ranked-list__dot--${tone}`}
+								/>
+							)}
 							<span className="pds-report-ranked-list__copy">
-								<strong>{item.label}</strong>
+								<span className="flex items-center gap-1.5">
+									<strong>{item.label}</strong>
+									{badge ? (
+										<span className="pds-report-ranked-list__item-badge">
+											{badge}
+										</span>
+									) : null}
+								</span>
 								{item.meta ? <small>{item.meta}</small> : null}
 							</span>
 							<span className="pds-report-ranked-list__track">
@@ -1463,6 +1534,7 @@ export interface ReportBarListItem {
 	meta?: ReactNode;
 	tone?: ReportTone;
 	value: number;
+	color?: string;
 }
 
 export interface ReportBarListProps
@@ -1470,6 +1542,7 @@ export interface ReportBarListProps
 	formatValue?: (value: number) => ReactNode;
 	items: readonly ReportBarListItem[];
 	title?: ReactNode;
+	flat?: boolean;
 }
 
 export function ReportBarList({
@@ -1477,8 +1550,49 @@ export function ReportBarList({
 	formatValue = (value) => value,
 	items,
 	title,
+	flat = false,
 	...props
 }: ReportBarListProps) {
+	const content = (
+		<ChartBarList
+			ariaLabel={typeof title === 'string' ? title : 'Report bar list'}
+			formatValue={(value) =>
+				typeof value === 'number'
+					? reportNodeToText(formatValue(value))
+					: String(value ?? '')
+			}
+			items={items}
+		/>
+	);
+
+	if (flat) {
+		return (
+			<div
+				className={cx(
+					'pds-report-bar-list',
+					'pds-report-bar-list--flat',
+					className,
+				)}
+				{...props}
+			>
+				{title ? (
+					<div
+						className="pds-report-block__header"
+						style={{ paddingBottom: '0.6rem' }}
+					>
+						<h3
+							className="pds-card__title"
+							style={{ fontSize: '0.8125rem', fontWeight: 600 }}
+						>
+							{title}
+						</h3>
+					</div>
+				) : null}
+				<div className="pds-report-block__content">{content}</div>
+			</div>
+		);
+	}
+
 	return (
 		<Card className={cx('pds-report-bar-list', className)} {...props}>
 			{title ? (
@@ -1486,17 +1600,7 @@ export function ReportBarList({
 					<CardTitle>{title}</CardTitle>
 				</CardHeader>
 			) : null}
-			<CardContent>
-				<ChartBarList
-					ariaLabel={typeof title === 'string' ? title : 'Report bar list'}
-					formatValue={(value) =>
-						typeof value === 'number'
-							? reportNodeToText(formatValue(value))
-							: String(value ?? '')
-					}
-					items={items}
-				/>
-			</CardContent>
+			<CardContent>{content}</CardContent>
 		</Card>
 	);
 }
@@ -1511,6 +1615,7 @@ export interface ReportDonutProps
 	centerLabel?: ReactNode;
 	segments: readonly ReportDonutSegment[];
 	title?: ReactNode;
+	flat?: boolean;
 }
 
 export function ReportDonut({
@@ -1518,6 +1623,7 @@ export function ReportDonut({
 	className,
 	segments,
 	title,
+	flat = false,
 	...props
 }: ReportDonutProps) {
 	const total = segments.reduce((sum, segment) => sum + segment.value, 0) || 1;
@@ -1526,6 +1632,57 @@ export function ReportDonut({
 		value: segment.value,
 	}));
 
+	const content = (
+		<div className="pds-report-donut__layout">
+			<ChartPieChart
+				ariaLabel={typeof title === 'string' ? title : 'Report donut chart'}
+				centerLabel={reportNodeToText(centerLabel)}
+				className="pds-report-donut__chart"
+				data={chartData}
+				height={150}
+				nameKey="label"
+				showLegend={false}
+				valueKey="value"
+				variant="donut"
+			/>
+			<div className="pds-report-donut__legend">
+				{segments.map((segment, index) => (
+					<div key={index}>
+						<span
+							className={`pds-report-donut__dot pds-report-donut__dot--${index + 1}`}
+						/>
+						<span>{segment.label}</span>
+						<strong>{Math.round((segment.value / total) * 100)}%</strong>
+					</div>
+				))}
+			</div>
+		</div>
+	);
+
+	if (flat) {
+		return (
+			<div
+				className={cx('pds-report-donut', 'pds-report-donut--flat', className)}
+				{...props}
+			>
+				{title ? (
+					<div
+						className="pds-report-block__header"
+						style={{ paddingBottom: '0.5rem' }}
+					>
+						<h3
+							className="pds-card__title"
+							style={{ fontSize: '0.8125rem', fontWeight: 600 }}
+						>
+							{title}
+						</h3>
+					</div>
+				) : null}
+				<div className="pds-report-block__content">{content}</div>
+			</div>
+		);
+	}
+
 	return (
 		<Card className={cx('pds-report-donut', className)} {...props}>
 			{title ? (
@@ -1533,32 +1690,7 @@ export function ReportDonut({
 					<CardTitle>{title}</CardTitle>
 				</CardHeader>
 			) : null}
-			<CardContent>
-				<div className="pds-report-donut__layout">
-					<ChartPieChart
-						ariaLabel={typeof title === 'string' ? title : 'Report donut chart'}
-						centerLabel={reportNodeToText(centerLabel)}
-						className="pds-report-donut__chart"
-						data={chartData}
-						height={150}
-						nameKey="label"
-						showLegend={false}
-						valueKey="value"
-						variant="donut"
-					/>
-					<div className="pds-report-donut__legend">
-						{segments.map((segment, index) => (
-							<div key={index}>
-								<span
-									className={`pds-report-donut__dot pds-report-donut__dot--${index + 1}`}
-								/>
-								<span>{segment.label}</span>
-								<strong>{Math.round((segment.value / total) * 100)}%</strong>
-							</div>
-						))}
-					</div>
-				</div>
-			</CardContent>
+			<CardContent>{content}</CardContent>
 		</Card>
 	);
 }
