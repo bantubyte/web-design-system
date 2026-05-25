@@ -31,8 +31,9 @@ import {
 	DialogTitle,
 } from './dialog';
 import { Progress } from './feedback';
-import { Field, Input, Select, Slider, Textarea } from './form';
+import { Field, Input, Select, Slider, Switch, Textarea } from './form';
 import { Icon, isPdsIconName, type PdsIconName } from './icons';
+import { Tooltip } from './tooltip';
 
 export interface CampaignSummaryCardProps
 	extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
@@ -1750,3 +1751,65 @@ const formatCampaignRange = (range?: DateRange): string => {
 	if (!range?.from || !range.to) return 'Select a start and end date';
 	return `${formatCampaignDate(range.from)} - ${formatCampaignDate(range.to)}`;
 };
+export interface CampaignPartialFlightsToggleProps {
+	id?: string;
+	checked: boolean;
+	disabled?: boolean;
+	onChange: (checked: boolean) => void;
+	className?: string;
+}
+
+export function CampaignPartialFlightsToggle({
+	id = 'partial-flights-toggle',
+	checked,
+	disabled,
+	onChange,
+	className,
+}: CampaignPartialFlightsToggleProps) {
+	return (
+		<label
+			className={cx(
+				'pds-campaign-partial-toggle',
+				disabled ? 'pds-campaign-partial-toggle--disabled' : '',
+				className,
+			)}
+			htmlFor={id}
+			style={{
+				display: 'inline-flex',
+				alignItems: 'center',
+				gap: '0.5rem',
+				cursor: disabled ? 'not-allowed' : 'pointer',
+				opacity: disabled ? 0.6 : 1,
+				userSelect: 'none',
+			}}
+		>
+			<span
+				style={{
+					display: 'inline-flex',
+					alignItems: 'center',
+					gap: '0.25rem',
+					fontSize: '11px',
+					fontWeight: 500,
+					color: 'rgba(18, 18, 18, 0.6)',
+					letterSpacing: '-0.025em',
+				}}
+			>
+				<span>Include partial flights</span>
+				<Tooltip content="Adds faces with hidden gaps in the campaign window. Pricing and metrics for these faces are already pro-rated to the available days.">
+					<span
+						style={{ display: 'inline-flex', color: 'rgba(18, 18, 18, 0.4)' }}
+					>
+						<Icon name="help" style={{ width: '12px', height: '12px' }} />
+					</span>
+				</Tooltip>
+			</span>
+			<Switch
+				aria-label="Include partially available flights"
+				checked={checked}
+				disabled={disabled}
+				id={id}
+				onChange={(e: any) => onChange(e.target.checked)}
+			/>
+		</label>
+	);
+}
