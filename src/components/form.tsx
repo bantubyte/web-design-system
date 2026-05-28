@@ -46,12 +46,45 @@ export function Field({
 	);
 }
 
-export const Input = forwardRef<
-	HTMLInputElement,
-	InputHTMLAttributes<HTMLInputElement>
->(({ className, ...props }, ref) => (
-	<input className={cx('pds-input', className)} ref={ref} {...props} />
-));
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+	prefix?: ReactNode;
+	formatValue?: (raw: string) => string;
+}
+
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+	({ className, formatValue, onChange, prefix, value, ...props }, ref) => {
+		const displayValue = formatValue
+			? formatValue(String(value ?? ''))
+			: value;
+
+		if (prefix) {
+			return (
+				<span className="pds-input-wrapper">
+					<span aria-hidden="true" className="pds-input__prefix">
+						{prefix}
+					</span>
+					<input
+						className={cx('pds-input pds-input--with-prefix', className)}
+						onChange={onChange}
+						ref={ref}
+						value={displayValue}
+						{...props}
+					/>
+				</span>
+			);
+		}
+
+		return (
+			<input
+				className={cx('pds-input', className)}
+				onChange={onChange}
+				ref={ref}
+				value={displayValue}
+				{...props}
+			/>
+		);
+	},
+);
 
 Input.displayName = 'Input';
 
@@ -107,10 +140,25 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
 
 Switch.displayName = 'Switch';
 
+const zarCurrencyFormatter = new Intl.NumberFormat('en-ZA', {
+	currency: 'ZAR',
+	maximumFractionDigits: 0,
+	style: 'currency',
+});
+
+/**
+ * Formats a numeric value as South African Rand with no decimal places, e.g.
+ * `2500000` → `R 2 500 000`. Handy as a `formatValue` for {@link Slider} when
+ * the slider represents a budget. Shared so currency presentation stays
+ * consistent across consumers.
+ */
+export const formatZarCurrency = (value: number): string =>
+	zarCurrencyFormatter.format(value);
+
 export interface SliderProps
 	extends Omit<
 		InputHTMLAttributes<HTMLInputElement>,
-		'type' | 'value' | 'defaultValue' | 'onChange'
+		'type' | 'value' | 'defaultValue' | 'onChange' | 'size'
 	> {
 	defaultValue?: number;
 	formatValue?: (value: number) => ReactNode;
@@ -118,6 +166,7 @@ export interface SliderProps
 	max?: number;
 	min?: number;
 	onValueChange?: (value: number) => void;
+	size?: 'md' | 'lg';
 	step?: number;
 	value?: number;
 }
@@ -130,6 +179,7 @@ export function Slider({
 	max = 100,
 	min = 0,
 	onValueChange,
+	size = 'md',
 	step = 1,
 	value,
 	...props
@@ -151,7 +201,9 @@ export function Slider({
 	};
 
 	return (
-		<label className={cx('pds-slider', className)}>
+		<label
+			className={cx('pds-slider', size === 'lg' && 'pds-slider--lg', className)}
+		>
 			{label ? (
 				<span className="pds-slider__header">
 					<span>{label}</span>

@@ -6,8 +6,10 @@ import {
 	type KeyboardEvent,
 	type LabelHTMLAttributes,
 	type ReactNode,
+	useEffect,
 	useId,
 	useMemo,
+	useRef,
 	useState,
 } from 'react';
 import { cx } from '../utils/class-names';
@@ -22,6 +24,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from './card';
+import { CommandMenu } from './command';
 import {
 	Dialog,
 	DialogBody,
@@ -31,8 +34,9 @@ import {
 	DialogTitle,
 } from './dialog';
 import { Progress } from './feedback';
-import { Field, Input, Select, Slider, Textarea } from './form';
+import { Field, Input, Select, Slider, Switch, Textarea } from './form';
 import { Icon, isPdsIconName, type PdsIconName } from './icons';
+import { Tooltip } from './tooltip';
 
 export interface CampaignSummaryCardProps
 	extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
@@ -519,6 +523,7 @@ export interface CampaignChoiceOption {
 	description?: ReactNode;
 	label: ReactNode;
 	value: string;
+	icon?: ReactNode;
 }
 
 export interface CampaignChoiceChipsProps
@@ -575,6 +580,151 @@ export function CampaignChoiceChips({
 				);
 			})}
 		</div>
+	);
+}
+
+export interface CampaignChoiceTilesProps extends CampaignChoiceChipsProps {
+	size?: 'default' | 'compact';
+}
+
+export function CampaignChoiceTiles({
+	className,
+	defaultSelectedValues = [],
+	onSelectedValuesChange,
+	options,
+	selectedValues,
+	size = 'default',
+	...props
+}: CampaignChoiceTilesProps) {
+	const [uncontrolledValues, setUncontrolledValues] = useState(
+		() => new Set(defaultSelectedValues),
+	);
+	const currentValues = new Set(selectedValues ?? uncontrolledValues);
+	const toggleValue = (nextValue: string) => {
+		const nextValues = new Set(currentValues);
+		if (nextValues.has(nextValue)) {
+			nextValues.delete(nextValue);
+		} else {
+			nextValues.add(nextValue);
+		}
+		if (selectedValues === undefined) {
+			setUncontrolledValues(nextValues);
+		}
+		onSelectedValuesChange?.([...nextValues]);
+	};
+
+	return (
+		<div
+			className={cx(
+				'pds-campaign-choice-tiles',
+				size === 'compact' && 'pds-campaign-choice-tiles--compact',
+				className,
+			)}
+			{...props}
+		>
+			{options.map((option) => {
+				const selected = currentValues.has(option.value);
+				return (
+					<button
+						aria-pressed={selected}
+						className={cx(
+							'pds-campaign-choice-tile',
+							selected && 'pds-campaign-choice-tile--selected',
+						)}
+						key={option.value}
+						onClick={() => toggleValue(option.value)}
+						type="button"
+					>
+						{option.icon && (
+							<div className="pds-campaign-choice-tile__icon">
+								{option.icon}
+							</div>
+						)}
+						<span className="pds-campaign-choice-tile__content">
+							<span className="pds-campaign-choice-tile__label">
+								{option.label}
+							</span>
+							{option.description && (
+								<small className="pds-campaign-choice-tile__description">
+									{option.description}
+								</small>
+							)}
+						</span>
+					</button>
+				);
+			})}
+		</div>
+	);
+}
+
+export interface CampaignCollapsibleFieldProps {
+	/** When false, the collapsed summary is shown instead of `children`. */
+	expanded: boolean;
+	/** Called when the user clicks the collapsed summary to edit again. */
+	onExpand: () => void;
+	/** Icon rendered inside the tinted square of the summary. */
+	summaryIcon?: ReactNode;
+	/** Primary line of the collapsed summary. */
+	summaryTitle: ReactNode;
+	/** Optional secondary line of the collapsed summary. */
+	summaryDescription?: ReactNode;
+	/** Optional trailing content (e.g. a Badge) shown before the change action. */
+	summaryTrailing?: ReactNode;
+	/** Text for the change affordance. Defaults to "Change". */
+	changeLabel?: ReactNode;
+	/** Expanded content (e.g. a picker or choice grid). */
+	children: ReactNode;
+	className?: string;
+}
+
+/**
+ * A field that collapses to a compact, clickable summary once a value is
+ * chosen, and expands back to its full editing UI on demand. Selection and
+ * collapse timing are controlled by the caller via `expanded` / `onExpand`;
+ * this component owns only the presentation (summary card + entrance
+ * animation). Used for the campaign date range and objective pickers.
+ */
+export function CampaignCollapsibleField({
+	expanded,
+	onExpand,
+	summaryIcon,
+	summaryTitle,
+	summaryDescription,
+	summaryTrailing,
+	changeLabel = 'Change',
+	children,
+	className,
+}: CampaignCollapsibleFieldProps) {
+	if (expanded) {
+		return (
+			<div className={cx('pds-campaign-collapsible__panel', className)}>
+				{children}
+			</div>
+		);
+	}
+
+	return (
+		<button
+			className={cx('pds-campaign-collapsible__summary', className)}
+			onClick={onExpand}
+			type="button"
+		>
+			{summaryIcon ? (
+				<span className="pds-campaign-collapsible__icon">{summaryIcon}</span>
+			) : null}
+			<span className="pds-campaign-collapsible__body">
+				<span className="pds-campaign-collapsible__title">{summaryTitle}</span>
+				{summaryDescription ? (
+					<span className="pds-campaign-collapsible__description">
+						{summaryDescription}
+					</span>
+				) : null}
+			</span>
+			<span className="pds-campaign-collapsible__trailing">
+				{summaryTrailing}
+				<span className="pds-campaign-collapsible__change">{changeLabel}</span>
+			</span>
+		</button>
 	);
 }
 
@@ -1750,3 +1900,132 @@ const formatCampaignRange = (range?: DateRange): string => {
 	if (!range?.from || !range.to) return 'Select a start and end date';
 	return `${formatCampaignDate(range.from)} - ${formatCampaignDate(range.to)}`;
 };
+export interface CampaignPartialFlightsToggleProps {
+	id?: string;
+	checked: boolean;
+	disabled?: boolean;
+	onChange: (checked: boolean) => void;
+	className?: string;
+}
+
+export function CampaignPartialFlightsToggle({
+	id = 'partial-flights-toggle',
+	checked,
+	disabled,
+	onChange,
+	className,
+}: CampaignPartialFlightsToggleProps) {
+	return (
+		<label
+			className={cx(
+				'pds-campaign-partial-toggle',
+				disabled ? 'pds-campaign-partial-toggle--disabled' : '',
+				className,
+			)}
+			htmlFor={id}
+		>
+			<span className="pds-campaign-partial-toggle__label">
+				<span>Include partial flights</span>
+				<Tooltip content="Adds faces with hidden gaps in the campaign window. Pricing and metrics for these faces are already pro-rated to the available days.">
+					<span className="pds-campaign-partial-toggle__icon">
+						<Icon name="help" style={{ width: '12px', height: '12px' }} />
+					</span>
+				</Tooltip>
+			</span>
+			<Switch
+				aria-label="Include partially available flights"
+				checked={checked}
+				disabled={disabled}
+				id={id}
+				onChange={(e: any) => onChange(e.target.checked)}
+			/>
+		</label>
+	);
+}
+
+export interface CampaignSelectOption {
+	label: string;
+	value: string;
+}
+
+export interface CampaignSelectFieldProps {
+	className?: string;
+	disabled?: boolean;
+	emptyLabel?: ReactNode;
+	onChange: (value: string) => void;
+	options: ReadonlyArray<CampaignSelectOption>;
+	placeholder?: string;
+	searchPlaceholder?: string;
+	value: string;
+}
+
+export function CampaignSelectField({
+	className,
+	disabled = false,
+	emptyLabel = 'No options found',
+	onChange,
+	options,
+	placeholder = 'Select…',
+	searchPlaceholder = 'Search…',
+	value,
+}: CampaignSelectFieldProps) {
+	const [open, setOpen] = useState(false);
+	const containerRef = useRef<HTMLDivElement>(null);
+	const triggerRef = useRef<HTMLButtonElement>(null);
+
+	useEffect(() => {
+		if (!open) return;
+		const handler = (event: MouseEvent) => {
+			if (
+				containerRef.current &&
+				!containerRef.current.contains(event.target as Node)
+			) {
+				setOpen(false);
+			}
+		};
+		document.addEventListener('mousedown', handler);
+		return () => document.removeEventListener('mousedown', handler);
+	}, [open]);
+
+	const selectedLabel = options.find((o) => o.value === value)?.label;
+
+	const handleSelect = (nextValue: string) => {
+		onChange(nextValue);
+		setOpen(false);
+		triggerRef.current?.focus();
+	};
+
+	return (
+		<div className={cx('pds-select-field', className)} ref={containerRef}>
+			<button
+				aria-expanded={open}
+				aria-haspopup="listbox"
+				className={cx(
+					'pds-select-field__trigger',
+					open && 'pds-select-field__trigger--open',
+					!selectedLabel && 'pds-select-field__trigger--placeholder',
+				)}
+				disabled={disabled}
+				onClick={() => setOpen(!open)}
+				onKeyDown={(e) => {
+					if (e.key === 'Escape') setOpen(false);
+				}}
+				ref={triggerRef}
+				type="button"
+			>
+				{selectedLabel ?? placeholder}
+			</button>
+			{open && (
+				<div className="pds-select-field__panel">
+					<CommandMenu
+						emptyLabel={emptyLabel}
+						items={options}
+						onSelect={handleSelect}
+						placeholder={searchPlaceholder}
+						selectedValue={value}
+					/>
+				</div>
+			)}
+		</div>
+	);
+}
